@@ -30,7 +30,7 @@ app.run(function ($rootScope) {
 
 app.controller('header', function ($scope) {
     $scope.homeLink = "http://localhost:63342/Enbarter/#/";
-    $scope.browseLink = "http://localhost:63342/Enbarter/#/barter";
+    $scope.browseLink = "http://localhost:63342/Enbarter/#/browse";
     $scope.createBarterLink = "http://localhost:63342/Enbarter/#/create_barter";
 
     $scope.login = function () {
@@ -77,6 +77,11 @@ app.controller('header', function ($scope) {
 
 
 app.controller('createBarter', function ($scope) {
+    getCategories(function (results) {
+        $scope.categories = results;
+        $scope.$apply();
+    });
+
     $scope.startBarter = function () {
         if (!Parse.User.current()) {
             alert("Not loggedIn");
@@ -84,11 +89,12 @@ app.controller('createBarter', function ($scope) {
         }
 
         var Barter = Parse.Object.extend("Barter");
+        var Category = Parse.Object.extend("Category");
         var barter = new Barter();
 
         barter.set("barterTitle", $scope.barterTitle);
         barter.set("barterDescription", $scope.barterDescription);
-        barter.set("offerCategory", $scope.offerCategory);
+        barter.set("offerCategory", Category.createWithoutData($scope.offerCategory));
         barter.set("offerTitle", $scope.offerTitle);
         barter.set("offerDescription", $scope.offerDescription);
         barter.set("offerMilestone", $scope.offerMilestone);
@@ -103,7 +109,7 @@ app.controller('createBarter', function ($scope) {
             barter.set("offerSampleImage", parseFile);
         }
         barter.set("offerDeadline", $scope.offerDeadline);
-        barter.set("seekCategory", $scope.seekCategory);
+        barter.set("seekCategory", Category.createWithoutData($scope.seekCategory));
         barter.set("seekTitle", $scope.seekTitle);
         barter.set("seekDescription", $scope.seekDescription);
         barter.set("seekSampleLink", $scope.seekSampleLink);
@@ -132,6 +138,46 @@ app.controller('createBarter', function ($scope) {
                 // Execute any logic that should take place if the save fails.
                 // error is a Parse.Error with an error code and message.
                 alert('Failed to create new object, with error code: ' + error.message);
+            }
+        });
+    }
+});
+
+
+function getCategories(successCallback) {
+    var query = new Parse.Query(Parse.Object.extend("Category"));
+    query.find({
+        success: function (results) {
+            successCallback(results);
+        },
+        error: function (error) {
+            alert("Error: " + error.code + " " + error.message);
+        }
+    });
+}
+app.controller('browseCtrl', function ($scope) {
+    getCategories(function (results) {
+        $scope.categories = results;
+        $scope.$apply();
+    });
+    $scope.search = function () {
+        var Category = Parse.Object.extend("Category");
+        var query = new Parse.Query(Parse.Object.extend("Barter"));
+        query.include('seekCategory');
+        query.include('offerCategory');
+        if ($scope.seekCat != '-1')
+            query.equalTo("seekCategory", Category.createWithoutData($scope.seekCat));
+        if ($scope.seekCat != '-1')
+            query.equalTo("offerCategory", Category.createWithoutData($scope.offerCat));
+        // query.contains("barterTitle", $scope.query);
+        query.find({
+            success: function (results) {
+                console.log(results);
+                $scope.results = results;
+                $scope.$apply();
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
             }
         });
     }

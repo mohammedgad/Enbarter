@@ -1,143 +1,140 @@
-<div ng-controller="createBarter"> 
-    <section id="content-3-3" class="content-block-nopad content-3-3" style="background-image:url('images/slider/books-1163695.jpg');"> 
-        <div class="overlay overlay-blue"> 
-            <div class="container text-center"> 
-                <h1 class="page-title">{{barterTitle}}</h1> 
-                <div class="col-md-4 margin-top20 text-center margin-bottom20 col-xs-offset-4"> 
-                    <i class="fa fa-edit fa-3x offer-icon white"></i> 
-                </div>                 
-            </div>             
-            <!-- /.container -->             
-        </div>         
-    </section>     
-    <div class="container"> 
-        <form role="form"> 
-            <div class="row"> 
-                <h1>About the barter</h1> 
-                <div class="form-group"> 
-                    <label class="control-label" for="formInput121">barter title</label>                     
-                    <input type="text" class="form-control" id="formInput121" placeholder="Placeholder text" ng-model="barterTitle"> 
-                </div>                 
-                <div class="form-group"> 
-                    <label class="control-label" for="formInput167">Barter Brief Description</label>                     
-                    <textarea ng-model="barterDescription" class="form-control" rows="3" id="formInput167"></textarea>                     
-                </div>                 
-            </div>             
-            <div class="row"> 
-                <h1>What do you wanna offer?</h1> 
-                <div class="form-group"> 
+<div ng-controller="createBarter">
+    <section id="content-3-3" class="content-block-nopad content-3-3"
+             style="background-image:url('images/slider/books-1163695.jpg');">
+        <div class="overlay overlay-blue">
+            <div class="container text-center">
+                <h1 class="page-title">{{barterTitle}}</h1>
+                <div class="col-md-4 margin-top20 text-center margin-bottom20 col-xs-offset-4">
+                    <i class="fa fa-edit fa-3x offer-icon white"></i>
+                </div>
+            </div>
+            <!-- /.container -->
+        </div>
+    </section>
+    <div class="container">
+        <form role="form">
+            <div class="row">
+                <h1>About the barter</h1>
+                <div class="form-group">
+                    <label class="control-label" for="formInput121">barter title</label>
+                    <input type="text" class="form-control" id="formInput121" placeholder="Placeholder text"
+                           ng-model="barterTitle">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput167">Barter Brief Description</label>
+                    <textarea ng-model="barterDescription" class="form-control" rows="3" id="formInput167"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <h1>What do you wanna offer?</h1>
+                <div class="form-group">
                     <label class="control-label" for="formInput226">Your offer Category&nbsp;
-                        <br> 
-                    </label>                     
-                    <select id="formInput226" class="form-control" ng-model="offerCategory"> 
-                        <option>All Offers</option>                         
-                        <option>Software</option>                         
-                        <option>Content Writing</option>                         
-                        <option>Marketing</option>                         
-                        <option>Software</option>                         
-                        <option>Content Writing</option>                         
-                        <option>other</option>                         
-                    </select>                     
-                </div>                 
-                <div class="form-group"> 
-                    <label class="control-label" for="formInput1953">Your offer Title</label>                     
-                    <input type="text" class="form-control" id="formInput1953" placeholder="Placeholder text" ng-model="offerTitle"> 
-                </div>                 
-                <div class="form-group"> 
-                    <label class="control-label" for="formInput2565">Your offer Description</label>                     
-                    <textarea class="form-control" rows="3" id="formInput2565" ng-model="offerDescription"></textarea>                     
-                </div>                 
-                <div class="form-group"> 
+                        <br>
+                    </label>
+                    <select id="formInput226" class="form-control" ng-model="offerCategory">
+                        <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.get('name')}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput1953">Your offer Title</label>
+                    <input type="text" class="form-control" id="formInput1953" placeholder="Placeholder text"
+                           ng-model="offerTitle">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput2565">Your offer Description</label>
+                    <textarea class="form-control" rows="3" id="formInput2565" ng-model="offerDescription"></textarea>
+                </div>
+                <div class="form-group">
                     <label class="control-label" for="formInput256">What are your milestones to create what you offer?
                         (what
                         are the steps you will follow to build your offer) separate between every milestone with a
                         comma
-</label>                     
-                    <textarea class="form-control" rows="3" id="formInput256" ng-model="offerMilestone"></textarea>                     
-                </div>                 
-                <div class="form-group"> 
-                    <label class="control-label" for="formInput1955">External sample link</label>                     
-                    <input type="text" class="form-control" id="formInput1955" placeholder="Placeholder text" ng-model="offerSampleLink"> 
-                </div>                 
-                <div class="form-group"> 
-                    <label class="control-label" for="exampleInputFile1">Upload Sample Image</label>                     
-                    <input type="file" id="exampleInputFile1" ng-model="offerSampleImage"> 
-                </div>                 
-                <div class="form-group"> 
+                    </label>
+                    <textarea class="form-control" rows="3" id="formInput256" ng-model="offerMilestone"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput1955">External sample link</label>
+                    <input type="text" class="form-control" id="formInput1955" placeholder="Placeholder text"
+                           ng-model="offerSampleLink">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="exampleInputFile1">Upload Sample Image</label>
+                    <input type="file" id="exampleInputFile1" ng-model="offerSampleImage">
+                </div>
+                <div class="form-group">
                     <label class="control-label" for="formInput1954">Deadline (the time you sayy you gonna produce your
                         offer
                         )
-</label>                     
-                    <input type="text" class="form-control" id="formInput1954" placeholder="20-5-2016" ng-model="offerDeadline"> 
-                </div>                 
-            </div>             
-            <div class="row"> 
-                <h1>What do you seek?</h1> 
-                <div class="form-group"> 
+                    </label>
+                    <input type="text" class="form-control" id="formInput1954" placeholder="20-5-2016"
+                           ng-model="offerDeadline">
+                </div>
+            </div>
+            <div class="row">
+                <h1>What do you seek?</h1>
+                <div class="form-group">
                     <label class="control-label" for="formInput226">Your seek Category&nbsp;
-                        <br> 
-                    </label>                     
-                    <select id="formInput206" class="form-control" ng-model="seekCategory"> 
-                        <option>All Seek</option>                         
-                        <option>Software</option>                         
-                        <option>Content Writing</option>                         
-                        <option>Marketing</option>                         
-                        <option>Software</option>                         
-                        <option>Content Writing</option>                         
-                        <option>other</option>                         
-                    </select>                     
-                </div>                 
-                <div class="form-group"> 
-                    <label class="control-label" for="formInput1951">Your seek Title</label>                     
-                    <input type="text" class="form-control" id="formInput1951" placeholder="Placeholder text" ng-model="seekTitle"> 
-                </div>                 
-                <div class="form-group"> 
-                    <label class="control-label" for="formInput2564">Your seek Description</label>                     
-                    <textarea class="form-control" rows="3" id="formInput2564" ng-model="seekDescription"></textarea>                     
-                </div>                 
-                <div class="form-group"> 
-                    <label class="control-label" for="formInput1959">External sample link</label>                     
-                    <input type="text" class="form-control" id="formInput1959" placeholder="Placeholder text" ng-model="seekSampleLink"> 
-                </div>                 
-                <div class="form-group"> 
-                    <label class="control-label" for="exampleInputFile">Upload Sample Image</label>                     
-                    <input type="file" id="exampleInputFile" ng-model="seekSampleImage"> 
-                </div>                 
-                <div class="form-group"> 
+                        <br>
+                    </label>
+                    <select id="formInput206" class="form-control" ng-model="seekCategory">
+                        <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.get('name')}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput1951">Your seek Title</label>
+                    <input type="text" class="form-control" id="formInput1951" placeholder="Placeholder text"
+                           ng-model="seekTitle">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput2564">Your seek Description</label>
+                    <textarea class="form-control" rows="3" id="formInput2564" ng-model="seekDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput1959">External sample link</label>
+                    <input type="text" class="form-control" id="formInput1959" placeholder="Placeholder text"
+                           ng-model="seekSampleLink">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="exampleInputFile">Upload Sample Image</label>
+                    <input type="file" id="exampleInputFile" ng-model="seekSampleImage">
+                </div>
+                <div class="form-group">
                     <label class="control-label" for="formInput195">Deadline (the time you want what you seek to be
                         finsihed
                         )
-</label>                     
-                    <input type="text" class="form-control" id="formInput195" placeholder="20-5-2016" ng-model="seekDeadline"> 
-                </div>                 
-            </div>             
-            <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="startBarter()">START BARTER</button>             
-        </form>         
-    </div>     
-    <section id="content-1-7" class="content-1-7 content-block"> 
-        <div class="container"> 
-            <div class="row"> 
-                <div class="col-md-2 col-sm-4"> 
-                    <img alt="Client Logo" src="images/partner-logos/logo-bootstrap.png"> 
-                </div>                 
-                <div class="col-md-2 col-sm-4"> 
-                    <img alt="Client Logo" src="images/partner-logos/logo-less.png"> 
-                </div>                 
-                <div class="col-md-2 col-sm-4"> 
-                    <img alt="Client Logo" src="images/partner-logos/logo-sass.png"> 
-                </div>                 
-                <div class="col-md-2 col-sm-4"> 
-                    <img alt="Client Logo" src="images/partner-logos/logo-yeoman.png"> 
-                </div>                 
-                <div class="col-md-2 col-sm-4"> 
-                    <img alt="Client Logo" src="images/partner-logos/logo-bower.png"> 
-                </div>                 
-                <div class="col-md-2 col-sm-4"> 
-                    <img alt="Client Logo" src="images/partner-logos/logo-jquery.png"> 
-                </div>                 
-            </div>             
-            <!--end of row-->             
-        </div>         
-        <!-- /.container -->         
-    </section>     
+                    </label>
+                    <input type="text" class="form-control" id="formInput195" placeholder="20-5-2016"
+                           ng-model="seekDeadline">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="startBarter()">START BARTER
+            </button>
+        </form>
+    </div>
+    <section id="content-1-7" class="content-1-7 content-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-bootstrap.png">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-less.png">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-sass.png">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-yeoman.png">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-bower.png">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-jquery.png">
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!-- /.container -->
+    </section>
 </div>
