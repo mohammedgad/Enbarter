@@ -9,7 +9,7 @@ app.config(function ($routeProvider) {
             templateUrl: "indexContent.html"
         }).when("/browse", {
         templateUrl: "browse.html"
-    }).when("/barter", {
+    }).when("/barter/:id", {
         templateUrl: "barter.html"
     }).when("/create_barter", {
         templateUrl: function () {
@@ -165,6 +165,8 @@ app.controller('browseCtrl', function ($scope) {
         var query = new Parse.Query(Parse.Object.extend("Barter"));
         query.include('seekCategory');
         query.include('offerCategory');
+        query.include('user');
+
         if ($scope.seekCat != '-1')
             query.equalTo("seekCategory", Category.createWithoutData($scope.seekCat));
         if ($scope.seekCat != '-1')
@@ -181,4 +183,19 @@ app.controller('browseCtrl', function ($scope) {
             }
         });
     }
+});
+
+
+app.controller('barterCtrl', function ($scope, $routeParams) {
+    var query = new Parse.Query(Parse.Object.extend("Barter"));
+    query.get($routeParams.id, {
+        success: function (result) {
+            $scope.result = result;
+            $scope.$apply();
+        },
+        error: function (object, error) {
+            alert("Error: " + error.code + " " + error.message);
+            window.location = "./";
+        }
+    });
 });
