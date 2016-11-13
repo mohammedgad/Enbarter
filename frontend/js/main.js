@@ -1,4 +1,5 @@
-var app = angular.module("BarterApp", ["ngRoute"]);
+var app = angular.module("BarterApp", ["ngRoute", 'ngAnimate','chieffancypants.loadingBar']);
+
 Parse.initialize("myAppId");
 Parse.serverURL = 'http://env-9871847.mircloud.host/parse';
 Parse.masterKey = 'mySecretMasterKey';
