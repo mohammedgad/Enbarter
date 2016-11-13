@@ -31,7 +31,7 @@ app.controller('header', function ($scope) {
         Parse.User.logIn($scope.email, $scope.password, {
             success: function (user) {
                 // Do stuff after successful login.
-                alert('Hello');
+                $scope.$apply();
             },
             error: function (user, error) {
                 // The login failed. Check error to see why.
@@ -48,12 +48,22 @@ app.controller('header', function ($scope) {
         user.signUp(null, {
             success: function (user) {
                 // Hooray! Let them use the app now.
-                alert('Hello');
+                $scope.$apply();
             },
             error: function (user, error) {
                 // Show the error message somewhere and let the user try again.
                 alert("Error: " + error.code + " " + error.message);
             }
         });
+    }
+
+    $scope.logout = function () {
+        Parse.User.logOut();
+    }
+
+    $scope.isLoggedIn = function () {
+        if (Parse.User.current())
+            return true;
+        return false;
     }
 });
