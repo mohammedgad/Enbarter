@@ -28,7 +28,7 @@ app.run(function ($rootScope) {
     $rootScope.keywords = "123";
 });
 
-app.controller('header', function ($scope) {
+app.controller('header', function ($scope, $location) {
     $scope.homeLink = "http://localhost:63342/Enbarter/#/";
     $scope.browseLink = "http://localhost:63342/Enbarter/#/browse";
     $scope.createBarterLink = "http://localhost:63342/Enbarter/#/create_barter";
@@ -65,7 +65,7 @@ app.controller('header', function ($scope) {
 
     $scope.logout = function () {
         Parse.User.logOut();
-        window.location = "/Enbarter";
+        $location.path('/');
     }
 
     $scope.isLoggedIn = function () {
@@ -186,16 +186,18 @@ app.controller('browseCtrl', function ($scope) {
 });
 
 
-app.controller('barterCtrl', function ($scope, $routeParams) {
+app.controller('barterCtrl', function ($scope, $location, $rootScope, $routeParams) {
     var query = new Parse.Query(Parse.Object.extend("Barter"));
     query.get($routeParams.id, {
         success: function (result) {
             $scope.result = result;
+            $rootScope.title = result.get("barterTitle");
             $scope.$apply();
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
-            window.location = "./";
+            $location.path('/');
+            $scope.$apply();
         }
     });
 });
