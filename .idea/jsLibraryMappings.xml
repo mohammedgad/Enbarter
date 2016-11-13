@@ -3,6 +3,5 @@
   <component name="JavaScriptLibraryMappings">
     <file url="PROJECT" libraries="{angular, parse}" />
     <includedPredefinedLibrary name="ECMAScript 6" />
-    <excludedPredefinedLibrary name="HTML5 / EcmaScript 5" />
   </component>
 </project>
