@@ -1,4 +1,4 @@
-var app = angular.module("BarterApp", ["ngRoute", 'ngAnimate','chieffancypants.loadingBar']);
+var app = angular.module("BarterApp", ["ngRoute"]);
 
 Parse.initialize("myAppId");
 Parse.serverURL = 'http://env-9871847.mircloud.host/parse';
@@ -125,6 +125,9 @@ app.controller('createBarter', function ($scope) {
         }
         barter.set("seekDeadline", $scope.seekDeadline);
         barter.set("user", Parse.User.current());
+        var text = $scope.barterTitle + " " + $scope.barterDescription + " " + $scope.offerTitle + " " + $scope.offerDescription + " " + $scope.offerMilestone + " " + $scope.seekTitle + " " + $scope.seekDescription;
+        var words = text.split(" ");
+        barter.set("words", words);
 
 
         barter.save(null, {
@@ -132,8 +135,7 @@ app.controller('createBarter', function ($scope) {
                 // Execute any logic that should take place after the object is saved.
 
                 alert('New object created with objectId: ' + barter.id);
-                window.location.href = "/Enbarter/#/barter";
-
+                window.location.href = "/Enbarter/#/barter/" + barter.id;
             },
             error: function (barter, error) {
                 // Execute any logic that should take place if the save fails.
@@ -172,7 +174,7 @@ app.controller('browseCtrl', function ($scope) {
             query.equalTo("seekCategory", Category.createWithoutData($scope.seekCat));
         if ($scope.seekCat != '-1')
             query.equalTo("offerCategory", Category.createWithoutData($scope.offerCat));
-        // query.contains("barterTitle", $scope.query);
+        query.containsAll("words", $scope.query.split(" "));
         query.find({
             success: function (results) {
                 console.log(results);
