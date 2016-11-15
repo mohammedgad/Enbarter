@@ -174,7 +174,8 @@ app.controller('browseCtrl', function ($scope) {
             query.equalTo("seekCategory", Category.createWithoutData($scope.seekCat));
         if ($scope.seekCat != '-1')
             query.equalTo("offerCategory", Category.createWithoutData($scope.offerCat));
-        query.containsAll("words", $scope.query.split(" "));
+        if ($scope.query)
+            query.containsAll("words", $scope.query.split(" "));
         query.find({
             success: function (results) {
                 console.log(results);
@@ -191,6 +192,9 @@ app.controller('browseCtrl', function ($scope) {
 
 app.controller('barterCtrl', function ($scope, $location, $rootScope, $routeParams) {
     var query = new Parse.Query(Parse.Object.extend("Barter"));
+    query.include('seekCategory');
+    query.include('offerCategory');
+    query.include('user');
     query.get($routeParams.id, {
         success: function (result) {
             $scope.result = result;

@@ -1,335 +1,275 @@
-<div ng-controller="barterCtrl"><section id="content-3-3" class="content-block-nopad content-3-3"
-         style="background-image:url('images/slider/books-1163695.jpg');">
-    <div class="overlay overlay-blue">
-        <div class="container text-center">
-            <h1 class="page-title">{{result.get('barterTitle')}}</h1>
-            <div class="col-md-4 margin-top20 text-center margin-bottom20 col-xs-offset-4">
-                <i class="fa fa-edit fa-3x offer-icon white"></i>
-                <i class="fa fa-arrows-h fa-2x offer-icon white"></i>
-                <i class="fa fa-photo fa-3x offer-icon white"></i>
-            </div>
-        </div>
-        <!-- /.container -->
-    </div>
-</section>
-<div class="page-content container-fluid">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="bg-white column-shadow div-inside text-center">
-                <h3 class="text-info">Barter Creator</h3>
-                <a href="" class="username-link">SomeOne</a>
-                <img src="images/project-1.jpg" class="img-responsive center-block barter-creator-img"/>
-                <div>
-                    <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                            class="fa fa-stack-1x fa-inverse fa-tag"></i></span>
-                    <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                            class="fa fa-stack-1x fa-inverse fa-rocket"></i></span>
-                    <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                            class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
-                </div>
-                <div>
-                    <span class="glyphicon glyphicon-star reputation-star"></span>
-                    <span class="glyphicon glyphicon-star reputation-star"></span>
-                    <span class="glyphicon glyphicon-star reputation-star"></span>
-                    <span class="glyphicon glyphicon-star reputation-star"></span>
-                    <span class="glyphicon glyphicon-star reputation-star"></span>
+<div ng-controller="barterCtrl">
+    <section id="content-3-3" class="content-block-nopad content-3-3"
+             style="background-image:url('images/slider/books-1163695.jpg');">
+        <div class="overlay overlay-blue">
+            <div class="container text-center">
+                <h1 class="page-title">{{result.get('barterTitle')}}</h1>
+                <div class="col-md-4 margin-top20 text-center margin-bottom20 col-xs-offset-4">
+                    <i class="fa fa-{{result.get('seekCategory').get('icon')}} fa-3x offer-icon white"></i>
+                    <i class="fa fa-arrows-h fa-2x offer-icon white"></i>
+                    <i class="fa fa-{{result.get('offerCategory').get('icon')}} fa-3x offer-icon white"></i>
                 </div>
             </div>
+            <!-- /.container -->
         </div>
-        <div class="col-md-9">
-            <div class="bg-white column-shadow div-inside">
-                <h3 class="text-info">Short Description</h3>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at
-                    eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.Cras justo odio, dapibus ac
-                    facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor
-                    id nibh ultricies vehicula ut id elit.Cras justo odio, dapibus ac facilisis in, egest.</p>
-                <h4 class="text-danger">Deadline 12-5-2016</h4>
-                <button type="button" class="btn btn-success btn-lg btn-block">BARTER UP</button>
-                <button type="button" class="btn btn-danger btn-sm">Report barter</button>
+    </section>
+    <div class="page-content container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="bg-white column-shadow div-inside text-center">
+                    <h3 class="text-info">Barter Creator</h3>
+                    <a href=".#/profile/{{result.get('user').id}}" class="username-link">{{result.get('user').get('username')}}</a>
+                    <img src="{{(result.get('user').get('pic'))?result.get('user').get('pic').url():'images/project-1.jpg'}}"
+                         class="img-responsive center-block barter-creator-img"/>
+                </div>
             </div>
-            <td class="clearfix"></td>
-        </div>
-    </div>
-    <div class="row seek-offer-page-content">
-        <div class="col-md-6">
-            <div class="column-shadow div-inside bg-deepocean white">
-                <h3>I Offer</h3>
-                <p class="white">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
-                    gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.Cras justo odio,
-                    dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam
-                    id dolor id nibh ultricies vehicula ut id elit.Cras justo odio, dapibus ac facilisis in, egestas
-                    eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies
-                    vehicula ut id elit.Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non
-                    mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.Cras justo
-                    odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
-                    Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                <h3>Sample</h3>
-                <a href="#" class="thumbnail">
-                    <img src="images/project-2.jpg" alt="">
-                </a>
-                <h3>Sample Links</h3>
-                <a href="http://" class="white">Link to youtube Video</a>
-                <br/>
-                <a href="http://" class="white">Behance Images</a>
-                <br/>
-                <a href="http://" class="white">Wiki</a>
+            <div class="col-md-9">
+                <div class="bg-white column-shadow div-inside">
+                    <h3 class="text-info">Short Description</h3>
+                    <p>{{result.get('barterDescription')}}</p>
+                    <h4 class="text-danger">Deadline [ Offer: {{result.get('offerDeadline')}} | Seek: {{result.get('seekDeadline')}}]</h4>
+                    <button type="button" class="btn btn-success btn-lg btn-block">BARTER UP</button>
+                    <button type="button" class="btn btn-danger btn-sm">Report barter</button>
+                </div>
+                <td class="clearfix"></td>
             </div>
         </div>
-        <div class="col-md-6 text-primary">
-            <div class="column-shadow div-inside bg-white">
-                <h3>I Seek</h3>
-                <p class="deepocean">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi
-                    porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.Cras justo odio,
-                    dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam
-                    id dolor id nibh ultricies vehicula ut id elit.Cras justo odio, dapibus ac facilisis in, egestas
-                    eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies
-                    vehicula ut id elit.Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non
-                    mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.Cras justo
-                    odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.
-                    Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                <h3>Sample</h3>
-                <a href="#" class="thumbnail">
-                    <img src="images/project-4.jpg" alt="">
-                </a>
-                <h3>Sample Links</h3>
-                <a href="http://">Website sample</a>
-                <br/>
-                <a href="http://">More samples</a>
-                <br/>
-                <a href="http://">Another Website Sample</a>
+        <div class="row seek-offer-page-content">
+            <div class="col-md-6">
+                <div class="column-shadow div-inside bg-deepocean white">
+                    <h3>I Offer</h3>
+                    <p class="white">{{result.get('offerDescription')}}</p>
+                    <h3>Sample</h3>
+                    <a href="#" class="thumbnail">
+                        <img src="{{result.get('offerSampleImage').url()}}" alt="">
+                    </a>
+                    <h3>Sample Links</h3>
+                    <a class="white" href="{{result.get('offerSampleLink')}}">{{result.get('offerSampleLink')}}</a>
+
+                </div>
+            </div>
+            <div class="col-md-6 text-primary">
+                <div class="column-shadow div-inside bg-white">
+                    <h3>I Seek</h3>
+                    <p class="deepocean">{{result.get('seekDescription')}}</p>
+                    <h3>Sample</h3>
+                    <a href="#" class="thumbnail">
+                        <img src="{{result.get('seekSampleImage').url()}}" alt="">
+                    </a>
+                    <h3>Sample Links</h3>
+                    <a href="{{result.get('seekSampleLink')}}">{{result.get('seekSampleLink')}}</a>
+
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row table-barter">
-        <table class="table table-hover table-condensed table-bg">
-            <thead class="table-head">
-            <tr class="table-head">
-                <th><p class="table-head-p">
-                    Created By</p></th>
-                <th><p class="table-head-p">Barters</p></th>
-                <th><p class="table-head-p">Deadline</p></th>
-                <th><p class="table-head-p">Action</p></th>
-                <p class="table-head-p">Deadline</p>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="text-center table-user-img">
-                    <img src="images/project-1.jpg" class="img-responsive center-block barter-creator-img"/>
-                </td>
-                <td>
-                    <a href="" class="username-link">SomeOne</a>
-                    <div>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                    </div>
-                    <div>
+        <div class="row table-barter">
+            <table class="table table-hover table-condensed table-bg">
+                <thead class="table-head">
+                <tr class="table-head">
+                    <th><p class="table-head-p">
+                        Created By</p></th>
+                    <th><p class="table-head-p">Barters</p></th>
+                    <th><p class="table-head-p">Deadline</p></th>
+                    <th><p class="table-head-p">Action</p></th>
+                    <p class="table-head-p">Deadline</p>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center table-user-img">
+                        <img src="images/project-1.jpg" class="img-responsive center-block barter-creator-img"/>
+                    </td>
+                    <td>
+                        <a href="" class="username-link">SomeOne</a>
+                        <div>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                        </div>
+                        <div>
                         <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
                                 class="fa fa-stack-1x fa-trophy fa-inverse"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-underline"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-picture-o"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-list"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-flag"></i></span>
-                    </div>
-                    <div>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-underline"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-picture-o"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-list"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-flag"></i></span>
+                        </div>
+                        <div>
                         <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
                                 class="fa fa-stack-1x fa-inverse fa-tag"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-rocket"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
-                    </div>
-                </td>
-                <td>12-5-2016</td>
-                <td class="table-action">
-                    <button type="button" class="btn btn-success" data-target="#myskills" data-toggle="modal">My
-                        Skills
-                    </button>
-                    <button type="button" class="btn btn-info" data-target="#milestones" data-toggle="modal">
-                        MileStones
-                    </button>
-                    <button type="button" class="btn btn-danger" data-target="#barterup" data-toggle="modal">Barter up
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td class="text-center table-user-img">
-                    <img src="images/project-2.jpg" class="img-responsive center-block barter-creator-img"/>
-                </td>
-                <td>
-                    <a href="" class="username-link">The Guy</a>
-                    <div>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                    </div>
-                    <div>
+                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-rocket"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
+                        </div>
+                    </td>
+                    <td>12-5-2016</td>
+                    <td class="table-action">
+                        <button type="button" class="btn btn-success" data-target="#myskills" data-toggle="modal">My
+                            Skills
+                        </button>
+                        <button type="button" class="btn btn-info" data-target="#milestones" data-toggle="modal">
+                            MileStones
+                        </button>
+                        <button type="button" class="btn btn-danger" data-target="#barterup" data-toggle="modal">Barter
+                            up
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center table-user-img">
+                        <img src="images/project-2.jpg" class="img-responsive center-block barter-creator-img"/>
+                    </td>
+                    <td>
+                        <a href="" class="username-link">The Guy</a>
+                        <div>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                        </div>
+                        <div>
                         <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
                                 class="fa fa-stack-1x fa-inverse fa-trophy"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-picture-o"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-list"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-flag"></i></span>
-                    </div>
-                    <div>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-picture-o"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-list"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-flag"></i></span>
+                        </div>
+                        <div>
                         <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
                                 class="fa fa-stack-1x fa-inverse fa-tag"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
-                    </div>
-                </td>
-                <td>15-5-2016</td>
-                <td class="table-action">
-                    <button type="button" class="btn btn-success" data-target="#myskills" data-toggle="modal">My
-                        Skills
-                    </button>
-                    <button type="button" class="btn btn-info" data-target="#milestones" data-toggle="modal">
-                        MileStones
-                    </button>
-                    <button type="button" class="btn btn-danger" data-target="#barterup" data-toggle="modal">Barter up
-                    </button>
-                </td>
-            </tr>
-            <tr>
-                <td class="text-center table-user-img">
-                    <img src="images/project-3.jpg" class="img-responsive center-block barter-creator-img"/>
-                </td>
-                <td>
-                    <a href="" class="username-link">Galal</a>
-                    <div>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                        <span class="glyphicon glyphicon-star reputation-star"></span>
-                    </div>
-                    <div>
+                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
+                        </div>
+                    </td>
+                    <td>15-5-2016</td>
+                    <td class="table-action">
+                        <button type="button" class="btn btn-success" data-target="#myskills" data-toggle="modal">My
+                            Skills
+                        </button>
+                        <button type="button" class="btn btn-info" data-target="#milestones" data-toggle="modal">
+                            MileStones
+                        </button>
+                        <button type="button" class="btn btn-danger" data-target="#barterup" data-toggle="modal">Barter
+                            up
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center table-user-img">
+                        <img src="images/project-3.jpg" class="img-responsive center-block barter-creator-img"/>
+                    </td>
+                    <td>
+                        <a href="" class="username-link">Galal</a>
+                        <div>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                        </div>
+                        <div>
                         <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
                                 class="fa fa-stack-1x fa-inverse fa-trophy"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-underline"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-picture-o"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-list"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-flag"></i></span>
-                    </div>
-                    <div>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-underline"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-picture-o"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-list"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-flag"></i></span>
+                        </div>
+                        <div>
                         <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
                                 class="fa fa-stack-1x fa-inverse fa-tag"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-rocket"></i></span>
-                        <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
-                    </div>
-                </td>
-                <td>6-5-2016</td>
-                <td class="table-action">
-                    <button type="button" class="btn btn-success" data-target="#myskills" data-toggle="modal">My
-                        Skills
-                    </button>
-                    <button type="button" class="btn btn-info" data-target="#milestones" data-toggle="modal">
-                        MileStones
-                    </button>
-                    <button type="button" class="btn btn-danger" data-target="#barterup" data-toggle="modal">Barter up
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-rocket"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
+                        </div>
+                    </td>
+                    <td>6-5-2016</td>
+                    <td class="table-action">
+                        <button type="button" class="btn btn-success" data-target="#myskills" data-toggle="modal">My
+                            Skills
+                        </button>
+                        <button type="button" class="btn btn-info" data-target="#milestones" data-toggle="modal">
+                            MileStones
+                        </button>
+                        <button type="button" class="btn btn-danger" data-target="#barterup" data-toggle="modal">Barter
+                            up
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-<div class="modal fade pg-show-modal" id="myskills" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">My Skills</h4>
-            </div>
-            <div class="modal-body">
-                <p>My skills and work!</p>
-                <a href="#" class="thumbnail">
-                    <img src="file:///D:/Programs/Pinegrow%20Web%20Designer/placeholders/img5.jpg" alt="">
-                </a>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Close</button>
+    <div class="modal fade pg-show-modal" id="myskills" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">My Skills</h4>
+                </div>
+                <div class="modal-body">
+                    <p>My skills and work!</p>
+                    <a href="#" class="thumbnail">
+                        <img src="file:///D:/Programs/Pinegrow%20Web%20Designer/placeholders/img5.jpg" alt="">
+                    </a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade pg-show-modal" id="milestones" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Mile Stones</h4>
-            </div>
-            <div class="modal-body">
-                <ul>
-                    <li>Lorem ipsum dolor sit amet</li>
-                    <li>Consectetur adipiscing elit</li>
-                    <li>Integer molestie lorem at massa</li>
-                    <li>Nulla volutpat aliquam velit
-                    </li>
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade pg-show-modal" id="barterup" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Barter Up</h4>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you wanna barter up with username? and you agree on the dead line 12-5-2016?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Close</button>
-                <button type="button" class="btn btn-danger">Barter up!</button>
+    <div class="modal fade pg-show-modal" id="milestones" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Mile Stones</h4>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>Lorem ipsum dolor sit amet</li>
+                        <li>Consectetur adipiscing elit</li>
+                        <li>Integer molestie lorem at massa</li>
+                        <li>Nulla volutpat aliquam velit
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<section id="content-1-7" class="content-1-7 content-block">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2 col-sm-4">
-                <img alt="Client Logo" src="images/partner-logos/logo-bootstrap.png">
-            </div>
-            <div class="col-md-2 col-sm-4">
-                <img alt="Client Logo" src="images/partner-logos/logo-less.png">
-            </div>
-            <div class="col-md-2 col-sm-4">
-                <img alt="Client Logo" src="images/partner-logos/logo-sass.png">
-            </div>
-            <div class="col-md-2 col-sm-4">
-                <img alt="Client Logo" src="images/partner-logos/logo-yeoman.png">
-            </div>
-            <div class="col-md-2 col-sm-4">
-                <img alt="Client Logo" src="images/partner-logos/logo-bower.png">
-            </div>
-            <div class="col-md-2 col-sm-4">
-                <img alt="Client Logo" src="images/partner-logos/logo-jquery.png">
+    <div class="modal fade pg-show-modal" id="barterup" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Barter Up</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you wanna barter up with username? and you agree on the dead line 12-5-2016?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Close</button>
+                    <button type="button" class="btn btn-danger">Barter up!</button>
+                </div>
             </div>
         </div>
-        <!--end of row-->
     </div>
-    <!-- /.container -->
-</section>
+
 </div>
