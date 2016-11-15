@@ -3,7 +3,7 @@
              style="background-image:url('images/slider/books-1163695.jpg');">
         <div class="overlay overlay-blue">
             <div class="container text-center">
-                <h1 class="page-title">{{result.get('barterTitle')}}</h1>
+                <h1 class="page-title" ng-bind="result.get('barterTitle')"></h1>
                 <div class="col-md-4 margin-top20 text-center margin-bottom20 col-xs-offset-4">
                     <i class="fa fa-{{result.get('seekCategory').get('icon')}} fa-3x offer-icon white"></i>
                     <i class="fa fa-arrows-h fa-2x offer-icon white"></i>
@@ -18,7 +18,8 @@
             <div class="col-md-3">
                 <div class="bg-white column-shadow div-inside text-center">
                     <h3 class="text-info">Barter Creator</h3>
-                    <a href=".#/profile/{{result.get('user').id}}" class="username-link">{{result.get('user').get('username')}}</a>
+                    <a href=".#/profile/{{result.get('user').id}}" class="username-link"
+                       ng-bind="result.get('user').get('username')"></a>
                     <img src="{{(result.get('user').get('pic'))?result.get('user').get('pic').url():'images/project-1.jpg'}}"
                          class="img-responsive center-block barter-creator-img"/>
                 </div>
@@ -26,8 +27,10 @@
             <div class="col-md-9">
                 <div class="bg-white column-shadow div-inside">
                     <h3 class="text-info">Short Description</h3>
-                    <p>{{result.get('barterDescription')}}</p>
-                    <h4 class="text-danger">Deadline [ Offer: {{result.get('offerDeadline')}} | Seek: {{result.get('seekDeadline')}}]</h4>
+                    <p ng-bind="result.get('barterDescription')"></p>
+                    <h4 class="text-danger"
+                        ng-bind="'Deadline [ Offer: '+result.get('offerDeadline')+' | Seek: '+result.get('seekDeadline')+']'">
+                        Deadline</h4>
                     <button type="button" class="btn btn-success btn-lg btn-block">BARTER UP</button>
                     <button type="button" class="btn btn-danger btn-sm">Report barter</button>
                 </div>

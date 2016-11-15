@@ -2,7 +2,7 @@
 <html lang="en" style="height:100%;" ng-app="BarterApp">
 <head>
     <meta charset="utf-8">
-    <title>{{title}}</title>
+    <title ng-bind="title">EnBarter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="{{keywords}}"/>
     <meta name="description" content="{{description}}"/>
@@ -44,17 +44,17 @@
         for (u = {
             catchupTime: 100,
             initialRate: .03,
-            minTime: 250,
+            minTime: 100,
             ghostTime: 100,
             maxProgressPerFrame: 20,
             easeFactor: 1.25,
             startOnPageLoad: !0,
             restartOnPushState: !0,
-            restartOnRequestAfter: 500,
+            restartOnRequestAfter: 100,
             target: "body",
             elements: {checkInterval: 100, selectors: ["body"]},
             eventLag: {minSamples: 10, sampleCount: 3, lagThreshold: 3},
-            ajax: {trackMethods: ["GET"], trackWebSockets: !0, ignoreURLs: []}
+            ajax: {trackMethods: ["GET", "POST"], trackWebSockets: !0, ignoreURLs: []}
         }, C = function () {
             var a;
             return null != (a = "undefined" != typeof performance && null !== performance && "function" == typeof performance.now ? performance.now() : void 0) ? a : +new Date
@@ -380,7 +380,8 @@
         }, "function" == typeof define && define.amd ? define(function () {
             return j
         }) : "object" == typeof exports ? module.exports = j : D.startOnPageLoad && j.start()
-    }).call(this);</script>
+    }).call(this);
+    </script>
     <style>
         .pace {
             -webkit-pointer-events: none;
