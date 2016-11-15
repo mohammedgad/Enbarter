@@ -30,9 +30,9 @@ app.run(function ($rootScope) {
 });
 
 app.controller('header', function ($scope, $location) {
-    $scope.homeLink = "http://localhost:63342/Enbarter/#/";
-    $scope.browseLink = "http://localhost:63342/Enbarter/#/browse";
-    $scope.createBarterLink = "http://localhost:63342/Enbarter/#/create_barter";
+    $scope.homeLink = ".#/";
+    $scope.browseLink = ".#/browse";
+    $scope.createBarterLink = ".#/create_barter";
 
     $scope.login = function () {
         Pace.start();
