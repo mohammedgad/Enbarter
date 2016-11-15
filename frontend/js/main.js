@@ -1,7 +1,7 @@
 var app = angular.module("BarterApp", ["ngRoute"]);
 
 Parse.initialize("myAppId");
-Parse.serverURL = 'http://env-9871847.mircloud.host/parse';
+Parse.serverURL = 'https://docker20668-env-9871847.mircloud.host/parse';
 Parse.masterKey = 'mySecretMasterKey';
 
 app.config(function ($routeProvider) {
