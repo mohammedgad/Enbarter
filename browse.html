@@ -1,0 +1,140 @@
+<div ng-controller="browseCtrl">
+    <section id="content-3-3" class="content-block-nopad content-3-3"
+             style="background-image:url('images/slider/books-1163695.jpg');">
+        <div class="overlay overlay-blue">
+            <div class="container text-center">
+                <h1 class="page-title">Browse all offers and seeks</h1>
+                <form role="form" class="form-horizontal">
+                    <div class="text-left">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label header-form-label">I Offer</label>
+                                <select class="form-control" ng-init="offerCat='-1'" ng-model="offerCat">
+                                    <option value="-1" selected>All Offers</option>
+                                    <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.get('name')}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 search-col">
+                            <div class="form-group">
+                                <label class="control-label header-form-label">I Seek</label>
+                                <select id="formInput206" class="form-control" ng-init="seekCat='-1'" ng-model="seekCat">
+                                    <option value="-1" selected>All Seeks</option>
+                                    <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.get('name')}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <label class="control-label header-form-label">Search</label>
+                        <input type="text" class="form-control" id="formInput245" placeholder="Placeholder text" ng-model="query">
+                        <button type="submit" class="btn pull-right btn-block btn-primary" ng-click="search()">Search</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.container -->
+        </div>
+    </section>
+    <div class="row page-content" ng-show="results.length">
+        <div class="col-md-8 pull-left">
+            <h1>Search Result</h1>
+            <h3>Barter up Media with Website</h3>
+        </div>
+        <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
+            <i class="fa fa-edit fa-3x deepocean offer-icon"></i>
+            <i class="fa fa-arrows-h fa-2x deepocean offer-icon"></i>
+            <i class="fa fa-photo fa-3x deepocean offer-icon"></i>
+        </div>
+    </div>
+    <div class="page-content container-fluid" ng-show="results.length">
+        <div class="row">
+            <table class="table table-hover table-condensed table-bg">
+                <thead class="table-head">
+                <tr class="table-head">
+                    <th><p class="table-head-p">PROJECT</p></th>
+                    <th><p class="table-head-p">Barters</p></th>
+                    <th><p class="table-head-p">
+                        Created By</p></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="result in results">
+                    <td>
+                        <a href="./#/barter/{{result.id}}"><h4>{{result.get('barterTitle')}}</h4></a>
+                        <p>{{result.get('barterDescription')}}</p>
+                        <i class="fa fa-{{result.get('seekCategory').get('icon')}} fa-3x deepocean offer-icon icon-table-size"></i>
+                        <i class="fa fa-arrows-h fa-2x deepocean offer-icon icon-table-size"></i>
+                        <i class="fa fa-{{result.get('offerCategory').get('icon')}} fa-3x deepocean offer-icon icon-table-size"></i>
+                    </td>
+                    <td>12</td>
+                    <td>
+                        <a href="" class="username-link">{{result.get('user').get('username')}}</a>
+                        <br/>
+                        <div>
+                        <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
+                                class="fa fa-stack-1x fa-inverse fa-tag"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-rocket"></i></span>
+                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
+                                    class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
+                        </div>
+                        <div>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                            <span class="glyphicon glyphicon-star reputation-star"></span>
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="row text-center">
+            <ul class="pagination">
+                <li>
+                    <a href="#">&laquo;</a>
+                </li>
+                <li class="active">
+                    <a href="#">1 <span class="sr-only">(current)</span></a>
+                </li>
+                <li>
+                    <a href="#">2</a>
+                </li>
+                <li>
+                    <a href="#">3</a>
+                </li>
+                <li>
+                    <a href="#">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <section id="content-1-7" class="content-1-7 content-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-bootstrap.png">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-less.png">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-sass.png">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-yeoman.png">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-bower.png">
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <img alt="Client Logo" src="images/partner-logos/logo-jquery.png">
+                </div>
+            </div>
+            <!--end of row-->
+        </div>
+        <!-- /.container -->
+    </section>
+</div>
