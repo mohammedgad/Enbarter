@@ -22,6 +22,8 @@ app.config(function ($routeProvider) {
             }
             return "create_barter.html";
         }
+    }).otherwise({
+        templateUrl: "404.html"
     });
 });
 
