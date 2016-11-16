@@ -31,11 +31,12 @@
                     <h4 class="text-danger"
                         ng-bind="'Deadline [ Offer: '+result.get('offerDeadline')+' | Seek: '+result.get('seekDeadline')+']'">
                         Deadline</h4>
-                    <button type="button" class="btn btn-success btn-lg btn-block" ng-hide="sameAccount()||bartered()"
+                    <button type="button" class="btn btn-success btn-lg btn-block" ng-hide="sameAccount()||bartered()||result.get('barterUpUser')"
                             data-target="{{isLoggedIn()?'#barterup':'#sign'}}" data-toggle="modal">BARTER UP
                     </button>
                     <button type="button" class="btn btn-info btn-lg btn-block disabled"
-                            ng-hide="sameAccount()||!bartered()">BARTERED
+                    ng-show="!sameAccount()&&(result.get('barterUpUser')||bartered())"
+                    >BARTERED
                     </button>
                     <!--TODO<button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()">Report barter</button>-->
                     <button type="button" class="btn btn-danger btn-sm" ng-show="sameAccount()" ng-click="disable()"
@@ -82,12 +83,12 @@
                         Created By</p></th>
                     <th><p class="table-head-p">Barters</p></th>
                     <th><p class="table-head-p">Deadline</p></th>
-                    <th ng-show="sameAccount()"><p class="table-head-p">Action</p></th>
+                    <th ng-show="result.get('barterUpUser')||sameAccount()"><p class="table-head-p">Action</p></th>
                     <p class="table-head-p">Deadline</p>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-show="sameAccount()&&result.get('barterUpUser')">
+                <tr ng-show="result.get('barterUpUser')">
                     <td class="text-center table-user-img">
                         <img src="images/project-1.jpg" class="img-responsive center-block barter-creator-img"/>
                     </td>
@@ -97,7 +98,9 @@
                     <td>{{result.get('barterUpDeadline')}}</td>
                     <td class="table-action">
                         <button type="button" class="btn btn-info"
-                                ng-click="showMilestones(result.get('barterUpMilestone'))">
+                                ng-click="showMilestones(result.get('barterUpMilestone'))"
+                                ng-show="sameAccount()"
+                        >
                             MileStones
                         </button>
                         <button type="button" class="btn btn-info disabled">BARTERED
