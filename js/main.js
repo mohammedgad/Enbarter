@@ -46,7 +46,7 @@ app.controller('header', function ($scope, $location) {
                 alert("Error: " + error.code + " " + error.message);
             }
         }).then(Pace.stop());
-        ;
+
     }
 
     $scope.signup = function () {
@@ -135,6 +135,7 @@ app.controller('createBarter', function ($scope) {
         var text = $scope.barterTitle + " " + $scope.barterDescription + " " + $scope.offerTitle + " " + $scope.offerDescription + " " + $scope.offerMilestone + " " + $scope.seekTitle + " " + $scope.seekDescription;
         var words = text.split(" ");
         barter.set("words", words);
+        barter.set("state", "created");
 
         Pace.start();
         barter.save(null, {
@@ -146,7 +147,7 @@ app.controller('createBarter', function ($scope) {
                 alert('Failed to create new object, with error code: ' + error.message);
             }
         }).then(Pace.stop());
-        ;
+
     }
 });
 
@@ -162,7 +163,7 @@ function getCategories(successCallback) {
             alert("Error: " + error.code + " " + error.message);
         }
     }).then(Pace.stop());
-    ;
+
 }
 app.controller('browseCtrl', function ($scope, $routeParams, $location) {
     $scope.offerCat = 'all';
@@ -203,10 +204,13 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
 
 
 app.controller('barterCtrl', function ($scope, $location, $rootScope, $routeParams) {
-    var query = new Parse.Query(Parse.Object.extend("Barter"));
+    $scope.result = null
+    var Barter = Parse.Object.extend("Barter");
+    var query = new Parse.Query(Barter);
     query.include('seekCategory');
     query.include('offerCategory');
     query.include('user');
+
     Pace.start();
     query.get($routeParams.id, {
         success: function (result) {
@@ -221,6 +225,39 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         }
     }).then(Pace.stop());
 
+    $scope.sameAccount = function () {
+        if ($scope.result && $scope.result.get('user').id == Parse.User.current().id)
+            return true;
+        return false;
+    }
+
+    $scope.disable = function () {
+        if ($scope.result) {
+            result.set("state", "disabled");
+            Pace.start();
+            result.save().then(Pace.stop()).then($scope.$apply());
+        }
+    }
+
+    $scope.barterUpRequest = function () {
+        $scope.result.add("barterRequests", {
+            deadline: $scope.deadline,
+            milestone: $scope.milestone,
+            user: Parse.User.current().id
+        });
+        Pace.start();
+        $scope.result.save().then(Pace.stop());
+    }
+
+    $scope.bartered = function () {
+        if ($scope.result) {
+            var barterRequests = $scope.result.get('barterRequests');
+            for (var i = 0; i < barterRequests.length; i++)
+                if (barterRequests[i].user == Parse.User.current().id)
+                    return true;
+        }
+        return false;
+    }
 });
 
 
