@@ -90,7 +90,7 @@ app.controller('createBarter', function ($scope) {
     });
 
     $scope.startBarter = function () {
-
+        $scope.canStartDisabled = true;
         if (!Parse.User.current()) {
             alert("Not loggedIn");
             return false;
@@ -146,7 +146,10 @@ app.controller('createBarter', function ($scope) {
             error: function (barter, error) {
                 alert('Failed to create new object, with error code: ' + error.message);
             }
-        }).then(Pace.stop());
+        }).then(Pace.stop()).then(function () {
+            $scope.canStartDisabled = false;
+            $scope.$apply();
+        });
 
     }
 });
@@ -267,10 +270,10 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
     $scope.barterUpOwner = function (request) {
         if (confirm('Are you sure you wanna barter up with this request?')) {
-            $scope.result.remove("barterRequests",request);
-            $scope.result.set("barterUpUser",Parse.User.createWithoutData(request.user));
-            $scope.result.set("barterUpMilestone",request.milestone);
-            $scope.result.set("barterUpDeadline",request.deadline);
+            $scope.result.remove("barterRequests", request);
+            $scope.result.set("barterUpUser", Parse.User.createWithoutData(request.user));
+            $scope.result.set("barterUpMilestone", request.milestone);
+            $scope.result.set("barterUpDeadline", request.deadline);
             Pace.start();
             $scope.result.save().then(Pace.stop());
         }
