@@ -22,7 +22,7 @@
                             data-toggle="modal" ng-hide="isLoggedIn()">Login /
                         Sign up
                     </button>
-                    <button id="logoutButton" class="btn btn-danger pull-right"  type="button"
+                    <button id="logoutButton" class="btn btn-danger pull-right" type="button"
                             ng-click="logout()" ng-show="isLoggedIn()">Logout
                     </button>
                     <ul class="nav navbar-nav navbar-right">
@@ -48,7 +48,7 @@
 
     <div class="modal fade pg-show-modal" id="sign" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" ng-hide="isLoggedIn()">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Login / Sign up</h4>
@@ -72,6 +72,14 @@
                     <button type="button" class="btn btn-danger" ng-click="signup()" data-dismiss="modal">Signup
                     </button>
                     <button type="button" class="btn btn-primary" ng-click="login()" data-dismiss="modal">Login</button>
+                </div>
+            </div>
+
+            <div class="modal-content" ng-show="isLoggedIn()">
+                <div class="modal-footer">
+                    <button class="btn btn-danger btn-block pull-right" type="button"
+                            ng-click="logout()" ng-show="isLoggedIn()">Logout
+                    </button>
                 </div>
             </div>
         </div>

@@ -10,6 +10,8 @@ app.config(function ($routeProvider) {
             templateUrl: "indexContent.html"
         }).when("/browse", {
         templateUrl: "browse.html"
+    }).when("/browse/:id", {
+        templateUrl: "browse.html"
     }).when("/barter/:id", {
         templateUrl: "barter.html"
     }).when("/create_barter", {
@@ -38,18 +40,13 @@ app.controller('header', function ($scope, $location) {
         Pace.start();
         Parse.User.logIn($scope.email, $scope.password, {
             success: function (user) {
-                // Do stuff after successful login.
                 $scope.$apply();
-                Pace.stop();
-
             },
             error: function (user, error) {
-                // The login failed. Check error to see why.
                 alert("Error: " + error.code + " " + error.message);
-                Pace.stop();
-
             }
-        });
+        }).then(Pace.stop());
+        ;
     }
 
     $scope.signup = function () {
@@ -61,18 +58,13 @@ app.controller('header', function ($scope, $location) {
 
         user.signUp(null, {
             success: function (user) {
-                // Hooray! Let them use the app now.
                 $scope.$apply();
-                Pace.stop();
-
             },
             error: function (user, error) {
-                // Show the error message somewhere and let the user try again.
                 alert("Error: " + error.code + " " + error.message);
-                Pace.stop();
-
             }
-        });
+        }).then(Pace.stop());
+        ;
     }
 
     $scope.logout = function () {
@@ -147,21 +139,14 @@ app.controller('createBarter', function ($scope) {
         Pace.start();
         barter.save(null, {
             success: function (barter) {
-                // Execute any logic that should take place after the object is saved.
-
                 alert('New object created with objectId: ' + barter.id);
                 window.location.href = "/Enbarter/#/barter/" + barter.id;
-                Pace.stop();
-
             },
             error: function (barter, error) {
-                // Execute any logic that should take place if the save fails.
-                // error is a Parse.Error with an error code and message.
                 alert('Failed to create new object, with error code: ' + error.message);
-                Pace.stop();
-
             }
-        });
+        }).then(Pace.stop());
+        ;
     }
 });
 
@@ -172,16 +157,16 @@ function getCategories(successCallback) {
     query.find({
         success: function (results) {
             successCallback(results);
-            Pace.stop();
         },
         error: function (error) {
             alert("Error: " + error.code + " " + error.message);
-            Pace.stop();
-
         }
-    });
+    }).then(Pace.stop());
+    ;
 }
-app.controller('browseCtrl', function ($scope) {
+app.controller('browseCtrl', function ($scope, $routeParams, $location) {
+    $scope.offerCat = 'all';
+    $scope.seekCat = 'all';
     getCategories(function (results) {
         $scope.categories = results;
         $scope.$apply();
@@ -192,26 +177,27 @@ app.controller('browseCtrl', function ($scope) {
         query.include('seekCategory');
         query.include('offerCategory');
         query.include('user');
-
-        if ($scope.seekCat != '-1')
+        if ($scope.seekCat && $scope.seekCat != 'all')
             query.equalTo("seekCategory", Category.createWithoutData($scope.seekCat));
-        if ($scope.seekCat != '-1')
+        if ($scope.offerCat && $scope.offerCat != 'all')
             query.equalTo("offerCategory", Category.createWithoutData($scope.offerCat));
         if ($scope.query)
             query.containsAll("words", $scope.query.split(" "));
         Pace.start();
         query.find({
             success: function (results) {
-                console.log(results);
                 $scope.results = results;
                 $scope.$apply();
-                Pace.stop();
             },
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
-                Pace.stop();
             }
-        });
+        }).then(Pace.stop());
+    }
+
+    if ($routeParams.id) {
+        $scope.offerCat = $routeParams.id;
+        $scope.search();
     }
 });
 
@@ -227,13 +213,23 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $scope.result = result;
             $rootScope.title = result.get("barterTitle");
             $scope.$apply();
-            Pace.stop();
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
             $location.path('/');
             $scope.$apply();
-            Pace.stop();
         }
-    });
+    }).then(Pace.stop());
+    ;
+});
+
+
+app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    $scope.catSoft = ".#/browse/gibkTa09CL";
+    $scope.catWrite = ".#/browse/Cm4O1u9w3f";
+    $scope.catMedia = ".#/browse/xVhMsj1Yne";
+    $scope.catData = ".#/browse/E1loFjtGQM";
+    $scope.catMarket = ".#/browse/JyDcu5YNE8";
+    $scope.catOther = ".#/browse/8N5ksGyQ4h";
+
 });
