@@ -111,7 +111,7 @@
         <div class="container">
             <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer offer:hover">
                 <div class="col-md-8 text-left">
-                    <a href="./barter.html"><h3 class="offer-list-item-h1">{{barter.get('barterTitle')}}</h3></a>
+                    <a href="./#/barter/{{barter.id}}"><h3 class="offer-list-item-h1">{{barter.get('barterTitle')}}</h3></a>
                     <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
                 </div>
                 <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
