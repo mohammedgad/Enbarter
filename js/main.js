@@ -210,6 +210,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     query.include('seekCategory');
     query.include('offerCategory');
     query.include('user');
+    query.include('barterRequests');
 
     Pace.start();
     query.get($routeParams.id, {
@@ -243,7 +244,8 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         $scope.result.add("barterRequests", {
             deadline: $scope.deadline,
             milestone: $scope.milestone,
-            user: Parse.User.current().id
+            user: Parse.User.current().id,
+            username: Parse.User.current().get('username')
         });
         Pace.start();
         $scope.result.save().then(Pace.stop());
@@ -257,6 +259,21 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                     return true;
         }
         return false;
+    }
+
+    $scope.showMilestones = function (milesone) {
+        alert(milesone);
+    }
+
+    $scope.barterUpOwner = function (request) {
+        if (confirm('Are you sure you wanna barter up with this request?')) {
+            $scope.result.remove("barterRequests",request);
+            $scope.result.set("barterUpUser",Parse.User.createWithoutData(request.user));
+            $scope.result.set("barterUpMilestone",request.milestone);
+            $scope.result.set("barterUpDeadline",request.deadline);
+            Pace.start();
+            $scope.result.save().then(Pace.stop());
+        }
     }
 });
 
@@ -274,7 +291,6 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
     query.include('seekCategory');
     query.include('offerCategory');
     query.include('user');
-    query.descending("objectId");
     query.limit(5);
     Pace.start();
     query.find({
