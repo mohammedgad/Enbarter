@@ -29,6 +29,11 @@ app.run(function ($rootScope) {
     $rootScope.title = 'EnBarter';
     $rootScope.description = "123";
     $rootScope.keywords = "123";
+    $rootScope.isLoggedIn = function () {
+        if (Parse.User.current())
+            return true;
+        return false;
+    }
 });
 
 app.controller('header', function ($scope, $location) {
@@ -73,12 +78,6 @@ app.controller('header', function ($scope, $location) {
             Pace.stop();
             $location.path('/');
         });
-    }
-
-    $scope.isLoggedIn = function () {
-        if (Parse.User.current())
-            return true;
-        return false;
     }
 });
 
@@ -213,7 +212,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     query.include('seekCategory');
     query.include('offerCategory');
     query.include('user');
-    query.include('barterRequests');
+    query.include('barterUpUser');
 
     Pace.start();
     query.get($routeParams.id, {
@@ -274,6 +273,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $scope.result.set("barterUpUser", Parse.User.createWithoutData(request.user));
             $scope.result.set("barterUpMilestone", request.milestone);
             $scope.result.set("barterUpDeadline", request.deadline);
+            $scope.result.set("state", "bartered");
             Pace.start();
             $scope.result.save().then(Pace.stop());
         }

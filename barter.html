@@ -32,7 +32,7 @@
                         ng-bind="'Deadline [ Offer: '+result.get('offerDeadline')+' | Seek: '+result.get('seekDeadline')+']'">
                         Deadline</h4>
                     <button type="button" class="btn btn-success btn-lg btn-block" ng-hide="sameAccount()||bartered()"
-                            data-target="#barterup" data-toggle="modal">BARTER UP
+                            data-target="{{isLoggedIn()?'#barterup':'#sign'}}" data-toggle="modal">BARTER UP
                     </button>
                     <button type="button" class="btn btn-info btn-lg btn-block disabled"
                             ng-hide="sameAccount()||!bartered()">BARTERED
