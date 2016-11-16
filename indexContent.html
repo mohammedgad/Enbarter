@@ -12,21 +12,21 @@
                 <img src="images/slider/apartments-924786.jpg" alt=""/>
                 <div class="carousel-caption">
                     <h3 class="slider-h3">sAVE TIME</h3>
-                    <p class="slider-p">Slide 1 description.</p>
+                    <p class="slider-p">________.</p>
                 </div>
             </div>
             <div class="item">
                 <img src="images/slider/books-1163695.jpg" alt=""/>
                 <div class="carousel-caption">
                     <h3 class="slider-h3">sAVE mONEY</h3>
-                    <p class="slider-p">Slide 2 description.</p>
+                    <p class="slider-p">________.</p>
                 </div>
             </div>
             <div class="item">
                 <img src="images/slider/backpack-1149462.jpg" alt=""/>
                 <div class="carousel-caption">
                     <h3 class="slider-h3">rEACH YOUR GOAL</h3>
-                    <p class="slider-p">Slide 3 description.</p>
+                    <p class="slider-p">________.</p>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
                     <div class="row">
                         <div class="col-sm-5 col-xs-12">
                             <button data-target="#sign"
-                                    data-toggle="modal" ng-hide="isLoggedIn()" class="btn btn-block btn-primary"
+                                    data-toggle="modal" class="btn btn-block btn-primary"
                                     data-loading-text="asd"><span class="fa fa-cloud-upload"></span>&nbsp; Register now
                             </button>
                         </div>
@@ -109,48 +109,15 @@
             </div>
         </div>
         <div class="container">
-            <div class="row margin-top5 margin-bottom15 text-right offer offer:hover">
+            <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer offer:hover">
                 <div class="col-md-8 text-left">
-                    <a href="./barter.html"><h3 class="offer-list-item-h1">I need a Content Writing</h3></a>
-                    <p class="offer-list-item-p">Content Writing Exchange with Profissional Flat&nbsp;Design</p>
+                    <a href="./barter.html"><h3 class="offer-list-item-h1">{{barter.get('barterTitle')}}</h3></a>
+                    <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
                 </div>
                 <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
-                    <i class="fa fa-edit fa-3x deepocean offer-icon"></i>
+                    <i class="fa fa-{{barter.get('seekCategory').get('icon')}} fa-3x deepocean offer-icon"></i>
                     <i class="fa fa-arrows-h fa-2x deepocean offer-icon"></i>
-                    <i class="fa fa-photo fa-3x deepocean offer-icon"></i>
-                </div>
-            </div>
-            <div class="row margin-top5 margin-bottom15 text-right offer offer:hover">
-                <div class="col-md-8 text-left">
-                    <a href="./barter.html"><h3 class="offer-list-item-h1">I need a profissional Website</h3></a>
-                    <p class="offer-list-item-p">Website Exchange with Video</p>
-                </div>
-                <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
-                    <i class="fa fa-3x deepocean offer-icon fa-chrome"></i>
-                    <i class="fa fa-arrows-h fa-2x deepocean offer-icon"></i>
-                    <i class="fa fa-3x deepocean offer-icon fa-video-camera"></i>
-                </div>
-            </div>
-            <div class="row margin-top5 margin-bottom15 text-right offer offer:hover">
-                <div class="col-md-8 text-left">
-                    <a href="./barter.html"><h3 class="offer-list-item-h1">I need a profissional Software</h3></a>
-                    <p class="offer-list-item-p">Software Exchange with Marketing Service</p>
-                </div>
-                <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
-                    <i class="fa fa-3x deepocean offer-icon fa-file-code-o"></i>
-                    <i class="fa fa-arrows-h fa-2x deepocean offer-icon"></i>
-                    <i class="fa fa-3x deepocean offer-icon fa-line-chart"></i>
-                </div>
-            </div>
-            <div class="row margin-top5 margin-bottom15 text-right offer offer:hover">
-                <div class="col-md-8 text-left">
-                    <a href="./barter.html"><h3 class="offer-list-item-h1">I need a profissional Video</h3></a>
-                    <p class="offer-list-item-p">Video &nbsp;Exchange with Profissional Flat&nbsp;Design</p>
-                </div>
-                <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
-                    <i class="fa fa-3x deepocean offer-icon fa-video-camera"></i>
-                    <i class="fa fa-arrows-h fa-2x deepocean offer-icon"></i>
-                    <i class="fa fa-photo fa-3x deepocean offer-icon"></i>
+                    <i class="fa fa-{{barter.get('offerCategory').get('icon')}} fa-3x deepocean offer-icon"></i>
                 </div>
             </div>
         </div>
@@ -163,7 +130,9 @@
                 <h1>start&nbsp;Bartering</h1>
                 <div class="col-md-6 col-md-offset-3 text-center">
                     <div class="col-md-6">
-                        <a href="#" class="btn btn-block btn-outline btn-outline-lg outline-light">Register now!</a>
+                        <a data-target="#sign"
+                           data-toggle="modal" class="btn btn-block btn-outline btn-outline-lg outline-light">Register
+                            now!</a>
                     </div>
                     <div class="col-md-6">
                         <a href="#" class="btn btn-block btn-outline btn-outline-lg outline-light">Find out more</a>

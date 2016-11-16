@@ -220,7 +220,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $scope.$apply();
         }
     }).then(Pace.stop());
-    ;
+
 });
 
 
@@ -231,5 +231,23 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
     $scope.catData = ".#/browse/E1loFjtGQM";
     $scope.catMarket = ".#/browse/JyDcu5YNE8";
     $scope.catOther = ".#/browse/8N5ksGyQ4h";
+
+
+    var query = new Parse.Query(Parse.Object.extend("Barter"));
+    query.include('seekCategory');
+    query.include('offerCategory');
+    query.include('user');
+    query.descending("objectId");
+    query.limit(5);
+    Pace.start();
+    query.find({
+        success: function (results) {
+            $scope.barters = results;
+            $scope.$apply();
+        },
+        error: function (error) {
+            alert("Error: " + error.code + " " + error.message);
+        }
+    }).then(Pace.stop());
 
 });
