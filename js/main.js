@@ -54,7 +54,7 @@ app.controller('header', function ($scope, $location) {
         Pace.start();
         Parse.User.logIn($scope.email, $scope.password, {
             success: function (user) {
-                $scope.$apply();
+                location.reload();
             },
             error: function (user, error) {
                 alert("Error: " + error.code + " " + error.message);
@@ -72,7 +72,7 @@ app.controller('header', function ($scope, $location) {
 
         user.signUp(null, {
             success: function (user) {
-                $scope.$apply();
+                location.reload();
             },
             error: function (user, error) {
                 alert("Error: " + error.code + " " + error.message);
