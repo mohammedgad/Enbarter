@@ -110,7 +110,7 @@ app.controller('createBarter', function ($scope) {
 
         barter.set("barterTitle", $scope.barterTitle);
         barter.set("barterDescription", $scope.barterDescription);
-        barter.set("offerCategory", Category.createWithoutData($scope.offerCategory));
+        barter.set("offerCategory", $scope.categories[$scope.offerCategory]);
         barter.set("offerTitle", $scope.offerTitle);
         barter.set("offerDescription", $scope.offerDescription);
         barter.set("offerMilestone", $scope.offerMilestone);
@@ -125,7 +125,7 @@ app.controller('createBarter', function ($scope) {
             barter.set("offerSampleImage", parseFile);
         }
         barter.set("offerDeadline", $scope.offerDeadline);
-        barter.set("seekCategory", Category.createWithoutData($scope.seekCategory));
+        barter.set("seekCategory", $scope.categories[$scope.seekCategory]);
         barter.set("seekTitle", $scope.seekTitle);
         barter.set("seekDescription", $scope.seekDescription);
         barter.set("seekSampleLink", $scope.seekSampleLink);
@@ -305,6 +305,7 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
     query.include('seekCategory');
     query.include('offerCategory');
     query.include('user');
+    query.descending("createdAt");
     query.limit(5);
     Pace.start();
     query.find({
