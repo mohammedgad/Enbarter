@@ -78,14 +78,14 @@ app.controller('header', function ($scope, $location) {
                 alert("Error: " + error.code + " " + error.message);
             }
         }).then(Pace.stop());
-        ;
     }
 
     $scope.logout = function () {
         Pace.start();
         Parse.User.logOut().then(function () {
             Pace.stop();
-            $location.path('/');
+            location.href = ".#/";
+            location.reload();
         });
     }
 });

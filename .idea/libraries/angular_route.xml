@@ -1,5 +1,14 @@
 <component name="libraryTable">
   <library name="angular-route" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/js/angular-route.js" />
+        <item url="file://$PROJECT_DIR$/js/bootstrap.js" />
+        <item url="file://$PROJECT_DIR$/js/bskit-scripts.js" />
+        <item url="file://$PROJECT_DIR$/js/main.js" />
+        <item url="file://$PROJECT_DIR$/js/plugins.js" />
+      </sourceFilesUrls>
+    </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/js/angular.min.js" />
       <root url="file://$PROJECT_DIR$/js/bootstrap.min.js" />
