@@ -9,8 +9,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label header-form-label">I Offer</label>
-                                <select class="form-control" ng-init="offerCat='-1'" ng-model="offerCat">
-                                    <option value="-1" selected>All Offers</option>
+                                <select class="form-control" ng-model="offerCat">
+                                    <option value="all" selected>All Offers</option>
                                     <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.get('name')}}
                                     </option>
                                 </select>
@@ -19,9 +19,9 @@
                         <div class="col-md-6 search-col">
                             <div class="form-group">
                                 <label class="control-label header-form-label">I Seek</label>
-                                <select id="formInput206" class="form-control" ng-init="seekCat='-1'"
+                                <select id="formInput206" class="form-control"
                                         ng-model="seekCat">
-                                    <option value="-1" selected>All Seeks</option>
+                                    <option value="all" selected>All Seeks</option>
                                     <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.get('name')}}
                                     </option>
                                 </select>

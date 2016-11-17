@@ -31,8 +31,22 @@
                     <h4 class="text-danger"
                         ng-bind="'Deadline [ Offer: '+result.get('offerDeadline')+' | Seek: '+result.get('seekDeadline')+']'">
                         Deadline</h4>
-                    <button type="button" class="btn btn-success btn-lg btn-block">BARTER UP</button>
-                    <button type="button" class="btn btn-danger btn-sm">Report barter</button>
+                    <button type="button" class="btn btn-success btn-lg btn-block"
+                            ng-hide="sameAccount()||bartered()||result.get('barterUpUser')"
+                            data-target="{{isLoggedIn()?'#barterup':'#sign'}}" data-toggle="modal">BARTER UP
+                    </button>
+                    <button type="button" class="btn btn-info btn-lg btn-block disabled"
+                            ng-show="!sameAccount()&&(result.get('barterUpUser')||bartered())"
+                    >BARTERED
+                    </button>
+                    <!--TODO<button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()">Report barter</button>-->
+                    <button type="button" class="btn btn-danger btn-sm" ng-show="sameAccount()" ng-click="disable()"
+                            ng-hide="!sameAccount()||result.get('state')=='disabled'">Disable
+                    </button>
+                    <a href=".#/dashboard/barter/{{result.id}}" class="btn btn-primary btn-sm"
+                       ng-show="sameAccount()||result.get('barterUpUser').id==userId"
+                    >Dashboard
+                    </a>
                 </div>
                 <td class="clearfix"></td>
             </div>
@@ -73,141 +87,44 @@
                         Created By</p></th>
                     <th><p class="table-head-p">Barters</p></th>
                     <th><p class="table-head-p">Deadline</p></th>
-                    <th><p class="table-head-p">Action</p></th>
+                    <th ng-show="result.get('barterUpUser')||sameAccount()"><p class="table-head-p">Action</p></th>
                     <p class="table-head-p">Deadline</p>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr ng-show="result.get('barterUpUser')">
                     <td class="text-center table-user-img">
                         <img src="images/project-1.jpg" class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
-                        <a href="" class="username-link">SomeOne</a>
-                        <div>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                        </div>
-                        <div>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-trophy fa-inverse"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-underline"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-picture-o"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-list"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-flag"></i></span>
-                        </div>
-                        <div>
-                        <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-tag"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-rocket"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
-                        </div>
+                        <a href=".#/profile/{{result.get('barterUpUser').id}}" class="username-link">{{result.get('barterUpUser').get('username')}}</a>
                     </td>
-                    <td>12-5-2016</td>
+                    <td>{{result.get('barterUpDeadline')}}</td>
                     <td class="table-action">
-                        <button type="button" class="btn btn-success" data-target="#myskills" data-toggle="modal">My
-                            Skills
-                        </button>
-                        <button type="button" class="btn btn-info" data-target="#milestones" data-toggle="modal">
+                        <button type="button" class="btn btn-info"
+                                ng-click="showMilestones(result.get('barterUpMilestone'))"
+                                ng-show="sameAccount()"
+                        >
                             MileStones
                         </button>
-                        <button type="button" class="btn btn-danger" data-target="#barterup" data-toggle="modal">Barter
-                            up
+                        <button type="button" class="btn btn-info disabled">BARTERED
                         </button>
                     </td>
                 </tr>
-                <tr>
+
+                <tr ng-repeat="request in result.get('barterRequests')">
                     <td class="text-center table-user-img">
-                        <img src="images/project-2.jpg" class="img-responsive center-block barter-creator-img"/>
+                        <img src="images/project-1.jpg" class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
-                        <a href="" class="username-link">The Guy</a>
-                        <div>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                        </div>
-                        <div>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-trophy"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-picture-o"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-list"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-flag"></i></span>
-                        </div>
-                        <div>
-                        <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-tag"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
-                        </div>
+                        <a href=".#/profile/{{request.user}}" class="username-link">{{request.username}}</a>
                     </td>
-                    <td>15-5-2016</td>
-                    <td class="table-action">
-                        <button type="button" class="btn btn-success" data-target="#myskills" data-toggle="modal">My
-                            Skills
-                        </button>
-                        <button type="button" class="btn btn-info" data-target="#milestones" data-toggle="modal">
+                    <td>{{request.deadline}}</td>
+                    <td class="table-action" ng-show="sameAccount()&&!result.get('barterUpUser')">
+                        <button type="button" class="btn btn-info" ng-click="showMilestones(request.milestone)">
                             MileStones
                         </button>
-                        <button type="button" class="btn btn-danger" data-target="#barterup" data-toggle="modal">Barter
-                            up
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center table-user-img">
-                        <img src="images/project-3.jpg" class="img-responsive center-block barter-creator-img"/>
-                    </td>
-                    <td>
-                        <a href="" class="username-link">Galal</a>
-                        <div>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                            <span class="glyphicon glyphicon-star reputation-star"></span>
-                        </div>
-                        <div>
-                        <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-trophy"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-underline"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-picture-o"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-list"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-stack-2x fa-stop"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-flag"></i></span>
-                        </div>
-                        <div>
-                        <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                class="fa fa-stack-1x fa-inverse fa-tag"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-rocket"></i></span>
-                            <span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i
-                                    class="fa fa-stack-1x fa-inverse fa-bolt"></i></span>
-                        </div>
-                    </td>
-                    <td>6-5-2016</td>
-                    <td class="table-action">
-                        <button type="button" class="btn btn-success" data-target="#myskills" data-toggle="modal">My
-                            Skills
-                        </button>
-                        <button type="button" class="btn btn-info" data-target="#milestones" data-toggle="modal">
-                            MileStones
-                        </button>
-                        <button type="button" class="btn btn-danger" data-target="#barterup" data-toggle="modal">Barter
+                        <button type="button" class="btn btn-danger" ng-click="barterUpOwner(request)">Barter
                             up
                         </button>
                     </td>
@@ -216,47 +133,7 @@
             </table>
         </div>
     </div>
-    <div class="modal fade pg-show-modal" id="myskills" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">My Skills</h4>
-                </div>
-                <div class="modal-body">
-                    <p>My skills and work!</p>
-                    <a href="#" class="thumbnail">
-                        <img src="file:///D:/Programs/Pinegrow%20Web%20Designer/placeholders/img5.jpg" alt="">
-                    </a>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade pg-show-modal" id="milestones" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Mile Stones</h4>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet</li>
-                        <li>Consectetur adipiscing elit</li>
-                        <li>Integer molestie lorem at massa</li>
-                        <li>Nulla volutpat aliquam velit
-                        </li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="modal fade pg-show-modal" id="barterup" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -265,11 +142,30 @@
                     <h4 class="modal-title">Barter Up</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you wanna barter up with username? and you agree on the dead line 12-5-2016?</p>
+                    <div class="form-group">
+                        <label class="control-label" for="formInput1954">Deadline (the time you sayy you gonna produce
+                            your
+                            offer
+                            )
+                        </label>
+                        <input type="number" class="form-control" id="formInput1954"
+                               ng-model="deadline">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="formInput256">What are your milestones to create what you
+                            offer?
+                            (what
+                            are the steps you will follow to build your offer) separate between every milestone with a
+                            comma
+                        </label>
+                        <textarea class="form-control" rows="3" id="formInput256" ng-model="milestone"></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Close</button>
-                    <button type="button" class="btn btn-danger">Barter up!</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" ng-click="barterUpRequest()" data-dismiss="modal">
+                        Barter up!
+                    </button>
                 </div>
             </div>
         </div>
