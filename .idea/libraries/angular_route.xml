@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="angular-route" type="javaScript">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/js/angular.min.js" />
+      <root url="file://$PROJECT_DIR$/js/bootstrap.min.js" />
+      <root url="file://$PROJECT_DIR$/js/html5shiv.js" />
+      <root url="file://$PROJECT_DIR$/js/jquery-1.11.1.min.js" />
+      <root url="file://$PROJECT_DIR$/js/parse.min.js" />
+      <root url="file://$PROJECT_DIR$/js/respond.min.js" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/js/angular-route.js" />
+      <root url="file://$PROJECT_DIR$/js/bootstrap.js" />
+      <root url="file://$PROJECT_DIR$/js/bskit-scripts.js" />
+      <root url="file://$PROJECT_DIR$/js/main.js" />
+      <root url="file://$PROJECT_DIR$/js/plugins.js" />
+    </SOURCES>
+  </library>
+</component>

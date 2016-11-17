@@ -1,0 +1,32 @@
+<div ng-controller="barterDashboardCtrl">
+    <div class="container">
+        <h1 class="text-center" ng-bind="result.get('barterTitle')"></h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Offer Milestones</h3>
+                <div class="well">
+                    <p ng-bind="result.get('offerMilestone')"></p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h3>Seek Milestones</h3>
+                <div class="well">
+                    <p ng-bind="result.get('barterUpMilestone')"></p>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom20 margin-top20">
+            <div class="col-md-12 offwhite">
+                <div class="chatbox well">
+                    <p ng-repeat="m in messages"><span
+                            class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</span>
+                        {{m.get('message')}}</p>
+                </div>
+                <form role="form">
+                    <input type="text" class="form-control" ng-model="message" placeholder="Enter message">
+                    <button ng-click="sendMessage()" class="btn btn-block btn-info">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

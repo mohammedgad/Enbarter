@@ -22,6 +22,8 @@ app.config(function ($routeProvider) {
             }
             return "create_barter.html";
         }
+    }).when("/dashboard/barter/:id", {
+        templateUrl: "barterDashboard.html"
     }).otherwise({
         templateUrl: "404.html"
     });
@@ -308,4 +310,71 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
         }
     }).then(Pace.stop());
 
+});
+
+app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    $scope.result = null;
+    $scope.messages = [];
+    $scope.userId = Parse.User.current().id;
+
+    var Barter = Parse.Object.extend("Barter");
+    var Chat = Parse.Object.extend("Chat");
+
+    $scope.reloadChat = function () {
+        var query = new Parse.Query(Chat);
+        query.include("user");
+        query.equalTo("barter", $scope.result);
+        Pace.start();
+        query.find({
+            success: function (results) {
+                $scope.messages = results;
+                $scope.$apply();
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        }).then(Pace.stop());
+    }
+
+    var query = new Parse.Query(Barter);
+    query.include('seekCategory');
+    query.include('offerCategory');
+    query.include('user');
+    query.include('barterUpUser');
+
+
+    Pace.start();
+    query.get($routeParams.id, {
+        success: function (result) {
+            $scope.result = result;
+            $rootScope.title = result.get("barterTitle");
+            $scope.$apply();
+            $scope.reloadChat();
+
+            // var subscription = query.subscribe();
+            // subscription.on('create', function (object) {
+            //     $scope.messages.push(object);
+            //     $scope.$apply();
+            // });
+        },
+        error: function (object, error) {
+            alert("Error: " + error.code + " " + error.message);
+            $location.path('/');
+            $scope.$apply();
+        }
+    }).then(Pace.stop());
+
+    $scope.sendMessage = function () {
+        var chat = new Chat();
+        chat.set("message", $scope.message);
+        chat.set("user", Parse.User.current());
+        chat.set("barter", $scope.result);
+        Pace.start();
+        chat.save().then(Pace.stop()).then($scope.reloadChat());
+        $scope.message = "";
+    }
+
+    window.setInterval(function () {
+        $scope.reloadChat();
+    }, 3000);
 });
