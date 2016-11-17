@@ -210,7 +210,8 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
 
 
 app.controller('barterCtrl', function ($scope, $location, $rootScope, $routeParams) {
-    $scope.result = null
+    $scope.result = null;
+    $scope.userId = Parse.User.current().id;
     var Barter = Parse.Object.extend("Barter");
     var query = new Parse.Query(Barter);
     query.include('seekCategory');

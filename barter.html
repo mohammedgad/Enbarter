@@ -31,18 +31,22 @@
                     <h4 class="text-danger"
                         ng-bind="'Deadline [ Offer: '+result.get('offerDeadline')+' | Seek: '+result.get('seekDeadline')+']'">
                         Deadline</h4>
-                    <button type="button" class="btn btn-success btn-lg btn-block" ng-hide="sameAccount()||bartered()||result.get('barterUpUser')"
+                    <button type="button" class="btn btn-success btn-lg btn-block"
+                            ng-hide="sameAccount()||bartered()||result.get('barterUpUser')"
                             data-target="{{isLoggedIn()?'#barterup':'#sign'}}" data-toggle="modal">BARTER UP
                     </button>
                     <button type="button" class="btn btn-info btn-lg btn-block disabled"
-                    ng-show="!sameAccount()&&(result.get('barterUpUser')||bartered())"
+                            ng-show="!sameAccount()&&(result.get('barterUpUser')||bartered())"
                     >BARTERED
                     </button>
                     <!--TODO<button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()">Report barter</button>-->
                     <button type="button" class="btn btn-danger btn-sm" ng-show="sameAccount()" ng-click="disable()"
                             ng-hide="!sameAccount()||result.get('state')=='disabled'">Disable
                     </button>
-
+                    <a href=".#/dashboard/barter/{{result.id}}" class="btn btn-primary btn-sm"
+                       ng-show="sameAccount()||result.get('barterUpUser').id==userId"
+                    >Dashboard
+                    </a>
                 </div>
                 <td class="clearfix"></td>
             </div>
