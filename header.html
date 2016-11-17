@@ -32,8 +32,11 @@
                         <li class="nav-item">
                             <a href="{{browseLink}}" class="deepocean">browse</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" ng-show="isLoggedIn()">
                             <a href="{{createBarterLink}}" class="deepocean">Create Barter</a>
+                        </li>
+                        <li class="nav-item" ng-show="isLoggedIn()">
+                            <a href=".#/profile/{{userId}}" class="deepocean">Profile</a>
                         </li>
                         <!--//dropdown-->
                     </ul>

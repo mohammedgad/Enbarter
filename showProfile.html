@@ -1,0 +1,22 @@
+<div ng-controller="showProfileCtrl">
+    <div class="well ">
+        <h1 class="text-center">Email: {{result.get('email')}}</h1>
+        <h1 class="text-center">Username: {{result.get('username')}}</h1>
+        <br>
+        <h1 class="text-center">Barters</h1>
+        <br>
+        <ul class="text-center">
+            <li ng-repeat="b in barters">
+                <a href="./#/barter/{{b.id}}">{{b.get('barterTitle')}}</a>
+            </li>
+        </ul>
+
+        <h1 class="text-center">Barters Request</h1>
+        <br>
+        <ul class="text-center">
+            <li ng-repeat="b in result.get('barterSeeks')">
+                <a href="./#/barter/{{b.id}}">{{b.get('barterTitle')}}</a>
+            </li>
+        </ul>
+    </div>
+</div>

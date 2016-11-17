@@ -24,6 +24,8 @@ app.config(function ($routeProvider) {
         }
     }).when("/dashboard/barter/:id", {
         templateUrl: "barterDashboard.html"
+    }).when("/profile/:id", {
+        templateUrl: "showProfile.html"
     }).otherwise({
         templateUrl: "404.html"
     });
@@ -38,6 +40,9 @@ app.run(function ($rootScope) {
             return true;
         return false;
     }
+    if (Parse.User.current())
+        $rootScope.userId = Parse.User.current().id;
+
 });
 
 app.controller('header', function ($scope, $location) {
@@ -211,7 +216,6 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
 
 app.controller('barterCtrl', function ($scope, $location, $rootScope, $routeParams) {
     $scope.result = null;
-    $scope.userId = Parse.User.current().id;
     var Barter = Parse.Object.extend("Barter");
     var query = new Parse.Query(Barter);
     query.include('seekCategory');
@@ -254,8 +258,10 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             user: Parse.User.current().id,
             username: Parse.User.current().get('username')
         });
+        var user = Parse.User.current();
+        user.addUnique("barterSeeks", $scope.result);
         Pace.start();
-        $scope.result.save().then(Pace.stop());
+        user.save().then($scope.result.save().then(Pace.stop()));
     }
 
     $scope.bartered = function () {
@@ -316,7 +322,6 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
 app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $routeParams) {
     $scope.result = null;
     $scope.messages = [];
-    $scope.userId = Parse.User.current().id;
 
     var Barter = Parse.Object.extend("Barter");
     var Chat = Parse.Object.extend("Chat");
@@ -348,7 +353,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     query.get($routeParams.id, {
         success: function (result) {
             $scope.result = result;
-            $rootScope.title = result.get("barterTitle");
+            $rootScope.title = result.get("Dashboard");
             $scope.$apply();
             $scope.reloadChat();
 
@@ -378,4 +383,35 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     window.setInterval(function () {
         $scope.reloadChat();
     }, 3000);
+});
+
+
+app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    $scope.result = null;
+    var query = new Parse.Query(Parse.User);
+    query.include("barterSeeks");
+    Pace.start();
+    query.get($routeParams.id, {
+        success: function (result) {
+            $scope.result = result;
+            $rootScope.title = result.get(result.get('username'));
+            $scope.$apply();
+        },
+        error: function (object, error) {
+            alert("Error: " + error.code + " " + error.message);
+            $location.path('/');
+            $scope.$apply();
+        }
+    }).then(Pace.stop());
+
+
+    var Barter = Parse.Object.extend("Barter");
+    var barterQuery = new Parse.Query(Barter);
+    barterQuery.equalTo("user", Parse.User.current());
+    barterQuery.find({
+        success: function (results) {
+            $scope.barters = results;
+            $scope.$apply();
+        }
+    });
 });
