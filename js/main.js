@@ -25,7 +25,7 @@ app.config(function ($routeProvider) {
     }).when("/dashboard/barter/:id", {
         templateUrl: "barterDashboard.html"
     }).when("/profile/:id", {
-        templateUrl: "showProfile.html"
+        templateUrl: "viewProfile.html"
     }).otherwise({
         templateUrl: "404.html"
     });
