@@ -40,7 +40,7 @@
                     >BARTERED
                     </button>
                     <!--TODO<button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()">Report barter</button>-->
-                    <button type="button" class="btn btn-danger btn-sm"  ng-click="disable()"
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="disable()"
                             ng-hide="!sameAccount()||result.get('state')=='disabled'||result.get('state')=='bartered'">
                         Disable
                     </button>
@@ -57,26 +57,32 @@
                 <div class="column-shadow div-inside bg-deepocean white">
                     <h3>I Offer</h3>
                     <p class="white">{{result.get('offerDescription')}}</p>
-                    <h3>Sample</h3>
-                    <a href="#" class="thumbnail">
-                        <img src="{{result.get('offerSampleImage').url()}}" alt="">
-                    </a>
-                    <h3>Sample Links</h3>
-                    <a class="white" href="{{result.get('offerSampleLink')}}">{{result.get('offerSampleLink')}}</a>
-
+                    <div ng-if="result.get('offerSampleImage')">
+                        <h3>Sample</h3>
+                        <a href="{{result.get('offerSampleImage').url()}}" class="thumbnail">
+                            <img ng-src="{{result.get('offerSampleImage').url()}}" alt="">
+                        </a>
+                    </div>
+                    <div ng-if="result.get('offerSampleLink')">
+                        <h3>Sample Links</h3>
+                        <a class="white" href="{{result.get('offerSampleLink')}}">{{result.get('offerSampleLink')}}</a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 text-primary">
                 <div class="column-shadow div-inside bg-white">
                     <h3>I Seek</h3>
                     <p class="deepocean">{{result.get('seekDescription')}}</p>
-                    <h3>Sample</h3>
-                    <a href="#" class="thumbnail">
-                        <img src="{{result.get('seekSampleImage').url()}}" alt="">
-                    </a>
-                    <h3>Sample Links</h3>
-                    <a href="{{result.get('seekSampleLink')}}">{{result.get('seekSampleLink')}}</a>
-
+                    <div ng-if="result.get('seekSampleImage')">
+                        <h3>Sample</h3>
+                        <a href="{{result.get('seekSampleImage').url()}}" class="thumbnail">
+                            <img ng-src="{{result.get('seekSampleImage').url()}}" alt="">
+                        </a>
+                    </div>
+                    <div ng-if="result.get('seekSampleLink')">
+                        <h3>Sample Links</h3>
+                        <a href="{{result.get('seekSampleLink')}}">{{result.get('seekSampleLink')}}</a>
+                    </div>
                 </div>
             </div>
         </div>
