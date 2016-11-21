@@ -353,8 +353,14 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     Pace.start();
     query.get($routeParams.id, {
         success: function (result) {
+            if (!Parse.User.current() || Parse.User.current().id != result.get('user').id || Parse.User.current().id != result.get('barterUpUser').id) {
+                alert("Error: Not allowed");
+                $location.path('/');
+                $scope.$apply();
+                return;
+            }
             $scope.result = result;
-            $rootScope.title = result.get("Dashboard");
+            $rootScope.title = "Dashboard";
             $scope.$apply();
             $scope.reloadChat();
 
