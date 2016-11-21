@@ -24,7 +24,11 @@ app.config(function ($routeProvider) {
         }
     }).when("/dashboard/barter/:id", {
         templateUrl: "barterDashboard.html"
+    }).when("/profile/edit", {
+        templateUrl: "editProfile.html"
     }).when("/profile/:id", {
+        templateUrl: "viewProfile.html"
+    }).when("/profile", {
         templateUrl: "viewProfile.html"
     }).otherwise({
         templateUrl: "404.html"
@@ -42,6 +46,12 @@ app.run(function ($rootScope) {
     }
     if (Parse.User.current())
         $rootScope.userId = Parse.User.current().id;
+
+    $rootScope.addItemTo = function (list, item) {
+        if (list.indexOf(item) == -1)
+            list.push(item);
+        return item = '';
+    }
 
 });
 
@@ -413,10 +423,10 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
     var query = new Parse.Query(Parse.User);
     query.include("barterSeeks");
     Pace.start();
-    query.get($routeParams.id, {
+    query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
         success: function (result) {
             $scope.result = result;
-            $rootScope.title = result.get(result.get('username'));
+            $rootScope.title = "Profile: " + result.get('username');
             $scope.$apply();
 
             console.log(result);
@@ -438,4 +448,46 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
             $scope.$apply();
         }
     });
+});
+
+app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    $scope.result = null;
+    var query = new Parse.Query(Parse.User);
+    Pace.start();
+    query.get(Parse.User.current() ? Parse.User.current().id : null, {
+        success: function (result) {
+            $scope.result = result;
+            $scope.username = result.get('username');
+            $scope.bio = result.get('bio');
+            $scope.birthday = result.get('birthday');
+            $scope.skills = result.get('skills') ? result.get('skills') : [];
+            $scope.workLinks = result.get('workLinks') ? result.get('workLinks') : [];
+            $rootScope.title = "Edit: " + result.get('username');
+            $scope.$apply();
+
+            console.log(result);
+        },
+        error: function (object, error) {
+            alert("Error: " + error.code + " " + error.message);
+            $location.path('/');
+            $scope.$apply();
+        }
+    }).then(Pace.stop());
+
+    $scope.submit = function () {
+        $scope.result.set("username", $scope.username);
+        $scope.result.set("bio", $scope.bio);
+        $scope.result.set("birthday", $scope.birthday);
+        $scope.result.set("skills", $scope.skills);
+        $scope.result.set("workLinks", $scope.workLinks);
+        fileUploadControl = $("#exampleInputFile1")[0];
+        if (fileUploadControl.files.length > 0) {
+            var file = fileUploadControl.files[0];
+            var name = "photo1.jpg";
+            var parseFile = new Parse.File(name, file);
+            $scope.result.set("pic", parseFile);
+        }
+        Pace.start();
+        $scope.result.save(null).then(location.reload());
+    }
 });
