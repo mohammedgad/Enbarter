@@ -40,8 +40,9 @@
                     >BARTERED
                     </button>
                     <!--TODO<button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()">Report barter</button>-->
-                    <button type="button" class="btn btn-danger btn-sm" ng-show="sameAccount()" ng-click="disable()"
-                            ng-hide="!sameAccount()||result.get('state')=='disabled'">Disable
+                    <button type="button" class="btn btn-danger btn-sm"  ng-click="disable()"
+                            ng-hide="!sameAccount()||result.get('state')=='disabled'||result.get('state')=='bartered'">
+                        Disable
                     </button>
                     <a href=".#/dashboard/barter/{{result.id}}" class="btn btn-primary btn-sm"
                        ng-show="sameAccount()||result.get('barterUpUser').id==userId"

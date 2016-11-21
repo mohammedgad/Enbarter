@@ -229,6 +229,8 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $scope.result = result;
             $rootScope.title = result.get("barterTitle");
             $scope.$apply();
+
+            console.log(result);
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
@@ -363,6 +365,9 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             //     $scope.messages.push(object);
             //     $scope.$apply();
             // });
+
+            console.log(result);
+
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
@@ -397,6 +402,8 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
             $scope.result = result;
             $rootScope.title = result.get(result.get('username'));
             $scope.$apply();
+
+            console.log(result);
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
