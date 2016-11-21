@@ -111,7 +111,6 @@ app.controller('createBarter', function ($scope) {
         barter.set("barterTitle", $scope.barterTitle);
         barter.set("barterDescription", $scope.barterDescription);
         barter.set("offerCategory", $scope.categories[$scope.offerCategory]);
-        barter.set("offerTitle", $scope.offerTitle);
         barter.set("offerDescription", $scope.offerDescription);
         barter.set("offerMilestone", $scope.offerMilestone);
         barter.set("offerSampleLink", $scope.offerSampleLink);
@@ -126,7 +125,6 @@ app.controller('createBarter', function ($scope) {
         }
         barter.set("offerDeadline", $scope.offerDeadline);
         barter.set("seekCategory", $scope.categories[$scope.seekCategory]);
-        barter.set("seekTitle", $scope.seekTitle);
         barter.set("seekDescription", $scope.seekDescription);
         barter.set("seekSampleLink", $scope.seekSampleLink);
         // upload
@@ -140,7 +138,7 @@ app.controller('createBarter', function ($scope) {
         }
         barter.set("seekDeadline", $scope.seekDeadline);
         barter.set("user", Parse.User.current());
-        var text = $scope.barterTitle + " " + $scope.barterDescription + " " + $scope.offerTitle + " " + $scope.offerDescription + " " + $scope.offerMilestone + " " + $scope.seekTitle + " " + $scope.seekDescription;
+        var text = $scope.barterTitle + " " + $scope.barterDescription + " " + $scope.offerDescription + " " + $scope.offerMilestone + " " + $scope.seekDescription;
         var words = text.split(" ");
         barter.set("words", words);
         barter.set("state", "created");
