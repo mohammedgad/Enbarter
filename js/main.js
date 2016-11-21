@@ -304,7 +304,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         if (confirm('Are you sure you wanna barter up with this request?')) {
             $scope.result.remove("barterRequests", request);
             $scope.result.set("barterUpUser", Parse.User.createWithoutData(request.user));
-            $scope.result.set("barterUpMilestone", request.milestone);
+            $scope.result.set("barterUpMilestones", request.milestone);
             $scope.result.set("barterUpDeadline", request.deadline);
             $scope.result.set("state", "bartered");
             Pace.start();
@@ -355,7 +355,7 @@ var chatIntervalId;
 app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $routeParams) {
     $scope.result = null;
     $scope.messages = [];
-
+    $scope.offerMilestones = [];
     var Barter = Parse.Object.extend("Barter");
     var Chat = Parse.Object.extend("Chat");
 
@@ -393,6 +393,9 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             }
             $scope.result = result;
             $rootScope.title = "Dashboard";
+            $scope.offerMilestones = JSON.parse(JSON.stringify(result.get('offerMilestones')));
+            $scope.barterUpMilestones = JSON.parse(JSON.stringify(result.get('barterUpMilestones')));
+
             $scope.$apply();
             $scope.reloadChat();
 
@@ -425,6 +428,20 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         Pace.start();
         chat.save().then(Pace.stop()).then($scope.reloadChat());
         $scope.message = "";
+    }
+
+    $scope.check = function (o, column) {
+        var arr = $scope.result.get(column);
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].task == o.task) {
+                arr[i].checked = true;
+                arr[i].date = new Date();
+            }
+        }
+        $scope.result.set(column, arr);
+        $scope[column] = JSON.parse(JSON.stringify(arr));
+        Pace.start();
+        $scope.result.save().then(Pace.stop());
     }
 
 });

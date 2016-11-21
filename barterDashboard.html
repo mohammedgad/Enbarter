@@ -8,7 +8,12 @@
     height: 200px;
     overflow-y: scroll;
 ">
-                    <p ng-bind="result.get('offerMilestone')"></p>
+                    <ul>
+                        <li ng-repeat="o in offerMilestones">
+                            <input type="checkbox" ng-disabled="o.checked" ng-click="check(o,'offerMilestones')">
+                            {{o.task}}
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div class="col-md-6">
@@ -17,7 +22,13 @@
     height: 200px;
     overflow-y: scroll;
 ">
-                    <p ng-bind="result.get('barterUpMilestone')"></p>
+                    <ul>
+                        <li ng-repeat="o in barterUpMilestones">
+                            <input type="checkbox" ng-disabled="o.checked" ng-click="check(o,'barterUpMilestones')">
+                            {{o.task}}
+                        </li>
+                    </ul>
+
                 </div>
             </div>
         </div>
