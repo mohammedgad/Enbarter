@@ -289,6 +289,16 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $scope.result.save().then(Pace.stop());
         }
     }
+
+    $scope.reportBarter = function () {
+        var Report = Parse.Object.extend("ReportBarter");
+        var report = new Report();
+        report.set("user", Parse.User.current());
+        report.set("description", $scope.reportDescription);
+        report.set("barter", $scope.result);
+        Pace.start();
+        report.save().then(Pace.stop()).then(alert("Thank You"));
+    }
 });
 
 
