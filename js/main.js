@@ -319,7 +319,7 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
     }).then(Pace.stop());
 
 });
-
+var chatIntervalId;
 app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $routeParams) {
     $scope.result = null;
     $scope.messages = [];
@@ -353,7 +353,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     Pace.start();
     query.get($routeParams.id, {
         success: function (result) {
-            if (!Parse.User.current() || Parse.User.current().id != result.get('user').id || Parse.User.current().id != result.get('barterUpUser').id) {
+            if (!Parse.User.current() || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
                 alert("Error: Not allowed");
                 $location.path('/');
                 $scope.$apply();
@@ -371,7 +371,12 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             // });
 
             console.log(result);
-
+            chatIntervalId = window.setInterval(function () {
+                $scope.reloadChat();
+            }, 3000);
+            $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                window.clearInterval(chatIntervalId);
+            });
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
@@ -390,9 +395,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         $scope.message = "";
     }
 
-    window.setInterval(function () {
-        $scope.reloadChat();
-    }, 3000);
 });
 
 
