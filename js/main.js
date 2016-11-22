@@ -458,6 +458,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
 
     $scope.closeAndRate = function () {
         var who = (Parse.User.current().id == $scope.result.get('user').id) ? "offer" : "barterUp";
+        var oppisite = (who == 'offer') ? 'barterUp' : 'offer';
         $scope.result.set(who + "Rate", $scope.rate);
         $scope.result.set(who + "Review", $scope.review);
         fileUploadControl = $("#formInput2565")[0];
@@ -467,6 +468,9 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             var parseFile = new Parse.File(name, file);
             $scope.result.set(who + "FinalPic", parseFile);
         }
+        if ($scope.result.get(oppisite + "Rate"))
+            $scope.result.set("state", 'completed');
+        
         Pace.start();
         $scope.result.save().then(Pace.stop());
     }
