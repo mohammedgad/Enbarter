@@ -444,6 +444,10 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             $scope.message = "";
         }
     }
+    $scope.checkParse = function (o, column) {
+        $scope.checkParseColumn = column;
+        $scope.checkParseObject = o;
+    }
 
     $scope.check = function (o, column) {
         var arr = $scope.result.get(column);
@@ -451,6 +455,14 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             if (arr[i].task == o.task) {
                 arr[i].checked = true;
                 arr[i].date = new Date();
+                arr[i].comment = $scope.comment;
+                fileUploadControl = $("#formInput25675")[0];
+                if (fileUploadControl.files.length > 0) {
+                    var file = fileUploadControl.files[0];
+                    var name = "photo1.jpg";
+                    var parseFile = new Parse.File(name, file);
+                    arr[i].file = parseFile;
+                }
             }
         }
         $scope.result.set(column, arr);
@@ -491,6 +503,12 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             return true;
         else
             return false;
+    }
+
+    $scope.canCheck = function (x) {
+        if (Parse.User.current().id == $scope.result.get(x).id)
+            return true;
+        return false;
     }
 });
 

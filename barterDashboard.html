@@ -12,9 +12,13 @@
     overflow-y: scroll;
 ">
                     <ul>
-                        <li ng-repeat="o in offerMilestones">
-                            <input type="checkbox" ng-disabled="o.checked" ng-click="check(o,'offerMilestones')">
+                        <li ng-repeat="o in offerMilestones"
+                            title="{{o.comment}}">
+                            <input type="checkbox" ng-disabled="o.checked||!canCheck('user')"
+                                   ng-click="checkParse(o,'offerMilestones')"
+                                   data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
                             {{o.task}}
+                            <a ng-if="o.file" href="{{o.file.url}}">File</a>
                         </li>
                     </ul>
                 </div>
@@ -29,9 +33,12 @@
     overflow-y: scroll;
 ">
                     <ul>
-                        <li ng-repeat="o in barterUpMilestones">
-                            <input type="checkbox" ng-disabled="o.checked" ng-click="check(o,'barterUpMilestones')">
+                        <li ng-repeat="o in barterUpMilestones" title="{{o.comment}}">
+                            <input type="checkbox" ng-disabled="o.checked||!canCheck('barterUpUser')"
+                                   ng-click="checkParse(o,'barterUpMilestones')"
+                                   data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
                             {{o.task}}
+                            <a ng-if="o.file" href="{{o.file.url}}">File</a>
                         </li>
                     </ul>
 
@@ -89,5 +96,32 @@
             </div>
         </div>
     </div>
+    <div class="modal fade pg-show-modal" id="milestoneCheck" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Close & Rate</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label" for="formInput2567">Comment</label>
 
+                        <textarea type="text" class="form-control" id="formInput2567" ng-model="comment"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="formInput25675">Final Pic</label>
+                        <input type="file" class="form-control" id="formInput25675">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" ng-click="check(checkParseObject,checkParseColumn)"
+                            data-dismiss="modal">
+                        Check!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
