@@ -418,9 +418,10 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             // });
 
             console.log(result);
-            chatIntervalId = window.setInterval(function () {
-                $scope.reloadChat();
-            }, 3000);
+            if (result.get('state') != 'completed')
+                chatIntervalId = window.setInterval(function () {
+                    $scope.reloadChat();
+                }, 3000);
             $rootScope.$on('$locationChangeStart', function (event, next, current) {
                 window.clearInterval(chatIntervalId);
             });
@@ -433,13 +434,15 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     }).then(Pace.stop());
 
     $scope.sendMessage = function () {
-        var chat = new Chat();
-        chat.set("message", $scope.message);
-        chat.set("user", Parse.User.current());
-        chat.set("barter", $scope.result);
-        Pace.start();
-        chat.save().then(Pace.stop()).then($scope.reloadChat());
-        $scope.message = "";
+        if (result.get('state') != 'completed') {
+            var chat = new Chat();
+            chat.set("message", $scope.message);
+            chat.set("user", Parse.User.current());
+            chat.set("barter", $scope.result);
+            Pace.start();
+            chat.save().then(Pace.stop()).then($scope.reloadChat());
+            $scope.message = "";
+        }
     }
 
     $scope.check = function (o, column) {
@@ -470,7 +473,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         }
         if ($scope.result.get(oppisite + "Rate"))
             $scope.result.set("state", 'completed');
-        
+
         Pace.start();
         $scope.result.save().then(Pace.stop());
     }

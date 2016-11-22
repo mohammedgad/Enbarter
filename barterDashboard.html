@@ -4,7 +4,8 @@
         <div class="row">
             <div class="col-md-6">
                 <h3>Offer Milestones
-                    <button data-target="#closeRate" data-toggle="modal" ng-show="showClose('offer')">Close & Rate</button>
+                    <button data-target="#closeRate" data-toggle="modal" ng-show="showClose('offer')">Close & Rate
+                    </button>
                 </h3>
                 <div class="well" style="
     height: 200px;
@@ -20,7 +21,8 @@
             </div>
             <div class="col-md-6">
                 <h3>Seek Milestones
-                    <button data-target="#closeRate" data-toggle="modal" ng-show="showClose('barterUp')">Close & Rate</button>
+                    <button data-target="#closeRate" data-toggle="modal" ng-show="showClose('barterUp')">Close & Rate
+                    </button>
                 </h3>
                 <div class="well" style="
     height: 200px;
@@ -46,7 +48,7 @@
                                                     class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
                         {{m.get('message')}}</p>
                 </div>
-                <form role="form">
+                <form role="form" ng-if="result.get('state')!='completed'">
                     <input type="text" class="form-control" ng-model="message" placeholder="Enter message">
                     <button ng-click="sendMessage()" class="btn btn-block btn-info">Send</button>
                 </form>
