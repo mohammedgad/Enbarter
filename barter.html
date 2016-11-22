@@ -40,14 +40,14 @@
                     >BARTERED
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()" data-toggle="modal"
-                            data-target="#reportBarter">Report barter
+                            data-target="{{isLoggedIn()?'#reportBarter':'#sign'}}">Report barter
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" ng-click="disable()"
                             ng-hide="!sameAccount()||result.get('state')=='disabled'||result.get('state')=='bartered'">
                         Disable
                     </button>
                     <a href=".#/dashboard/barter/{{result.id}}" class="btn btn-primary btn-sm"
-                       ng-show="sameAccount()||result.get('barterUpUser').id==userId"
+                       ng-show="(sameAccount()||result.get('barterUpUser').id==userId)&&result.get('state')=='bartered'"
                     >Dashboard
                     </a>
                 </div>
@@ -88,7 +88,7 @@
                 </div>
             </div>
         </div>
-        <div class="row table-barter" ng-show="result.get('barterUpUser').length||result.get('barterRequests').length">
+        <div class="row table-barter" ng-show="result.get('barterUpUser')||result.get('barterRequests').length">
             <table class="table table-hover table-condensed table-bg">
                 <thead class="table-head">
                 <tr class="table-head">
@@ -103,7 +103,8 @@
                 <tbody>
                 <tr ng-show="result.get('barterUpUser')">
                     <td class="text-center table-user-img">
-                        <img src="images/project-1.jpg" class="img-responsive center-block barter-creator-img"/>
+                        <img ng-src="{{result.get('barterUpUser').get('pic')?result.get('barterUpUser').get('pic').url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                             class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
                         <a href=".#/profile/{{result.get('barterUpUser').id}}" class="username-link">{{result.get('barterUpUser').get('username')}}</a>
@@ -123,7 +124,8 @@
 
                 <tr ng-repeat="request in result.get('barterRequests')">
                     <td class="text-center table-user-img">
-                        <img src="images/project-1.jpg" class="img-responsive center-block barter-creator-img"/>
+                        <img ng-src="{{request.pic?request.pic.url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                             class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
                         <a href=".#/profile/{{request.user}}" class="username-link">{{request.username}}</a>
@@ -163,7 +165,8 @@
                     <div class="form-group">
                         <ul>
                             <li ng-repeat="o in milestones">{{o}}
-                                <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button></li>
+                                <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button>
+                            </li>
                         </ul>
                         <label class="control-label" for="formInput256">What are your milestones to create what you
                             offer?

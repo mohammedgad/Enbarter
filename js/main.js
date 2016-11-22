@@ -283,7 +283,8 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             deadline: $scope.deadline,
             milestone: milestones,
             user: Parse.User.current().id,
-            username: Parse.User.current().get('username')
+            username: Parse.User.current().get('username'),
+            pic: Parse.User.current().get('pic')
         });
         var user = Parse.User.current();
         user.addUnique("barterSeeks", $scope.result);
