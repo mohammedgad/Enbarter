@@ -303,8 +303,8 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         return false;
     }
 
-    $scope.showMilestones = function (milesone) {
-        alert(milesone);
+    $scope.showMilestones = function (milestones) {
+        $scope.barterMilestones = milestones;
     }
 
     $scope.barterUpOwner = function (request) {
@@ -456,6 +456,35 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         $scope.result.save().then(Pace.stop());
     }
 
+    $scope.closeAndRate = function () {
+        var who = (Parse.User.current().id == $scope.result.get('user').id) ? "offer" : "barterUp";
+        $scope.result.set(who + "Rate", $scope.rate);
+        $scope.result.set(who + "Review", $scope.review);
+        fileUploadControl = $("#formInput2565")[0];
+        if (fileUploadControl.files.length > 0) {
+            var file = fileUploadControl.files[0];
+            var name = "photo1.jpg";
+            var parseFile = new Parse.File(name, file);
+            $scope.result.set(who + "FinalPic", parseFile);
+        }
+        Pace.start();
+        $scope.result.save().then(Pace.stop());
+    }
+
+    $scope.showClose = function (x) {
+        var oppisite = (x == 'offer') ? 'barterUp' : 'offer';
+        if ((x == 'offer' && Parse.User.current().id == $scope.result.get('user').id) || (x == 'barterUp' && Parse.User.current().id == $scope.result.get('barterUpUser').id) || ($scope.result.get(oppisite + "Rate")))
+            return false;
+        var arr = $scope.result.get(x + 'Milestones');
+        for (var i = 0; i < arr.length; i++) {
+            if (!arr[i].checked)
+                return false;
+        }
+        if (arr.length)
+            return true;
+        else
+            return false;
+    }
 });
 
 
