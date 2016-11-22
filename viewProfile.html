@@ -2,7 +2,8 @@
         <div class="row">
             <div class="col-md-2">
                 <a href="#" class="thumbnail">
-                    <img src="images/slider/hipster-865295.jpg" alt="">
+                    <img ng-src="{{result.get('pic')?result.get('pic').url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                         alt="">
                 </a>
                 <p>@{{result.get('username')}}</p>
             </div>
