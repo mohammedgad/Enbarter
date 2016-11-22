@@ -2,14 +2,15 @@
         <div class="row">
             <div class="col-md-2">
                 <a href="#" class="thumbnail">
-                    <img src="images/slider/hipster-865295.jpg" alt="">
+                    <img ng-src="{{result.get('pic')?result.get('pic').url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                         alt="">
                 </a>
                 <p>@{{result.get('username')}}</p>
             </div>
             <div class="col-md-10">
                 <div class="row">
                     <h3>Bio</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pulvinar faucibus neque, nec rhoncus nunc ultrices sit amet. Curabitur ac sagittis neque, vel egestas est. Aenean elementum, erat at aliquet hendrerit, elit nisl posuere tortor, id suscipit diam dui sed nisi. Morbi sollicitudin massa vel tortor consequat, eget semper nisl fringilla. Maecenas at hendrerit odio. Sed in mi eu quam suscipit bibendum quis at orci. Pellentesque fermentum nisl purus, et iaculis lectus pharetra sit amet.</p>
+                    <p>{{result.get('bio')}}</p>
                     <h3>Email</h3>
                     <p>{{result.get('email')}}</p>
                     <h3>Barters</h3>
@@ -39,34 +40,9 @@
                     </div>
 
                     <h3>Samples of my work</h3>
-                    <div class="col-xs-6 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img src="images/slider/write-593333.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="col-xs-6 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img src="images/slider/write-593333.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="col-xs-6 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img src="images/slider/write-593333.jpg" alt="">
-                        </a>
-                    </div>
-                    <div class="col-xs-6 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img src="images/slider/write-593333.jpg" alt="">
-                        </a>
-                    </div>
-                    <form role="form">
-                        <div class="form-group">
-                            <label class="control-label" for="formInput440">Send a Messege
-</label>                                 
-                            <textarea class="form-control" rows="3" id="formInput440"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-block btn-primary">Submit</button>
-                    </form>
+                    <ul>
+                        <li ng-repeat="link in result.get('workLinks')"><a href="{{link}}">{{link}}</a></li>
+                    </ul>
                 </div>
             </div>
         </div>

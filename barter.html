@@ -39,9 +39,12 @@
                             ng-show="!sameAccount()&&(result.get('barterUpUser')||bartered())"
                     >BARTERED
                     </button>
-                    <!--TODO<button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()">Report barter</button>-->
-                    <button type="button" class="btn btn-danger btn-sm" ng-show="sameAccount()" ng-click="disable()"
-                            ng-hide="!sameAccount()||result.get('state')=='disabled'">Disable
+                    <button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()" data-toggle="modal"
+                            data-target="#reportBarter">Report barter
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="disable()"
+                            ng-hide="!sameAccount()||result.get('state')=='disabled'||result.get('state')=='bartered'">
+                        Disable
                     </button>
                     <a href=".#/dashboard/barter/{{result.id}}" class="btn btn-primary btn-sm"
                        ng-show="sameAccount()||result.get('barterUpUser').id==userId"
@@ -56,30 +59,36 @@
                 <div class="column-shadow div-inside bg-deepocean white">
                     <h3>I Offer</h3>
                     <p class="white">{{result.get('offerDescription')}}</p>
-                    <h3>Sample</h3>
-                    <a href="#" class="thumbnail">
-                        <img src="{{result.get('offerSampleImage').url()}}" alt="">
-                    </a>
-                    <h3>Sample Links</h3>
-                    <a class="white" href="{{result.get('offerSampleLink')}}">{{result.get('offerSampleLink')}}</a>
-
+                    <div ng-if="result.get('offerSampleImage')">
+                        <h3>Sample</h3>
+                        <a href="{{result.get('offerSampleImage').url()}}" class="thumbnail">
+                            <img ng-src="{{result.get('offerSampleImage').url()}}" alt="">
+                        </a>
+                    </div>
+                    <div ng-if="result.get('offerSampleLink')">
+                        <h3>Sample Links</h3>
+                        <a class="white" href="{{result.get('offerSampleLink')}}">{{result.get('offerSampleLink')}}</a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-6 text-primary">
                 <div class="column-shadow div-inside bg-white">
                     <h3>I Seek</h3>
                     <p class="deepocean">{{result.get('seekDescription')}}</p>
-                    <h3>Sample</h3>
-                    <a href="#" class="thumbnail">
-                        <img src="{{result.get('seekSampleImage').url()}}" alt="">
-                    </a>
-                    <h3>Sample Links</h3>
-                    <a href="{{result.get('seekSampleLink')}}">{{result.get('seekSampleLink')}}</a>
-
+                    <div ng-if="result.get('seekSampleImage')">
+                        <h3>Sample</h3>
+                        <a href="{{result.get('seekSampleImage').url()}}" class="thumbnail">
+                            <img ng-src="{{result.get('seekSampleImage').url()}}" alt="">
+                        </a>
+                    </div>
+                    <div ng-if="result.get('seekSampleLink')">
+                        <h3>Sample Links</h3>
+                        <a href="{{result.get('seekSampleLink')}}">{{result.get('seekSampleLink')}}</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row table-barter">
+        <div class="row table-barter" ng-show="result.get('barterUpUser').length||result.get('barterRequests').length">
             <table class="table table-hover table-condensed table-bg">
                 <thead class="table-head">
                 <tr class="table-head">
@@ -152,13 +161,18 @@
                                ng-model="deadline">
                     </div>
                     <div class="form-group">
+                        <ul>
+                            <li ng-repeat="o in milestones" ng-bind="o"></li>
+                        </ul>
                         <label class="control-label" for="formInput256">What are your milestones to create what you
                             offer?
                             (what
                             are the steps you will follow to build your offer) separate between every milestone with a
                             comma
                         </label>
-                        <textarea class="form-control" rows="3" id="formInput256" ng-model="milestone"></textarea>
+                        <input type="text" class="form-control" id="formInput256" ng-model="milestoneItem">
+                        <button ng-click="milestoneItem=addItemTo(milestones,milestoneItem)">Add</button>
+
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -171,4 +185,27 @@
         </div>
     </div>
 
+    <div class="modal fade pg-show-modal" id="reportBarter" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Report</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label" for="formInput2568">Describe</label>
+                        <textarea class="form-control" rows="3" id="formInput2568"
+                                  ng-model="reportDescription"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" ng-click="reportBarter()" data-dismiss="modal">
+                        Report!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

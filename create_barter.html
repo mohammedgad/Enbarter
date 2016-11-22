@@ -21,7 +21,7 @@
                            ng-model="barterTitle">
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput167">Barter Brief Description</label>
+                    <label class="control-label" for="formInput167">Barter Brief Summary</label>
                     <textarea ng-model="barterDescription" class="form-control" rows="3" id="formInput167"></textarea>
                 </div>
             </div>
@@ -36,21 +36,21 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput1953">Your offer Title</label>
-                    <input type="text" class="form-control" id="formInput1953" placeholder="Placeholder text"
-                           ng-model="offerTitle">
-                </div>
-                <div class="form-group">
                     <label class="control-label" for="formInput2565">Your offer Description</label>
                     <textarea class="form-control" rows="3" id="formInput2565" ng-model="offerDescription"></textarea>
                 </div>
                 <div class="form-group">
+                    <ul>
+                        <li ng-repeat="o in milestones" ng-bind="o"></li>
+                    </ul>
                     <label class="control-label" for="formInput256">What are your milestones to create what you offer?
                         (what
                         are the steps you will follow to build your offer) separate between every milestone with a
                         comma
                     </label>
-                    <textarea class="form-control" rows="3" id="formInput256" ng-model="offerMilestone"></textarea>
+                    <input type="text" class="form-control" id="formInput256" ng-model="offerMilestoneItem">
+                    <button ng-click="offerMilestoneItem=addItemTo(milestones,offerMilestoneItem)">Add</button>
+
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput1955">External sample link</label>
@@ -81,11 +81,6 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput1951">Your seek Title</label>
-                    <input type="text" class="form-control" id="formInput1951" placeholder="Placeholder text"
-                           ng-model="seekTitle">
-                </div>
-                <div class="form-group">
                     <label class="control-label" for="formInput2564">Your seek Description</label>
                     <textarea class="form-control" rows="3" id="formInput2564" ng-model="seekDescription"></textarea>
                 </div>
@@ -107,7 +102,8 @@
                            ng-model="seekDeadline">
                 </div>
             </div>
-            <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="startBarter()" ng-disabled="canStartDisabled">START BARTER
+            <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="startBarter()"
+                    ng-disabled="canStartDisabled">START BARTER
             </button>
         </form>
     </div>
