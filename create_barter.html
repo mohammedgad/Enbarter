@@ -41,7 +41,9 @@
                 </div>
                 <div class="form-group">
                     <ul>
-                        <li ng-repeat="o in milestones" ng-bind="o"></li>
+                        <li ng-repeat="o in milestones">{{o}}
+                            <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button>
+                        </li>
                     </ul>
                     <label class="control-label" for="formInput256">What are your milestones to create what you offer?
                         (what

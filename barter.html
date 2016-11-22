@@ -162,7 +162,8 @@
                     </div>
                     <div class="form-group">
                         <ul>
-                            <li ng-repeat="o in milestones" ng-bind="o"></li>
+                            <li ng-repeat="o in milestones">{{o}}
+                                <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button></li>
                         </ul>
                         <label class="control-label" for="formInput256">What are your milestones to create what you
                             offer?
@@ -170,6 +171,7 @@
                             are the steps you will follow to build your offer) separate between every milestone with a
                             comma
                         </label>
+
                         <input type="text" class="form-control" id="formInput256" ng-model="milestoneItem">
                         <button ng-click="milestoneItem=addItemTo(milestones,milestoneItem)">Add</button>
 

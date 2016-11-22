@@ -52,6 +52,12 @@ app.run(function ($rootScope) {
             list.push(item);
         return item = '';
     }
+    $rootScope.removeItemFrom = function (list, item) {
+        var index = list.indexOf(item);
+        if (index > -1) {
+            list.splice(index, 1);
+        }
+    }
 
 });
 
@@ -389,6 +395,11 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 alert("Error: Not allowed");
                 $location.path('/');
                 $scope.$apply();
+                return;
+            }
+            if (!result.get('barterUpMilestones') || !result.get('offerMilestones')) {
+                alert("Dashboard can't be accessed because there is no barter user");
+                window.location.href = "/Enbarter/#/barter/" + result.id;
                 return;
             }
             $scope.result = result;
