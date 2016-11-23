@@ -3,29 +3,42 @@
         <h1 class="text-center" ng-bind="result.get('barterTitle')"></h1>
         <div class="row">
             <div class="col-md-6">
-                <h3>Offer Milestones</h3>
+                <h3>Offer Milestones
+                    <button data-target="#closeRate" data-toggle="modal" ng-show="showClose('offer')">Close & Rate
+                    </button>
+                </h3>
                 <div class="well" style="
     height: 200px;
     overflow-y: scroll;
 ">
                     <ul>
-                        <li ng-repeat="o in offerMilestones">
-                            <input type="checkbox" ng-disabled="o.checked" ng-click="check(o,'offerMilestones')">
+                        <li ng-repeat="o in offerMilestones"
+                            title="{{o.comment}}">
+                            <input type="checkbox" ng-disabled="o.checked||!canCheck('user')"
+                                   ng-click="checkParse(o,'offerMilestones')"
+                                   data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
                             {{o.task}}
+                            <a ng-if="o.file" href="{{o.file.url}}">File</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-6">
-                <h3>Seek Milestones</h3>
+                <h3>Seek Milestones
+                    <button data-target="#closeRate" data-toggle="modal" ng-show="showClose('barterUp')">Close & Rate
+                    </button>
+                </h3>
                 <div class="well" style="
     height: 200px;
     overflow-y: scroll;
 ">
                     <ul>
-                        <li ng-repeat="o in barterUpMilestones">
-                            <input type="checkbox" ng-disabled="o.checked" ng-click="check(o,'barterUpMilestones')">
+                        <li ng-repeat="o in barterUpMilestones" title="{{o.comment}}">
+                            <input type="checkbox" ng-disabled="o.checked||!canCheck('barterUpUser')"
+                                   ng-click="checkParse(o,'barterUpMilestones')"
+                                   data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
                             {{o.task}}
+                            <a ng-if="o.file" href="{{o.file.url}}">File</a>
                         </li>
                     </ul>
 
@@ -42,10 +55,72 @@
                                                     class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
                         {{m.get('message')}}</p>
                 </div>
-                <form role="form">
+                <form role="form" ng-if="result.get('state')!='completed'">
                     <input type="text" class="form-control" ng-model="message" placeholder="Enter message">
                     <button ng-click="sendMessage()" class="btn btn-block btn-info">Send</button>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade pg-show-modal" id="closeRate" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Close & Rate</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label" for="formInput1954">Rate</label>
+                        <input type="number" class="form-control" id="formInput1954"
+                               ng-model="rate" min="0" max="5">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="formInput256">Review</label>
+
+                        <textarea type="text" class="form-control" id="formInput256" ng-model="review"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="formInput2565">Final Pic</label>
+
+                        <input type="file" class="form-control" id="formInput2565">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" ng-click="closeAndRate()" data-dismiss="modal">
+                        Done!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade pg-show-modal" id="milestoneCheck" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Close & Rate</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label" for="formInput2567">Comment</label>
+
+                        <textarea type="text" class="form-control" id="formInput2567" ng-model="comment"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="formInput25675">Final Pic</label>
+                        <input type="file" class="form-control" id="formInput25675">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" ng-click="check(checkParseObject,checkParseColumn)"
+                            data-dismiss="modal">
+                        Check!
+                    </button>
+                </div>
             </div>
         </div>
     </div>

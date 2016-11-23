@@ -40,14 +40,14 @@
                     >BARTERED
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()" data-toggle="modal"
-                            data-target="#reportBarter">Report barter
+                            data-target="{{isLoggedIn()?'#reportBarter':'#sign'}}">Report barter
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" ng-click="disable()"
                             ng-hide="!sameAccount()||result.get('state')=='disabled'||result.get('state')=='bartered'">
                         Disable
                     </button>
                     <a href=".#/dashboard/barter/{{result.id}}" class="btn btn-primary btn-sm"
-                       ng-show="sameAccount()||result.get('barterUpUser').id==userId"
+                       ng-show="(sameAccount()||result.get('barterUpUser').id==userId)&&result.get('state')=='bartered'"
                     >Dashboard
                     </a>
                 </div>
@@ -88,7 +88,7 @@
                 </div>
             </div>
         </div>
-        <div class="row table-barter" ng-show="result.get('barterUpUser').length||result.get('barterRequests').length">
+        <div class="row table-barter" ng-show="result.get('barterUpUser')||result.get('barterRequests').length">
             <table class="table table-hover table-condensed table-bg">
                 <thead class="table-head">
                 <tr class="table-head">
@@ -103,7 +103,8 @@
                 <tbody>
                 <tr ng-show="result.get('barterUpUser')">
                     <td class="text-center table-user-img">
-                        <img src="images/project-1.jpg" class="img-responsive center-block barter-creator-img"/>
+                        <img ng-src="{{result.get('barterUpUser').get('pic')?result.get('barterUpUser').get('pic').url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                             class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
                         <a href=".#/profile/{{result.get('barterUpUser').id}}" class="username-link">{{result.get('barterUpUser').get('username')}}</a>
@@ -111,8 +112,8 @@
                     <td>{{result.get('barterUpDeadline')}}</td>
                     <td class="table-action">
                         <button type="button" class="btn btn-info"
-                                ng-click="showMilestones(result.get('barterUpMilestone'))"
-                                ng-show="sameAccount()"
+                                ng-click="showMilestones(result.get('barterUpMilestones'))"
+                                ng-show="sameAccount()" data-target="#barterMilestones" data-toggle="modal"
                         >
                             MileStones
                         </button>
@@ -123,14 +124,16 @@
 
                 <tr ng-repeat="request in result.get('barterRequests')">
                     <td class="text-center table-user-img">
-                        <img src="images/project-1.jpg" class="img-responsive center-block barter-creator-img"/>
+                        <img ng-src="{{request.pic?request.pic.url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                             class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
                         <a href=".#/profile/{{request.user}}" class="username-link">{{request.username}}</a>
                     </td>
                     <td>{{request.deadline}}</td>
                     <td class="table-action" ng-show="sameAccount()&&!result.get('barterUpUser')">
-                        <button type="button" class="btn btn-info" ng-click="showMilestones(request.milestone)">
+                        <button type="button" class="btn btn-info" ng-click="showMilestones(request.milestone)"
+                                data-target="#barterMilestones" data-toggle="modal">
                             MileStones
                         </button>
                         <button type="button" class="btn btn-danger" ng-click="barterUpOwner(request)">Barter
@@ -162,7 +165,9 @@
                     </div>
                     <div class="form-group">
                         <ul>
-                            <li ng-repeat="o in milestones" ng-bind="o"></li>
+                            <li ng-repeat="o in milestones">{{o}}
+                                <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button>
+                            </li>
                         </ul>
                         <label class="control-label" for="formInput256">What are your milestones to create what you
                             offer?
@@ -170,6 +175,7 @@
                             are the steps you will follow to build your offer) separate between every milestone with a
                             comma
                         </label>
+
                         <input type="text" class="form-control" id="formInput256" ng-model="milestoneItem">
                         <button ng-click="milestoneItem=addItemTo(milestones,milestoneItem)">Add</button>
 
@@ -204,6 +210,29 @@
                     <button type="button" class="btn btn-danger" ng-click="reportBarter()" data-dismiss="modal">
                         Report!
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade pg-show-modal" id="barterMilestones" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Milestones</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <ul>
+                            <li ng-repeat="o in barterMilestones">{{o.task}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
