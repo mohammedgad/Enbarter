@@ -1,4 +1,4 @@
-var app = angular.module("BarterApp", ["ngRoute"]);
+var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize']);
 
 Parse.initialize("myAppId");
 Parse.serverURL = 'http://docker20668-env-9871847.mircloud.host/parse';
@@ -491,9 +491,11 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
 
     $scope.showClose = function (x) {
         var oppisite = (x == 'offer') ? 'barterUp' : 'offer';
-        if ((x == 'offer' && Parse.User.current().id == $scope.result.get('user').id) || (x == 'barterUp' && Parse.User.current().id == $scope.result.get('barterUpUser').id) || ($scope.result.get(oppisite + "Rate")))
+        if ($scope.result && ((x == 'offer' && Parse.User.current().id == $scope.result.get('user').id) || (x == 'barterUp' && Parse.User.current().id == $scope.result.get('barterUpUser').id) || ($scope.result.get(oppisite + "Rate"))))
             return false;
-        var arr = $scope.result.get(x + 'Milestones');
+        var arr=[];
+        if ($scope.result)
+             arr = $scope.result.get(x + 'Milestones');
         for (var i = 0; i < arr.length; i++) {
             if (!arr[i].checked)
                 return false;

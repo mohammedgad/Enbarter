@@ -50,8 +50,8 @@
                 <div class="chatbox well" style="
     height: 300px;
     overflow-y: scroll;
-">
-                    <p ng-repeat="m in messages"><a href=".#/profile/{{m.get('user').id}}"
+" scroll-glue>
+                    <p ng-repeat="m in messages" ><a href=".#/profile/{{m.get('user').id}}"
                                                     class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
                         {{m.get('message')}}</p>
                 </div>
