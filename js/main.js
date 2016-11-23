@@ -418,7 +418,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             // });
 
             console.log(result);
-            if (result.get('state') != 'completed')
+            if ($scope.result.get('state') != 'completed')
                 chatIntervalId = window.setInterval(function () {
                     $scope.reloadChat();
                 }, 3000);
@@ -432,15 +432,14 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             $scope.$apply();
         }
     }).then(Pace.stop());
-
     $scope.sendMessage = function () {
-        if (result.get('state') != 'completed') {
+        if ($scope.result.get('state') != 'completed') {
             var chat = new Chat();
             chat.set("message", $scope.message);
             chat.set("user", Parse.User.current());
             chat.set("barter", $scope.result);
             Pace.start();
-            chat.save().then(Pace.stop()).then($scope.reloadChat());
+            chat.save().then(Pace.stop());
             $scope.message = "";
         }
     }

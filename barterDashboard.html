@@ -55,8 +55,8 @@
                                                     class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
                         {{m.get('message')}}</p>
                 </div>
-                <form role="form" ng-if="result.get('state')!='completed'">
-                    <input type="text" class="form-control" ng-model="message" placeholder="Enter message">
+                <form role="form" ng-show="result.get('state')!='completed'">
+                    <input type="text" class="form-control" ng-model="message" >
                     <button ng-click="sendMessage()" class="btn btn-block btn-info">Send</button>
                 </form>
             </div>
