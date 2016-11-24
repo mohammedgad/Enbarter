@@ -13,7 +13,7 @@
                     <p>{{result.get('bio')}}</p>
                     <h3>Email</h3>
                     <p>{{result.get('email')}}</p>
-                    <h3>Barters</h3>
+                    <h3 ng-show="barters.length">Barters</h3>
                     <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer offer:hover">
                         <div class="col-md-8 text-left">
                             <a href="./#/barter/{{barter.id}}"><h3 class="offer-list-item-h1">{{barter.get('barterTitle')}}</h3></a>
@@ -26,7 +26,7 @@
                         </div>
                     </div>
 
-                    <h3>Barters Requests</h3>
+                    <h3 ng-show="result.get('barterSeeks').length">Barters Requests</h3>
                     <div ng-repeat="barter in result.get('barterSeeks')" class="row margin-top5 margin-bottom15 text-right offer offer:hover">
                         <div class="col-md-8 text-left">
                             <a href="./#/barter/{{barter.id}}"><h3 class="offer-list-item-h1">{{barter.get('barterTitle')}}</h3></a>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <h3>Samples of my work</h3>
+                    <h3 ng-show="result.get('workLinks').length">Samples of my work</h3>
                     <ul>
                         <li ng-repeat="link in result.get('workLinks')"><a href="{{link}}">{{link}}</a></li>
                     </ul>

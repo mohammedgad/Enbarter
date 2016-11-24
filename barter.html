@@ -88,7 +88,7 @@
                 </div>
             </div>
         </div>
-        <div class="row table-barter" ng-show="result.get('barterUpUser')||result.get('barterRequests').length">
+        <div class="row table-barter" ng-show="result.get('barterUpUser')||barterRequests.length">
             <table class="table table-hover table-condensed table-bg">
                 <thead class="table-head">
                 <tr class="table-head">
@@ -122,7 +122,7 @@
                     </td>
                 </tr>
 
-                <tr ng-repeat="request in result.get('barterRequests')">
+                <tr ng-repeat="request in barterRequests">
                     <td class="text-center table-user-img">
                         <img ng-src="{{request.pic?request.pic.url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
                              class="img-responsive center-block barter-creator-img"/>

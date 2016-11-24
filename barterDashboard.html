@@ -18,7 +18,7 @@
                                    ng-click="checkParse(o,'offerMilestones')"
                                    data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
                             {{o.task}}
-                            <a ng-if="o.file" href="{{o.file.url}}">File</a>
+                            <a ng-show="o.file" href="{{o.file.url()}}">File</a>
                         </li>
                     </ul>
                 </div>
@@ -38,7 +38,7 @@
                                    ng-click="checkParse(o,'barterUpMilestones')"
                                    data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
                             {{o.task}}
-                            <a ng-if="o.file" href="{{o.file.url}}">File</a>
+                            <a ng-show="o.file" href="{{o.file.url()}}">File</a>
                         </li>
                     </ul>
 
@@ -50,8 +50,8 @@
                 <div class="chatbox well" style="
     height: 300px;
     overflow-y: scroll;
-">
-                    <p ng-repeat="m in messages"><a href=".#/profile/{{m.get('user').id}}"
+" scroll-glue>
+                    <p ng-repeat="m in messages" ><a href=".#/profile/{{m.get('user').id}}"
                                                     class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
                         {{m.get('message')}}</p>
                 </div>
