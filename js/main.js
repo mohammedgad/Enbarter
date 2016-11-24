@@ -66,6 +66,7 @@ app.controller('header', function ($scope, $location) {
     $scope.homeLink = ".#/";
     $scope.browseLink = ".#/browse";
     $scope.createBarterLink = ".#/create_barter";
+    $scope.dashboardLink = ".#/dashboard";
 
     $scope.login = function () {
         Pace.start();
