@@ -18,7 +18,7 @@
                                    ng-click="checkParse(o,'offerMilestones')"
                                    data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
                             {{o.task}}
-                            <a ng-if="o.file" href="{{o.file.url}}">File</a>
+                            <a ng-show="o.file" href="{{o.file.url()}}">File</a>
                         </li>
                     </ul>
                 </div>
@@ -38,7 +38,7 @@
                                    ng-click="checkParse(o,'barterUpMilestones')"
                                    data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
                             {{o.task}}
-                            <a ng-if="o.file" href="{{o.file.url}}">File</a>
+                            <a ng-show="o.file" href="{{o.file.url()}}">File</a>
                         </li>
                     </ul>
 
