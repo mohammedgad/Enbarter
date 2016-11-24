@@ -394,6 +394,17 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 alert("Error: " + error.code + " " + error.message);
             }
         }).then(Pace.stop());
+
+        var subscription = query.subscribe();
+        subscription.on('create', function (object) {
+            console.log(object);
+            $scope.messages.push(object);
+            $scope.$apply();
+        });
+
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            subscription.unsubscribe();
+        });
     }
 
     var query = new Parse.Query(Barter);
@@ -428,22 +439,17 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             $scope.barterUpMilestones = JSON.parse(JSON.stringify(result.get('barterUpMilestones')));
 
             $scope.$apply();
-            $scope.reloadChat();
-
-            // var subscription = query.subscribe();
-            // subscription.on('create', function (object) {
-            //     $scope.messages.push(object);
-            //     $scope.$apply();
-            // });
+            if ($scope.result.get('state') != 'completed')
+                $scope.reloadChat();
 
             console.log(result);
-            if ($scope.result.get('state') != 'completed')
-                chatIntervalId = window.setInterval(function () {
-                    $scope.reloadChat();
-                }, 3000);
-            $rootScope.$on('$locationChangeStart', function (event, next, current) {
-                window.clearInterval(chatIntervalId);
-            });
+            // if ($scope.result.get('state') != 'completed')
+            //     chatIntervalId = window.setInterval(function () {
+            //         $scope.reloadChat();
+            //     }, 3000);
+            // $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            //     window.clearInterval(chatIntervalId);
+            // });
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
