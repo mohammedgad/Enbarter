@@ -1,8 +1,7 @@
 var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize']);
 
-Parse.initialize("myAppId");
-Parse.serverURL = 'http://docker20668-env-9871847.mircloud.host/parse';
-Parse.masterKey = 'mySecretMasterKey';
+Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
+Parse.serverURL = 'https://enbarter.back4app.io'
 
 app.config(function ($routeProvider) {
     $routeProvider
@@ -105,6 +104,18 @@ app.controller('header', function ($scope, $location) {
             location.href = ".#/";
             location.reload();
         });
+    }
+
+    $scope.passwordReset = function () {
+        Pace.start();
+        Parse.User.requestPasswordReset($scope.email, {
+            success: function () {
+                alert("Request sent");
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        }).then(Pace.stop());
     }
 });
 
@@ -250,6 +261,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         success: function (result) {
             $scope.result = result;
             $rootScope.title = result.get("barterTitle");
+            $scope.barterRequests = angular.copy(result.get('barterRequests'));
             $scope.$apply();
 
             console.log(result);
