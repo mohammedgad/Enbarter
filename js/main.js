@@ -435,14 +435,27 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             }
             $scope.result = result;
             $rootScope.title = "Dashboard";
-            $scope.offerMilestones = JSON.parse(JSON.stringify(result.get('offerMilestones')));
-            $scope.barterUpMilestones = JSON.parse(JSON.stringify(result.get('barterUpMilestones')));
+            $scope.offerMilestones = angular.copy(result.get('offerMilestones'));
+            $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
 
             $scope.$apply();
             if ($scope.result.get('state') != 'completed')
                 $scope.reloadChat();
 
             console.log(result);
+
+            var subscription = query.subscribe();
+            subscription.on('update', function (object) {
+                $scope.result = result;
+                $scope.offerMilestones = angular.copy(result.get('offerMilestones'));
+                $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
+                $scope.$apply();
+                console.log(object);
+            });
+
+            $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                subscription.unsubscribe();
+            });
             // if ($scope.result.get('state') != 'completed')
             //     chatIntervalId = window.setInterval(function () {
             //         $scope.reloadChat();
@@ -490,7 +503,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             }
         }
         $scope.result.set(column, arr);
-        $scope[column] = JSON.parse(JSON.stringify(arr));
+        $scope[column] = angular.copy(arr);
         Pace.start();
         $scope.result.save().then(Pace.stop());
     }
