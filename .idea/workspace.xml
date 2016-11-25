@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f419f5a6-d5bc-4f9c-9259-aaf15c2fb361" name="Default" comment="" />
+    <list default="true" id="f419f5a6-d5bc-4f9c-9259-aaf15c2fb361" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/city-marketing-lights-night.jpg" afterPath="$PROJECT_DIR$/images/slider/city-marketing-lights-night.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/city-sunny-people-street.jpg" afterPath="$PROJECT_DIR$/images/slider/city-sunny-people-street.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/hipster-865295.jpg" afterPath="$PROJECT_DIR$/images/slider/hipster-865295.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/road-street-blur-blurred.jpg" afterPath="$PROJECT_DIR$/images/slider/road-street-blur-blurred.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/startup-photos.jpg" afterPath="$PROJECT_DIR$/images/slider/startup-photos.jpg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/write-593333.jpg" afterPath="$PROJECT_DIR$/images/slider/write-593333.jpg" />
+    </list>
     <ignored path="enbarter.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -646,15 +653,15 @@
       <workItem from="1479809967471" duration="2201000" />
       <workItem from="1479881795280" duration="2595000" />
       <workItem from="1479957114484" duration="227000" />
-      <workItem from="1480104002787" duration="2373000" />
+      <workItem from="1480104002787" duration="2557000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19677000" />
+    <option name="totallyTimeSpent" value="19861000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1924" height="1050" extended-state="1" />
+    <frame x="-9" y="-9" width="1924" height="1050" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
