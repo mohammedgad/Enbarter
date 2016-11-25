@@ -630,7 +630,13 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             $scope.result.set("pic", parseFile);
         }
         Pace.start();
-        $scope.result.save(null).then(location.reload());
+        $scope.result.save({
+            success: function (result) {
+                location.reload();
+            }, error: function (object, error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
     }
 });
 
