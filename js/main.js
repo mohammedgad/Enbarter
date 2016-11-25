@@ -262,7 +262,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         success: function (result) {
             $scope.result = result;
             $rootScope.title = result.get("barterTitle");
-            $scope.barterRequests = angular.copy(result.get('barterRequests'));
+            $scope.barterRequests = angular.copy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
 
             console.log(result);
@@ -294,17 +294,20 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         for (var i = 0; i < $scope.milestones.length; i++) {
             milestones.push({checked: false, task: $scope.milestones[i]});
         }
-        $scope.result.add("barterRequests", {
+        var request = {
             deadline: $scope.deadline,
             milestone: milestones,
             user: Parse.User.current().id,
             username: Parse.User.current().get('username'),
             pic: Parse.User.current().get('pic')
-        });
+        };
+        $scope.result.add("barterRequests", request);
+
         var user = Parse.User.current();
         user.addUnique("barterSeeks", $scope.result);
         Pace.start();
         user.save().then($scope.result.save().then(Pace.stop()));
+        $scope.barterRequests.push(request);
     }
 
     $scope.bartered = function () {
@@ -324,13 +327,14 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
     $scope.barterUpOwner = function (request) {
         if (confirm('Are you sure you wanna barter up with this request?')) {
-            $scope.result.remove("barterRequests", request);
+            $scope.result.remove("barterRequests", JSON.parse(angular.toJson(request)));
             $scope.result.set("barterUpUser", Parse.User.createWithoutData(request.user));
             $scope.result.set("barterUpMilestones", request.milestone);
             $scope.result.set("barterUpDeadline", request.deadline);
             $scope.result.set("state", "bartered");
             Pace.start();
             $scope.result.save().then(Pace.stop());
+            $scope.barterRequests.splice($scope.barterRequests.indexOf(request), 1);
         }
     }
 
