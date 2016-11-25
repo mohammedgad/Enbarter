@@ -1,0 +1,5 @@
+<div ng-controller="notificationsCtrl">
+    <ul>
+        <li ng-repeat="result in results"><a href="{{result.get('redirect')}}">{{result.get('description')}}</a></li>
+    </ul>
+</div>

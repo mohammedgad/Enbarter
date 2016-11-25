@@ -34,6 +34,8 @@ app.config(function ($routeProvider) {
         templateUrl: "viewProfile.html"
     }).when("/profile", {
         templateUrl: "viewProfile.html"
+    }).when("/notifications", {
+        templateUrl: "notifications.html"
     }).otherwise({
         templateUrl: "404.html"
     });
@@ -677,4 +679,19 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 
         return false;
     }
+});
+
+app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    var Notification = Parse.Object.extend('Notification');
+    var query = new Parse.Query(Notification);
+    query.equalTo("user", Parse.User.current());
+    query.find({
+        success: function (results) {
+            $scope.results = results;
+            $scope.$apply();
+        },
+        error: function (error) {
+            alert("Error: " + error.code + " " + error.message);
+        }
+    });
 });
