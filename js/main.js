@@ -309,8 +309,8 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         var user = Parse.User.current();
         user.addUnique("barterSeeks", $scope.result);
         Pace.start();
-        user.save().then($scope.result.save().then(Pace.stop()));
-        $scope.barterRequests.push(angular.copy(request));
+        user.save();
+        $scope.result.save().then(Pace.stop()).then($scope.barterRequests.push(angular.copy(request)));
     }
 
     $scope.bartered = function () {
@@ -336,8 +336,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $scope.result.set("barterUpDeadline", request.deadline);
             $scope.result.set("state", "bartered");
             Pace.start();
-            $scope.result.save().then(Pace.stop());
-            $scope.barterRequests.splice($scope.barterRequests.indexOf(request), 1);
+            $scope.result.save().then(Pace.stop()).then($scope.barterRequests.splice($scope.barterRequests.indexOf(request), 1));
         }
     }
 
@@ -425,17 +424,18 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     Pace.start();
     query.get($routeParams.id, {
         success: function (result) {
+            if (!result.get('barterUpUser') && Parse.User.current().id != result.get('user').id) {
+                alert("Dashboard can't be accessed because there is no barter user");
+                window.location.href = "/Enbarter/#/barter/" + result.id;
+                return;
+            }
             if (!Parse.User.current() || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
                 alert("Error: Not allowed");
                 $location.path('/');
                 $scope.$apply();
                 return;
             }
-            if (!result.get('barterUpUser')) {
-                alert("Dashboard can't be accessed because there is no barter user");
-                window.location.href = "/Enbarter/#/barter/" + result.id;
-                return;
-            }
+
             if (!result.get('barterUpMilestones') || !result.get('offerMilestones') || !result.get('barterUpMilestones').length || !result.get('offerMilestones').length) {
                 alert("Dashboard can't be accessed because there is no Milestones");
                 window.location.href = "/Enbarter/#/barter/" + result.id;
