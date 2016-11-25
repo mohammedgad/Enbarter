@@ -275,7 +275,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     }).then(Pace.stop());
 
     $scope.sameAccount = function () {
-        if ($scope.result && $scope.result.get('user').id == Parse.User.current().id)
+        if (Parse.User.current() && $scope.result && $scope.result.get('user').id == Parse.User.current().id)
             return true;
         return false;
     }
@@ -312,7 +312,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             var barterRequests = $scope.result.get('barterRequests');
             if (barterRequests)
                 for (var i = 0; i < barterRequests.length; i++)
-                    if (barterRequests[i].user == Parse.User.current().id)
+                    if (Parse.User.current() && barterRequests[i].user == Parse.User.current().id)
                         return true;
         }
         return false;
@@ -347,12 +347,12 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
 
 app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParams) {
-    $scope.catSoft = ".#/browse/gibkTa09CL";
-    $scope.catWrite = ".#/browse/Cm4O1u9w3f";
-    $scope.catMedia = ".#/browse/xVhMsj1Yne";
-    $scope.catData = ".#/browse/E1loFjtGQM";
-    $scope.catMarket = ".#/browse/JyDcu5YNE8";
-    $scope.catOther = ".#/browse/8N5ksGyQ4h";
+    $scope.catSoft = ".#/browse/0NFJVql0U9";
+    $scope.catWrite = ".#/browse/zSBhtFd8ZE";
+    $scope.catMedia = ".#/browse/Wb8uqGgkdG";
+    $scope.catData = ".#/browse/4TtjWA9W5e";
+    $scope.catMarket = ".#/browse/7lY1lEwRny";
+    $scope.catOther = ".#/browse/U8MCGz0C2B";
 
 
     var query = new Parse.Query(Parse.Object.extend("Barter"));
