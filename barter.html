@@ -103,7 +103,7 @@
                 <tbody>
                 <tr ng-show="result.get('barterUpUser')">
                     <td class="text-center table-user-img">
-                        <img ng-src="{{result.get('barterUpUser').get('pic')?result.get('barterUpUser').get('pic').url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                        <img ng-src="{{result.get('barterUpUser').get('pic')?result.get('barterUpUser').get('pic').url():'/Enbarter/images/slider/hipster-865295.jpg'}}"
                              class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
@@ -124,7 +124,7 @@
 
                 <tr ng-repeat="request in barterRequests">
                     <td class="text-center table-user-img">
-                        <img ng-src="{{request.pic?request.pic.url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                        <img ng-src="{{request.pic?request.pic.url():'/Enbarter/images/slider/hipster-865295.jpg'}}"
                              class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
