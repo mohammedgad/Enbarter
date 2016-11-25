@@ -1,7 +1,10 @@
 var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize']);
 
 Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
-Parse.serverURL = 'https://enbarter.back4app.io'
+Parse.serverURL = 'https://enbarter.back4app.io';
+
+// Parse.initialize("myAppId", "client");
+// Parse.serverURL = 'http://localhost:1337/parse';
 
 app.config(function ($routeProvider) {
     $routeProvider
@@ -307,7 +310,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         user.addUnique("barterSeeks", $scope.result);
         Pace.start();
         user.save().then($scope.result.save().then(Pace.stop()));
-        $scope.barterRequests.push(request);
+        $scope.barterRequests.push(angular.copy(request));
     }
 
     $scope.bartered = function () {
