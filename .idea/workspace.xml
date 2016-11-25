@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f419f5a6-d5bc-4f9c-9259-aaf15c2fb361" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/city-marketing-lights-night.jpg" afterPath="$PROJECT_DIR$/images/slider/city-marketing-lights-night.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/city-sunny-people-street.jpg" afterPath="$PROJECT_DIR$/images/slider/city-sunny-people-street.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/hipster-865295.jpg" afterPath="$PROJECT_DIR$/images/slider/hipster-865295.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/road-street-blur-blurred.jpg" afterPath="$PROJECT_DIR$/images/slider/road-street-blur-blurred.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/startup-photos.jpg" afterPath="$PROJECT_DIR$/images/slider/startup-photos.jpg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/slider/write-593333.jpg" afterPath="$PROJECT_DIR$/images/slider/write-593333.jpg" />
-    </list>
+    <list default="true" id="f419f5a6-d5bc-4f9c-9259-aaf15c2fb361" name="Default" comment="" />
     <ignored path="enbarter.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
