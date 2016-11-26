@@ -41,7 +41,16 @@
                         <li class="nav-item" ng-show="isLoggedIn()">
                             <a href="{{dashboardLink}}" class="deepocean">Dashboard</a>
                         </li>
-                        <!--//dropdown-->
+                        <li class="nav-item dropdown" ng-show="isLoggedIn()">
+                            <a class="deepocean dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                               data-delay="0" data-close-others="false">Notifications<span
+                                    class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="result in notifications" class="{{!result.get('read')?'bg-black':''}}"><a
+                                        ng-click="notificationCheck(result)">{{result.get('description')}}{{result.get('read')}}</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                     <!--//nav-->
                 </div>
@@ -75,7 +84,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" ng-click="passwordReset()" data-dismiss="modal">Password
+                    <button type="button" class="btn btn-default" ng-click="passwordReset()" data-dismiss="modal">
+                        Password
                         Reset
                     </button>
                     <button type="button" class="btn btn-danger" ng-click="signup()" data-dismiss="modal">Signup

@@ -3,14 +3,13 @@
         <div class="row">
             <div class="col-md-2">
                 <a href="#" class="thumbnail">
-                    <img ng-src="{{result.get('pic')?result.get('pic').url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                    <img ng-src="{{result.get('pic')?result.get('pic').url():'/Enbarter/images/slider/hipster-865295.jpg'}}"
                          alt="">
                 </a>
                 <ul class="list-group">
-                    <a class="list-group-item" href="http://">Notifications<span class="badge">4</span></a>
-                    <a class="list-group-item" href="http://">Barters<span class="badge">3</span></a>
-                    <a class="list-group-item" href="http://">Achievements<span class="badge">7</span></a>
-                    <a class="list-group-item" href="http://">Edit Profile</a>
+                    <a class="list-group-item" href=".#/notifications">Notifications<span class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
+                    <a class="list-group-item" href=".#/dashboard">Barters<span class="badge">{{barters.length+result.get('barterSeeks').length}}</span></a>
+                    <a class="list-group-item" href=".#/profile/edit">Edit Profile</a>
                 </ul>
             </div>
             <div class="col-md-10">
@@ -32,7 +31,7 @@
                         </div>
                         <div class="form-group">
                             <a href="#" class="thumbnail">
-                                <img ng-src="{{result.get('pic')?result.get('pic').url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                                <img ng-src="{{result.get('pic')?result.get('pic').url():'/Enbarter/images/slider/hipster-865295.jpg'}}"
                                      alt="">
                             </a>
                             <label class="control-label" for="exampleInputFile1">Upload your avatar</label>
@@ -40,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <ul>
-                                <li ng-repeat="skill in skills" >
+                                <li ng-repeat="skill in skills">
                                     {{skill}}
                                     <button class="btn-link" ng-click="removeItemFrom(skills,skill)">X</button>
                                 </li>

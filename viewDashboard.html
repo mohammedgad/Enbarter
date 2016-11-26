@@ -2,10 +2,15 @@
     <div class="row">
         <div class="col-md-2">
             <a href="#" class="thumbnail">
-                <img ng-src="{{result.get('pic')?result.get('pic').url():'http://localhost:63342/Enbarter/images/slider/hipster-865295.jpg'}}"
+                <img ng-src="{{result.get('pic')?result.get('pic').url():'/Enbarter/images/slider/hipster-865295.jpg'}}"
                      alt="">
             </a>
             <p>@{{result.get('username')}}</p>
+            <ul class="list-group">
+                <a class="list-group-item" href=".#/notifications">Notifications<span class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
+                <a class="list-group-item" href=".#/dashboard">Barters<span class="badge">{{barters.length+result.get('barterSeeks').length}}</span></a>
+                <a class="list-group-item" href=".#/profile/edit">Edit Profile</a>
+            </ul>
         </div>
         <div class="col-md-10">
             <div class="row">
