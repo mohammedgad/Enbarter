@@ -67,6 +67,10 @@ app.run(function ($rootScope, $location) {
 
 
     $rootScope.notificationCheck = function (notification) {
+        if (notification.get('read')) {
+            $location.path(results.get('redirect'));
+            return;
+        }
         notification.set("read", true);
         $rootScope.nCount--;
         notification.save({
