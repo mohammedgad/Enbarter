@@ -46,8 +46,8 @@
                                data-delay="0" data-close-others="false">Notifications<span
                                     class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
                             <ul class="dropdown-menu">
-                                <li ng-repeat="result in notifications"><a
-                                        href="{{result.get('redirect')}}">{{result.get('description')}}{{result.get('read')}}</a>
+                                <li ng-repeat="result in notifications" class="{{!result.get('read')?'bg-black':''}}"><a
+                                        ng-click="notificationCheck(result)">{{result.get('description')}}{{result.get('read')}}</a>
                                 </li>
                             </ul>
                         </li>
