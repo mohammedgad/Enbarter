@@ -144,6 +144,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
     var Notification = Parse.Object.extend('Notification');
     var query = new Parse.Query(Notification);
     query.equalTo("user", Parse.User.current());
+    query.descending("createdAt");
     query.limit(10);
     query.find({
         success: function (results) {
@@ -718,8 +719,14 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 });
 
 app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    if (!Parse.User.current()) {
+        alert("Error: not allowed");
+        $location.path('/');
+        $scope.$apply();
+    }
     var Notification = Parse.Object.extend('Notification');
     var query = new Parse.Query(Notification);
+    query.descending("createdAt");
     query.equalTo("user", Parse.User.current());
     query.find({
         success: function (results) {
@@ -728,6 +735,8 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
         },
         error: function (error) {
             alert("Error: " + error.code + " " + error.message);
+            $location.path('/');
+            $scope.$apply();
         }
     });
 });
