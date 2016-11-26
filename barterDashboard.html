@@ -51,12 +51,12 @@
     height: 300px;
     overflow-y: scroll;
 " scroll-glue>
-                    <p ng-repeat="m in messages" ><a href=".#/profile/{{m.get('user').id}}"
+                    <p ng-repeat="m in messages"><a href=".#/profile/{{m.get('user').id}}"
                                                     class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
                         {{m.get('message')}}</p>
                 </div>
                 <form role="form" ng-show="result.get('state')!='completed'">
-                    <input type="text" class="form-control" ng-model="message" >
+                    <input type="text" class="form-control" ng-model="message">
                     <button ng-click="sendMessage()" class="btn btn-block btn-info">Send</button>
                 </form>
             </div>
@@ -101,7 +101,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Close & Rate</h4>
+                    <h4 class="modal-title">Milestone check</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -110,7 +110,7 @@
                         <textarea type="text" class="form-control" id="formInput2567" ng-model="comment"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="control-label" for="formInput25675">Final Pic</label>
+                        <label class="control-label" for="formInput25675">Attach</label>
                         <input type="file" class="form-control" id="formInput25675">
                     </div>
                 </div>

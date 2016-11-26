@@ -68,14 +68,21 @@ app.run(function ($rootScope, $location) {
 
     $rootScope.notificationCheck = function (notification) {
         if (notification.get('read')) {
-            $location.path(results.get('redirect'));
+            if (notification.get('redirect') == $location.path())
+                location.reload();
+            else
+                $location.path(notification.get('redirect'));
             return;
         }
         notification.set("read", true);
         $rootScope.nCount--;
         notification.save({
             success: function (results) {
-                $location.path(results.get('redirect'));
+                if (results.get('redirect') == $location.path())
+                    location.reload();
+                else
+                    $location.path(results.get('redirect'));
+                $rootScope.$apply();
             },
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
@@ -141,25 +148,35 @@ app.controller('header', function ($scope, $location, $rootScope) {
         }).then(Pace.stop());
     }
 
-    var Notification = Parse.Object.extend('Notification');
-    var query = new Parse.Query(Notification);
-    query.equalTo("user", Parse.User.current());
-    query.descending("createdAt");
-    query.limit(10);
-    query.find({
-        success: function (results) {
-            $scope.notifications = results;
-            $rootScope.nCount = results.filter(function (x) {
-                if (!x.get('read'))
-                    return true;
-                return false;
-            }).length;
+    if (Parse.User.current()) {
+        var Notification = Parse.Object.extend('Notification');
+        var query = new Parse.Query(Notification);
+        query.equalTo("user", Parse.User.current());
+        query.descending("createdAt");
+        query.limit(10);
+        query.find({
+            success: function (results) {
+                $scope.notifications = results;
+                $rootScope.nCount = results.filter(function (x) {
+                    if (!x.get('read'))
+                        return true;
+                    return false;
+                }).length;
+                $scope.$apply();
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
+
+        var subscription = query.subscribe();
+        subscription.on('create', function (object) {
+            console.log(object);
+            $rootScope.nCount++;
+            $scope.notifications.unshift(object);
             $scope.$apply();
-        },
-        error: function (error) {
-            alert("Error: " + error.code + " " + error.message);
-        }
-    });
+        });
+    }
 });
 
 
