@@ -67,7 +67,7 @@ app.run(function ($rootScope) {
 
 });
 
-app.controller('header', function ($scope, $location) {
+app.controller('header', function ($scope, $location, $rootScope) {
     $scope.homeLink = ".#/";
     $scope.browseLink = ".#/browse";
     $scope.createBarterLink = ".#/create_barter";
@@ -123,6 +123,25 @@ app.controller('header', function ($scope, $location) {
             }
         }).then(Pace.stop());
     }
+
+    var Notification = Parse.Object.extend('Notification');
+    var query = new Parse.Query(Notification);
+    query.equalTo("user", Parse.User.current());
+    query.limit(10);
+    query.find({
+        success: function (results) {
+            $scope.notifications = results;
+            $rootScope.nCount = results.filter(function (x) {
+                if (!x.get('read'))
+                    return true;
+                return false;
+            }).length;
+            $scope.$apply();
+        },
+        error: function (error) {
+            alert("Error: " + error.code + " " + error.message);
+        }
+    });
 });
 
 
