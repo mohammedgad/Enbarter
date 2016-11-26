@@ -41,7 +41,7 @@ app.config(function ($routeProvider) {
     });
 });
 
-app.run(function ($rootScope) {
+app.run(function ($rootScope, $location) {
     $rootScope.title = 'EnBarter';
     $rootScope.description = "123";
     $rootScope.keywords = "123";
@@ -65,6 +65,19 @@ app.run(function ($rootScope) {
         }
     }
 
+
+    $rootScope.notificationCheck = function (notification) {
+        notification.set("read", true);
+        $rootScope.nCount--;
+        notification.save({
+            success: function (results) {
+                $location.path(results.get('redirect'));
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
+    }
 });
 
 app.controller('header', function ($scope, $location, $rootScope) {

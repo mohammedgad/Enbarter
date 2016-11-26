@@ -1,6 +1,6 @@
 <div ng-controller="notificationsCtrl">
     <ul>
-        <li ng-repeat="result in results"><input type="checkbox" ng-checked="{{result.get('read')}}"  disabled><a
-                href="{{result.get('redirect')}}">{{result.get('description')}}{{result.get('read')}}</a></li>
+        <li ng-repeat="result in results" class="{{!result.get('read')?'bg-black':''}}"><a
+                ng-click="notificationCheck(result)">{{result.get('description')}}{{result.get('read')}}</a>
     </ul>
 </div>
