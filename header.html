@@ -18,11 +18,11 @@
                 </div>
                 <!-- Navigation -->
                 <div class="collapse navbar-collapse" id="nav1">
-                    <button id="signButton" class="btn btn-info pull-right" type="button" data-target="#sign"
+                    <button id="signButton" class="btn btn-info " type="button" data-target="#sign"
                             data-toggle="modal" ng-hide="isLoggedIn()">Login /
                         Sign up
                     </button>
-                    <button id="logoutButton" class="btn btn-danger pull-right" type="button"
+                    <button id="logoutButton" class="btn btn-danger " type="button"
                             ng-click="logout()" ng-show="isLoggedIn()">Logout
                     </button>
                     <ul class="nav navbar-nav navbar-right">
@@ -101,7 +101,7 @@
 
             <div class="modal-content" ng-show="isLoggedIn()">
                 <div class="modal-footer">
-                    <button class="btn btn-danger btn-block pull-right" type="button"
+                    <button class="btn btn-danger btn-block " type="button"
                             ng-click="logout()" ng-show="isLoggedIn()">Logout
                     </button>
                 </div>
