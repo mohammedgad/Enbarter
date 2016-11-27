@@ -108,6 +108,9 @@
                     </td>
                     <td>
                         <a href=".#/profile/{{result.get('barterUpUser').id}}" class="username-link">{{result.get('barterUpUser').get('username')}}</a>
+                        <br>
+                        <a class="label label-default">Ratings <span class="badge">{{(result.get('barterUpUser').get('rateCount'))?(result.get('barterUpUser').get('rate')/result.get('barterUpUser').get('rateCount')| number:1):'5'}}</span></a>
+
                     </td>
                     <td>{{result.get('barterUpDeadline')}}</td>
                     <td class="table-action">

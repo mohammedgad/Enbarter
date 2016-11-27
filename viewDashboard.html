@@ -7,17 +7,21 @@
             </a>
             <p>@{{result.get('username')}}</p>
             <ul class="list-group">
-                <a class="list-group-item" href=".#/notifications">Notifications<span class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
-                <a class="list-group-item" href=".#/dashboard">Barters<span class="badge">{{barters.length+result.get('barterSeeks').length}}</span></a>
-                <a class="list-group-item" href=".#/profile/edit">Edit Profile</a>
+                <a class="list-group-item">Ratings <span class="badge">{{(result.get('rateCount'))?(result.get('rate')/result.get('rateCount')| number:1):'5'}}</span></a>
+                <a ng-show="userId==result.id" class="list-group-item" href=".#/notifications">Notifications<span
+                        class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
+                <a class="list-group-item">Barters<span class="badge">{{barters.length+result.get('barterSeeks').length}}</span></a>
+                <a ng-show="userId==result.id" class="list-group-item" href=".#/profile/edit">Edit Profile</a>
             </ul>
         </div>
         <div class="col-md-10">
             <div class="row">
                 <h3>Dashboards</h3>
-                <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer offer:hover" ng-show="dashboardActive(barter)">
+                <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer offer:hover"
+                     ng-show="dashboardActive(barter)">
                     <div class="col-md-8 text-left">
-                        <a href="./#/dashboard/barter/{{barter.id}}"><h3 class="offer-list-item-h1">{{barter.get('barterTitle')}}</h3></a>
+                        <a href="./#/dashboard/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
+                            {{barter.get('barterTitle')}}</h3></a>
                         <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
                     </div>
                     <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
@@ -26,9 +30,12 @@
                         <i class="fa fa-{{barter.get('offerCategory').get('icon')}} fa-3x deepocean offer-icon"></i>
                     </div>
                 </div>
-                <div ng-repeat="barter in result.get('barterSeeks')" class="row margin-top5 margin-bottom15 text-right offer offer:hover" ng-show="dashboardActive(barter)">
+                <div ng-repeat="barter in result.get('barterSeeks')"
+                     class="row margin-top5 margin-bottom15 text-right offer offer:hover"
+                     ng-show="dashboardActive(barter)">
                     <div class="col-md-8 text-left">
-                        <a href="./#/dashboard/barter/{{barter.id}}"><h3 class="offer-list-item-h1">{{barter.get('barterTitle')}}</h3></a>
+                        <a href="./#/dashboard/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
+                            {{barter.get('barterTitle')}}</h3></a>
                         <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
                     </div>
                     <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">

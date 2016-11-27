@@ -43,11 +43,16 @@
                         </li>
                         <li class="nav-item dropdown" ng-show="isLoggedIn()">
                             <a class="deepocean dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-                               data-delay="0" data-close-others="false">Notifications<span
-                                    class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
+                               data-delay="0" data-close-others="false"><i class="fa fa-bell" aria-hidden="true"></i>
+                                <span
+                                        class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
                             <ul class="dropdown-menu">
                                 <li ng-repeat="result in notifications" class="{{!result.get('read')?'bg-black':''}}"><a
-                                        ng-click="notificationCheck(result)">{{result.get('description')}}{{result.get('read')}}</a>
+                                        ng-click="notificationCheck(result)">{{result.get('description')}}</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li class=""><a
+                                        href=".#/notifications">More Notifications</a>
                                 </li>
                             </ul>
                         </li>
