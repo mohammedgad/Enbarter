@@ -1,5 +1,5 @@
 <div ng-controller="notificationsCtrl">
-    <ul>
+    <ul class="well">
         <li ng-repeat="result in results" class="{{!result.get('read')?'bg-black':''}}"><a
                 ng-click="notificationCheck(result)">{{result.get('description')}}</a>
     </ul>

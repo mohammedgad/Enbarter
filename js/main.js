@@ -194,12 +194,15 @@ app.controller('createBarter', function ($scope) {
     });
 
     $scope.startBarter = function () {
-        $scope.canStartDisabled = true;
         if (!Parse.User.current()) {
             alert("Not loggedIn");
-            return false;
+            return;
         }
-
+        if (!$scope.milestones || !$scope.milestones.length) {
+            alert('Milestones are required!');
+            return;
+        }
+        $scope.canStartDisabled = true;
         var Barter = Parse.Object.extend("Barter");
         var Category = Parse.Object.extend("Category");
         var barter = new Barter();
@@ -364,7 +367,10 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     }
 
     $scope.barterUpRequest = function () {
-
+        if (!$scope.milestones || !$scope.milestones.length) {
+            alert('Milestones are required!');
+            return;
+        }
         var milestones = [];
         for (var i = 0; i < $scope.milestones.length; i++) {
             milestones.push({checked: false, task: $scope.milestones[i]});

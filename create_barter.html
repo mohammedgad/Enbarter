@@ -18,11 +18,12 @@
                 <div class="form-group">
                     <label class="control-label" for="formInput121">barter title</label>
                     <input type="text" class="form-control" id="formInput121" placeholder="Placeholder text"
-                           ng-model="barterTitle">
+                           ng-model="barterTitle" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput167">Barter Brief Summary</label>
-                    <textarea ng-model="barterDescription" class="form-control" rows="3" id="formInput167"></textarea>
+                    <textarea ng-model="barterDescription" class="form-control" rows="3" id="formInput167"
+                              required></textarea>
                 </div>
             </div>
             <div class="row">
@@ -31,13 +32,14 @@
                     <label class="control-label" for="formInput226">Your offer Category&nbsp;
                         <br>
                     </label>
-                    <select id="formInput226" class="form-control" ng-model="offerCategory">
+                    <select id="formInput226" class="form-control" ng-model="offerCategory" required>
                         <option ng-repeat="cat in categories" value="{{$index}}">{{cat.get('name')}}
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput2565">Your offer Description</label>
-                    <textarea class="form-control" rows="3" id="formInput2565" ng-model="offerDescription"></textarea>
+                    <textarea class="form-control" rows="3" id="formInput2565" ng-model="offerDescription"
+                              required></textarea>
                 </div>
                 <div class="form-group">
                     <ul>
@@ -57,11 +59,11 @@
                 <div class="form-group">
                     <label class="control-label" for="formInput1955">External sample link</label>
                     <input type="text" class="form-control" id="formInput1955" placeholder="Placeholder text"
-                           ng-model="offerSampleLink">
+                           ng-model="offerSampleLink" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="exampleInputFile1">Upload Sample Image</label>
-                    <input type="file" id="exampleInputFile1" ng-model="offerSampleImage">
+                    <input type="file" id="exampleInputFile1" ng-model="offerSampleImage" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput1954">Deadline (the time you sayy you gonna produce your
@@ -69,7 +71,7 @@
                         )
                     </label>
                     <input type="number" class="form-control" id="formInput1954"
-                           ng-model="offerDeadline">
+                           ng-model="offerDeadline" required>
                 </div>
             </div>
             <div class="row">
@@ -78,22 +80,23 @@
                     <label class="control-label" for="formInput226">Your seek Category&nbsp;
                         <br>
                     </label>
-                    <select id="formInput206" class="form-control" ng-model="seekCategory">
+                    <select id="formInput206" class="form-control" ng-model="seekCategory" required>
                         <option ng-repeat="cat in categories" value="{{$index}}">{{cat.get('name')}}
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput2564">Your seek Description</label>
-                    <textarea class="form-control" rows="3" id="formInput2564" ng-model="seekDescription"></textarea>
+                    <textarea class="form-control" rows="3" id="formInput2564" ng-model="seekDescription"
+                              required></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput1959">External sample link</label>
                     <input type="text" class="form-control" id="formInput1959" placeholder="Placeholder text"
-                           ng-model="seekSampleLink">
+                           ng-model="seekSampleLink" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="exampleInputFile">Upload Sample Image</label>
-                    <input type="file" id="exampleInputFile" ng-model="seekSampleImage">
+                    <input type="file" id="exampleInputFile" ng-model="seekSampleImage" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput195">Deadline (the time you want what you seek to be
@@ -101,7 +104,7 @@
                         )
                     </label>
                     <input type="number" class="form-control" id="formInput195"
-                           ng-model="seekDeadline">
+                           ng-model="seekDeadline" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="startBarter()"
