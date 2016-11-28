@@ -56,8 +56,8 @@
                         {{m.get('message')}}</p>
                 </div>
                 <form role="form" ng-show="result.get('state')!='completed'">
-                    <input type="text" class="form-control" ng-model="message">
-                    <button ng-click="sendMessage()" class="btn btn-block btn-info">Send</button>
+                    <input type="text" class="form-control" ng-model="message"  ng-disabled="cantSend">
+                    <button ng-click="sendMessage()" class="btn btn-block btn-info" ng-disabled="cantSend">Send</button>
                 </form>
             </div>
         </div>
