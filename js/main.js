@@ -660,13 +660,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         var oppisite = (who == 'offer') ? 'barterUp' : 'offer';
         result.set(who + "Rate", $scope.rate);
         result.set(who + "Review", $scope.review);
-        fileUploadControl = $("#formInput2565")[0];
-        if (fileUploadControl.files.length > 0) {
-            var file = fileUploadControl.files[0];
-            var name = "photo1.jpg";
-            var parseFile = new Parse.File(name, file);
-            result.set(who + "FinalPic", parseFile);
-        }
         if (result.get(oppisite + "Rate"))
             result.set("state", 'completed');
 

@@ -7,7 +7,7 @@
                     <button class="btn btn-success" data-target="#closeRate" data-toggle="modal"
                             ng-show="showClose('offer')">Close & Rate
                     </button>
-                    <a href="result.get('offerFinalPic').url()" class="btn btn-danger"
+                    <a href="{{result.get('offerFinalPic').url()}}" class="btn btn-danger"
                        ng-show="result.get('offerFinalPic')">final link</a>
                 </h3>
                 <div class="well" style="
@@ -31,7 +31,7 @@
                     <button class="btn btn-success" data-target="#closeRate" data-toggle="modal"
                             ng-show="showClose('barterUp')">Close & Rate
                     </button>
-                    <a href="result.get('barterUpFinalPic').url()" class="btn btn-danger"
+                    <a href="{{result.get('barterUpFinalPic').url()}}" class="btn btn-danger"
                        ng-show="result.get('barterUpFinalPic')">final link</a>
                 </h3>
                 <div class="well" style="
@@ -87,11 +87,6 @@
 
                         <textarea type="text" class="form-control" id="formInput256" ng-model="review"
                                   required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="formInput2565">Final Pic</label>
-
-                        <input type="file" class="form-control" id="formInput2565" required>
                     </div>
                 </div>
                 <div class="modal-footer">
