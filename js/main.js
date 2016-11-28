@@ -679,19 +679,44 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         var oppisite = (x == 'offer') ? 'barterUp' : 'offer';
         if ($scope.result && ((x == 'offer' && Parse.User.current().id == $scope.result.get('user').id) || (x == 'barterUp' && Parse.User.current().id == $scope.result.get('barterUpUser').id) || ($scope.result.get(oppisite + "Rate"))))
             return false;
+        if ($scope.result && $scope.result.get(x + 'FinalPic'))
+            return true;
+        return false;
+    }
+    $scope.showFinalPic = function (x) {
+        var oppisite = (x == 'offer') ? 'barterUp' : 'offer';
+        if ($scope.result && ((x == 'offer' && Parse.User.current().id != $scope.result.get('user').id) || (x == 'barterUp' && Parse.User.current().id != $scope.result.get('barterUpUser').id) ))
+            return false;
         var arr = [];
         if ($scope.result)
-            arr = $scope.result.get(x + 'Milestones');
+            arr = $scope.result.get(x + 'Milestones') || [];
+
         for (var i = 0; i < arr.length; i++) {
             if (!arr[i].checked)
                 return false;
         }
-        if (arr.length)
+        if (arr.length && !$scope.result.get(x + 'FinalPic'))
             return true;
-        else
-            return false;
+        return false;
     }
 
+    $scope.finalPic = function (x) {
+        var result = angular.copy($scope.result);
+        fileUploadControl = $("#" + x + "FinalPic")[0];
+        if (fileUploadControl.files.length > 0) {
+            var file = fileUploadControl.files[0];
+            var name = "photo1.jpg";
+            var parseFile = new Parse.File(name, file);
+            result.set(x + "FinalPic", parseFile);
+        }
+        result.save({
+            success: function () {
+
+            }, error: function (object, error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
+    }
     $scope.canCheck = function (x) {
         if (Parse.User.current().id == $scope.result.get(x).id)
             return true;
