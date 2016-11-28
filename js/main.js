@@ -340,10 +340,19 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     }
 
     $scope.disable = function () {
-        if ($scope.result) {
+        var result = angular.copy($scope.result);
+        if (result) {
             result.set("state", "disabled");
             Pace.start();
-            result.save().then(Pace.stop()).then($scope.$apply());
+            result.save({
+                success: function (results) {
+                    $scope.result = results;
+                    $scope.$apply();
+                },
+                error: function (error) {
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            }).then(Pace.stop());
         }
     }
 
@@ -360,13 +369,29 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             username: Parse.User.current().get('username'),
             pic: Parse.User.current().get('pic')
         };
-        $scope.result.add("barterRequests", request);
+        var result = angular.copy($scope.result);
+        result.add("barterRequests", request);
 
         var user = Parse.User.current();
-        user.addUnique("barterSeeks", $scope.result);
+        user.addUnique("barterSeeks", result);
         Pace.start();
-        user.save();
-        $scope.result.save().then(Pace.stop()).then($scope.barterRequests.push(angular.copy(request)));
+        user.save({
+            success: function (results) {
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
+        result.save({
+            success: function (results) {
+                $scope.result = results;
+                $scope.barterRequests.push(angular.copy(request));
+                $scope.$apply();
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        }).then(Pace.stop());
     }
 
     $scope.bartered = function () {
@@ -386,13 +411,23 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
     $scope.barterUpOwner = function (request) {
         if (confirm('Are you sure you wanna barter up with this request?')) {
-            $scope.result.remove("barterRequests", JSON.parse(angular.toJson(request)));
-            $scope.result.set("barterUpUser", Parse.User.createWithoutData(request.user));
-            $scope.result.set("barterUpMilestones", request.milestone);
-            $scope.result.set("barterUpDeadline", request.deadline);
-            $scope.result.set("state", "bartered");
+            var result = $scope.result;
+            result.remove("barterRequests", JSON.parse(angular.toJson(request)));
+            result.set("barterUpUser", Parse.User.createWithoutData(request.user));
+            result.set("barterUpMilestones", request.milestone);
+            result.set("barterUpDeadline", request.deadline);
+            result.set("state", "bartered");
             Pace.start();
-            $scope.result.save().then(Pace.stop()).then($scope.barterRequests.splice($scope.barterRequests.indexOf(request), 1));
+            result.save({
+                success: function (results) {
+                    $scope.result = results;
+                    $scope.barterRequests.splice($scope.barterRequests.indexOf(request), 1)
+                    $scope.$apply();
+                },
+                error: function (error) {
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            }).then(Pace.stop());
         }
     }
 
@@ -403,7 +438,14 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         report.set("description", $scope.reportDescription);
         report.set("barter", $scope.result);
         Pace.start();
-        report.save(null).then(Pace.stop()).then(alert("Thank You"));
+        report.save({
+            success: function (results) {
+                alert("Thank You");
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        }).then(Pace.stop());
     }
 });
 
@@ -536,13 +578,22 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     }).then(Pace.stop());
     $scope.sendMessage = function () {
         if ($scope.result.get('state') != 'completed') {
+            $scope.cantSend = true;
             var chat = new Chat();
             chat.set("message", $scope.message);
             chat.set("user", Parse.User.current());
             chat.set("barter", $scope.result);
             Pace.start();
-            chat.save().then(Pace.stop());
-            $scope.message = "";
+            chat.save({
+                success: function (results) {
+                    $scope.message = "";
+                    $scope.cantSend = false;
+                    $scope.$apply();
+                },
+                error: function (error) {
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            }).then(Pace.stop());
         }
     }
     $scope.checkParse = function (o, column) {
@@ -551,7 +602,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     }
 
     $scope.check = function (o, column) {
-        var arr = $scope.result.get(column);
+        var result = angular.copy($scope.result);
+        var arr = result.get(column);
         for (var i = 0; i < arr.length; i++) {
             if (arr[i].task == o.task) {
                 arr[i].checked = true;
@@ -566,29 +618,46 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 }
             }
         }
-        $scope.result.set(column, arr);
-        $scope[column] = angular.copy(arr);
+        result.set(column, arr);
         Pace.start();
-        $scope.result.save().then(Pace.stop());
+        result.save({
+            success: function (results) {
+                $scope[column] = angular.copy(arr);
+                $scope.result = results;
+                $scope.$apply();
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        }).then(Pace.stop());
     }
 
     $scope.closeAndRate = function () {
-        var who = (Parse.User.current().id == $scope.result.get('user').id) ? "offer" : "barterUp";
+        var result = angular.copy($scope.result);
+        var who = (Parse.User.current().id == result.get('user').id) ? "offer" : "barterUp";
         var oppisite = (who == 'offer') ? 'barterUp' : 'offer';
-        $scope.result.set(who + "Rate", $scope.rate);
-        $scope.result.set(who + "Review", $scope.review);
+        result.set(who + "Rate", $scope.rate);
+        result.set(who + "Review", $scope.review);
         fileUploadControl = $("#formInput2565")[0];
         if (fileUploadControl.files.length > 0) {
             var file = fileUploadControl.files[0];
             var name = "photo1.jpg";
             var parseFile = new Parse.File(name, file);
-            $scope.result.set(who + "FinalPic", parseFile);
+            result.set(who + "FinalPic", parseFile);
         }
-        if ($scope.result.get(oppisite + "Rate"))
-            $scope.result.set("state", 'completed');
+        if (result.get(oppisite + "Rate"))
+            result.set("state", 'completed');
 
         Pace.start();
-        $scope.result.save().then(Pace.stop());
+        result.save({
+            success: function (results) {
+                $scope.result = results;
+                $scope.$apply();
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        }).then(Pace.stop());
     }
 
     $scope.showClose = function (x) {
@@ -673,20 +742,21 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
     }).then(Pace.stop());
 
     $scope.submit = function () {
-        $scope.result.set("username", $scope.username);
-        $scope.result.set("bio", $scope.bio);
-        $scope.result.set("birthday", $scope.birthday);
-        $scope.result.set("skills", $scope.skills);
-        $scope.result.set("workLinks", $scope.workLinks);
+        var result = angular.copy($scope.result);
+        result.set("username", $scope.username);
+        result.set("bio", $scope.bio);
+        result.set("birthday", $scope.birthday);
+        result.set("skills", $scope.skills);
+        result.set("workLinks", $scope.workLinks);
         fileUploadControl = $("#exampleInputFile1")[0];
         if (fileUploadControl.files.length > 0) {
             var file = fileUploadControl.files[0];
             var name = "photo1.jpg";
             var parseFile = new Parse.File(name, file);
-            $scope.result.set("pic", parseFile);
+            result.set("pic", parseFile);
         }
         Pace.start();
-        $scope.result.save({
+        result.save({
             success: function (result) {
                 location.reload();
             }, error: function (object, error) {
