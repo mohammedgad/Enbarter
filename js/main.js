@@ -99,7 +99,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
 
     $scope.login = function () {
         Pace.start();
-        Parse.User.logIn($scope.email, $scope.password, {
+        Parse.User.logIn($scope.username, $scope.password, {
             success: function (user) {
                 location.reload();
             },
@@ -111,20 +111,23 @@ app.controller('header', function ($scope, $location, $rootScope) {
     }
 
     $scope.signup = function () {
-        var user = new Parse.User();
-        user.set("username", $scope.email);
-        user.set("password", $scope.password);
-        user.set("email", $scope.email);
-        Pace.start();
+        var email = prompt("Enter Email");
+        if (email) {
+            var user = new Parse.User();
+            user.set("username", $scope.username);
+            user.set("password", $scope.password);
+            user.set("email", email);
+            Pace.start();
 
-        user.signUp(null, {
-            success: function (user) {
-                location.reload();
-            },
-            error: function (user, error) {
-                alert("Error: " + error.code + " " + error.message);
-            }
-        }).then(Pace.stop());
+            user.signUp(null, {
+                success: function (user) {
+                    location.reload();
+                },
+                error: function (user, error) {
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            }).then(Pace.stop());
+        } else alert('Email is required');
     }
 
     $scope.logout = function () {
@@ -137,15 +140,18 @@ app.controller('header', function ($scope, $location, $rootScope) {
     }
 
     $scope.passwordReset = function () {
-        Pace.start();
-        Parse.User.requestPasswordReset($scope.email, {
-            success: function () {
-                alert("Request sent");
-            },
-            error: function (error) {
-                alert("Error: " + error.code + " " + error.message);
-            }
-        }).then(Pace.stop());
+        var email = prompt("Enter Email");
+        if (email) {
+            Pace.start();
+            Parse.User.requestPasswordReset(email, {
+                success: function () {
+                    alert("Request sent");
+                },
+                error: function (error) {
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            }).then(Pace.stop());
+        } else alert('Email is required');
     }
 
     if (Parse.User.current()) {
