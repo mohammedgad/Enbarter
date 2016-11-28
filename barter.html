@@ -133,6 +133,9 @@
                     <td>
                         <a href=".#/profile/{{request.user.id}}"
                            class="username-link">{{request.user.get('username')}}</a>
+                        <br>
+                        <a class="label label-default">Ratings <span class="badge">{{(rrequest.user.get('rateCount'))?(request.user.get('rate')/request.user.get('rateCount')| number:1):'5'}}</span></a>
+
                     </td>
                     <td>{{request.deadline}}</td>
                     <td class="table-action" ng-show="sameAccount()&&!result.get('barterUpUser')">
@@ -181,7 +184,7 @@
                         </label>
 
                         <input type="text" class="form-control" id="formInput256" ng-model="milestoneItem">
-                        <button ng-click="milestoneItem=addItemTo(milestones,milestoneItem)">Add</button>
+                        <button class="btn btn-default" ng-click="milestoneItem=addItemTo(milestones,milestoneItem)">Add</button>
 
                     </div>
                 </div>

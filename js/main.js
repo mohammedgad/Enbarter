@@ -645,6 +645,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             success: function (results) {
                 $scope[column] = angular.copy(arr);
                 $scope.result = results;
+                $scope.comment = '';
                 $scope.$apply();
             },
             error: function (error) {
@@ -659,13 +660,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         var oppisite = (who == 'offer') ? 'barterUp' : 'offer';
         result.set(who + "Rate", $scope.rate);
         result.set(who + "Review", $scope.review);
-        fileUploadControl = $("#formInput2565")[0];
-        if (fileUploadControl.files.length > 0) {
-            var file = fileUploadControl.files[0];
-            var name = "photo1.jpg";
-            var parseFile = new Parse.File(name, file);
-            result.set(who + "FinalPic", parseFile);
-        }
         if (result.get(oppisite + "Rate"))
             result.set("state", 'completed');
 
@@ -763,6 +757,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
     }).then(Pace.stop());
 
     $scope.submit = function () {
+        $scope.cantSubmit = true;
         var result = angular.copy($scope.result);
         result.set("username", $scope.username);
         result.set("bio", $scope.bio);
@@ -783,6 +778,9 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             }, error: function (object, error) {
                 alert("Error: " + error.code + " " + error.message);
             }
+        }).then(function () {
+            $scope.cantSubmit = false;
+            $scope.$apply();
         });
     }
 });
