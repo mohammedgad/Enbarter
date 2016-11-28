@@ -194,12 +194,15 @@ app.controller('createBarter', function ($scope) {
     });
 
     $scope.startBarter = function () {
-        $scope.canStartDisabled = true;
         if (!Parse.User.current()) {
             alert("Not loggedIn");
-            return false;
+            return;
         }
-
+        if (!$scope.milestones || !$scope.milestones.length) {
+            alert('Milestones are required!');
+            return;
+        }
+        $scope.canStartDisabled = true;
         var Barter = Parse.Object.extend("Barter");
         var Category = Parse.Object.extend("Category");
         var barter = new Barter();
@@ -364,7 +367,10 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     }
 
     $scope.barterUpRequest = function () {
-
+        if (!$scope.milestones || !$scope.milestones.length) {
+            alert('Milestones are required!');
+            return;
+        }
         var milestones = [];
         for (var i = 0; i < $scope.milestones.length; i++) {
             milestones.push({checked: false, task: $scope.milestones[i]});
@@ -376,6 +382,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         };
         var result = angular.copy($scope.result);
         result.add("barterRequests", request);
+        // result.add("barterRequestsUsers", Parse.User.current());
 
         var user = Parse.User.current();
         user.addUnique("barterSeeks", result);
@@ -404,7 +411,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             var barterRequests = $scope.result.get('barterRequests');
             if (barterRequests)
                 for (var i = 0; i < barterRequests.length; i++)
-                    if (Parse.User.current() && barterRequests[i].user == Parse.User.current().id)
+                    if (Parse.User.current() && barterRequests[i].user.id == Parse.User.current().id)
                         return true;
         }
         return false;
@@ -417,8 +424,17 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     $scope.barterUpOwner = function (request) {
         if (confirm('Are you sure you wanna barter up with this request?')) {
             var result = $scope.result;
-            result.remove("barterRequests", JSON.parse(angular.toJson(request)));
-            result.set("barterUpUser", request.user);
+            result.remove("barterRequests", {
+                deadline: request.deadline,
+                milestone: request.milestone,
+                user: {
+                    objectId: request.user.id || request.user.objectId
+                }
+            });
+            result.set("barterUpUser", {
+                "__type": "Pointer", "className": "_User",
+                "objectId": request.user.id || request.user.objectId
+            });
             result.set("barterUpMilestones", request.milestone);
             result.set("barterUpDeadline", request.deadline);
             result.set("state", "bartered");
