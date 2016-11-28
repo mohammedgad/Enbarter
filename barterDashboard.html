@@ -23,6 +23,13 @@
                             {{o.task}}
                             <a ng-show="o.file" href="{{o.file.url()}}">File</a>
                         </li>
+
+                        <li ng-show="showFinalPic('offer')">
+                            <input type="file" id="offerFinalPic">
+                            <button class="btn btn-success" ng-click="finalPic('offer')"
+                            >Final pic
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -45,6 +52,13 @@
                                    data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
                             {{o.task}}
                             <a ng-show="o.file" href="{{o.file.url()}}">File</a>
+                        </li>
+
+                        <li ng-show="showFinalPic('barterUp')">
+                            <input type="file" id="barterUpFinalPic">
+                            <button class="btn btn-success" ng-click="finalPic('barterUp')"
+                            >Final pic
+                            </button>
                         </li>
                     </ul>
 
