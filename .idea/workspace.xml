@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="2e3cd79b-e06a-4ec3-a556-aa8f97d7565b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/barter.html" afterPath="$PROJECT_DIR$/barter.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/create_barter.html" afterPath="$PROJECT_DIR$/create_barter.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/editProfile.html" afterPath="$PROJECT_DIR$/editProfile.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
     </list>
     <ignored path="enbarter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,8 +62,8 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="742" column="35" lean-forward="true" selection-start-line="742" selection-start-column="35" selection-end-line="769" selection-end-column="41" />
+            <state relative-caret-position="122">
+              <caret line="630" column="41" lean-forward="true" selection-start-line="630" selection-start-column="41" selection-end-line="630" selection-end-column="41" />
               <folding>
                 <element signature="e#412#468#0" expanded="true" />
                 <element signature="e#486#528#0" expanded="true" />
@@ -92,9 +92,9 @@
                 <element signature="e#15124#15511#0" expanded="true" />
                 <element signature="e#15880#16105#0" expanded="true" />
                 <element signature="e#21301#21637#0" expanded="true" />
-                <element signature="e#22604#22919#0" expanded="true" />
-                <element signature="e#23733#23996#0" expanded="true" />
-                <element signature="e#27598#27817#0" expanded="true" />
+                <element signature="e#22604#22956#0" expanded="true" />
+                <element signature="e#23770#24033#0" expanded="true" />
+                <element signature="e#27635#27854#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -104,7 +104,7 @@
         <entry file="file://$PROJECT_DIR$/barter.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="179">
-              <caret line="186" column="54" lean-forward="false" selection-start-line="186" selection-start-column="54" selection-end-line="186" selection-end-column="54" />
+              <caret line="182" column="29" lean-forward="false" selection-start-line="182" selection-start-column="29" selection-end-line="182" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -113,18 +113,18 @@
       <file leaf-file-name="create_barter.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/create_barter.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="55" column="39" lean-forward="false" selection-start-line="55" selection-start-column="39" selection-end-line="55" selection-end-column="39" />
+            <state relative-caret-position="196">
+              <caret line="100" column="60" lean-forward="false" selection-start-line="100" selection-start-column="60" selection-end-line="100" selection-end-column="60" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="editProfile.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="editProfile.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/editProfile.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="196">
-              <caret line="39" column="34" lean-forward="false" selection-start-line="39" selection-start-column="34" selection-end-line="39" selection-end-column="34" />
+              <caret line="39" column="68" lean-forward="true" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -140,11 +140,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="barterDashboard.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="barterDashboard.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/barterDashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="29" column="35" lean-forward="true" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
+            <state relative-caret-position="215">
+              <caret line="121" column="41" lean-forward="false" selection-start-line="121" selection-start-column="37" selection-end-line="121" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -154,9 +154,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>checkParse</find>
-      <find>Close &amp; Rate</find>
-      <find>.save</find>
       <find>barterre</find>
       <find>barterup</find>
       <find>barterupr</find>
@@ -184,6 +181,9 @@
       <find>input</find>
       <find>ratin</find>
       <find>add</find>
+      <find>chec</find>
+      <find>check</find>
+      <find>file</find>
     </findStrings>
   </component>
   <component name="Gantt">
@@ -219,10 +219,10 @@
         <option value="$PROJECT_DIR$/header.html" />
         <option value="$PROJECT_DIR$/barterDashboard.html" />
         <option value="$PROJECT_DIR$/notifications.html" />
-        <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/barter.html" />
-        <option value="$PROJECT_DIR$/create_barter.html" />
+        <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/editProfile.html" />
+        <option value="$PROJECT_DIR$/create_barter.html" />
       </list>
     </option>
   </component>
@@ -778,11 +778,18 @@
       <option name="project" value="LOCAL" />
       <updated>1480363566155</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="ratings , disable submit on profile edit, some stiling">
+      <created>1480363789538</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1480363789538</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41253000" />
+    <option name="totallyTimeSpent" value="41510000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -882,7 +889,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Fucking awesome chat with livequery" />
     <MESSAGE value="Hide some stuff when empty" />
     <MESSAGE value="Again awesome livequery for the milestones" />
     <MESSAGE value="Dashboard link" />
@@ -907,7 +913,8 @@
     <MESSAGE value="require for inputs" />
     <MESSAGE value="bitch resolved" />
     <MESSAGE value="ratings , disable submit on profile edit" />
-    <option name="LAST_COMMIT_MESSAGE" value="ratings , disable submit on profile edit" />
+    <MESSAGE value="ratings , disable submit on profile edit, some stiling" />
+    <option name="LAST_COMMIT_MESSAGE" value="ratings , disable submit on profile edit, some stiling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -973,9 +980,9 @@
             <element signature="e#15124#15511#0" expanded="true" />
             <element signature="e#15880#16105#0" expanded="true" />
             <element signature="e#21301#21637#0" expanded="true" />
-            <element signature="e#22604#22919#0" expanded="true" />
-            <element signature="e#23733#23996#0" expanded="true" />
-            <element signature="e#27598#27817#0" expanded="true" />
+            <element signature="e#22604#22956#0" expanded="true" />
+            <element signature="e#23770#24033#0" expanded="true" />
+            <element signature="e#27635#27854#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1060,9 +1067,9 @@
             <element signature="e#15124#15511#0" expanded="true" />
             <element signature="e#15880#16105#0" expanded="true" />
             <element signature="e#21301#21637#0" expanded="true" />
-            <element signature="e#22604#22919#0" expanded="true" />
-            <element signature="e#23733#23996#0" expanded="true" />
-            <element signature="e#27598#27817#0" expanded="true" />
+            <element signature="e#22604#22956#0" expanded="true" />
+            <element signature="e#23770#24033#0" expanded="true" />
+            <element signature="e#27635#27854#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1147,9 +1154,9 @@
             <element signature="e#15124#15511#0" expanded="true" />
             <element signature="e#15880#16105#0" expanded="true" />
             <element signature="e#21301#21637#0" expanded="true" />
-            <element signature="e#22604#22919#0" expanded="true" />
-            <element signature="e#23733#23996#0" expanded="true" />
-            <element signature="e#27598#27817#0" expanded="true" />
+            <element signature="e#22604#22956#0" expanded="true" />
+            <element signature="e#23770#24033#0" expanded="true" />
+            <element signature="e#27635#27854#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1234,9 +1241,9 @@
             <element signature="e#15124#15511#0" expanded="true" />
             <element signature="e#15880#16105#0" expanded="true" />
             <element signature="e#21301#21637#0" expanded="true" />
-            <element signature="e#22604#22919#0" expanded="true" />
-            <element signature="e#23733#23996#0" expanded="true" />
-            <element signature="e#27598#27817#0" expanded="true" />
+            <element signature="e#22604#22956#0" expanded="true" />
+            <element signature="e#23770#24033#0" expanded="true" />
+            <element signature="e#27635#27854#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1291,9 +1298,9 @@
             <element signature="e#15124#15511#0" expanded="true" />
             <element signature="e#15880#16105#0" expanded="true" />
             <element signature="e#21301#21637#0" expanded="true" />
-            <element signature="e#22604#22919#0" expanded="true" />
-            <element signature="e#23733#23996#0" expanded="true" />
-            <element signature="e#27598#27817#0" expanded="true" />
+            <element signature="e#22604#22956#0" expanded="true" />
+            <element signature="e#23770#24033#0" expanded="true" />
+            <element signature="e#27635#27854#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1341,9 +1348,9 @@
             <element signature="e#15124#15511#0" expanded="true" />
             <element signature="e#15880#16105#0" expanded="true" />
             <element signature="e#21301#21637#0" expanded="true" />
-            <element signature="e#22604#22919#0" expanded="true" />
-            <element signature="e#23733#23996#0" expanded="true" />
-            <element signature="e#27598#27817#0" expanded="true" />
+            <element signature="e#22604#22956#0" expanded="true" />
+            <element signature="e#23770#24033#0" expanded="true" />
+            <element signature="e#27635#27854#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1391,9 +1398,9 @@
             <element signature="e#15124#15511#0" expanded="true" />
             <element signature="e#15880#16105#0" expanded="true" />
             <element signature="e#21301#21637#0" expanded="true" />
-            <element signature="e#22604#22919#0" expanded="true" />
-            <element signature="e#23733#23996#0" expanded="true" />
-            <element signature="e#27598#27817#0" expanded="true" />
+            <element signature="e#22604#22956#0" expanded="true" />
+            <element signature="e#23770#24033#0" expanded="true" />
+            <element signature="e#27635#27854#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1441,9 +1448,9 @@
             <element signature="e#15124#15511#0" expanded="true" />
             <element signature="e#15880#16105#0" expanded="true" />
             <element signature="e#21301#21637#0" expanded="true" />
-            <element signature="e#22604#22919#0" expanded="true" />
-            <element signature="e#23733#23996#0" expanded="true" />
-            <element signature="e#27598#27817#0" expanded="true" />
+            <element signature="e#22604#22956#0" expanded="true" />
+            <element signature="e#23770#24033#0" expanded="true" />
+            <element signature="e#27635#27854#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1491,9 +1498,9 @@
             <element signature="e#15124#15511#0" expanded="true" />
             <element signature="e#15880#16105#0" expanded="true" />
             <element signature="e#21301#21637#0" expanded="true" />
-            <element signature="e#22604#22919#0" expanded="true" />
-            <element signature="e#23733#23996#0" expanded="true" />
-            <element signature="e#27598#27817#0" expanded="true" />
+            <element signature="e#22604#22956#0" expanded="true" />
+            <element signature="e#23770#24033#0" expanded="true" />
+            <element signature="e#27635#27854#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1523,14 +1530,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="21" lean-forward="false" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/barterDashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="29" column="35" lean-forward="true" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1569,10 +1568,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/barter.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="182" column="29" lean-forward="false" selection-start-line="182" selection-start-column="29" selection-end-line="182" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="742" column="35" lean-forward="true" selection-start-line="742" selection-start-column="35" selection-end-line="769" selection-end-column="41" />
+        <state relative-caret-position="122">
+          <caret line="630" column="41" lean-forward="true" selection-start-line="630" selection-start-column="41" selection-end-line="630" selection-end-column="41" />
           <folding>
             <element signature="e#412#468#0" expanded="true" />
             <element signature="e#486#528#0" expanded="true" />
@@ -1601,33 +1608,33 @@
             <element signature="e#15124#15511#0" expanded="true" />
             <element signature="e#15880#16105#0" expanded="true" />
             <element signature="e#21301#21637#0" expanded="true" />
-            <element signature="e#22604#22919#0" expanded="true" />
-            <element signature="e#23733#23996#0" expanded="true" />
-            <element signature="e#27598#27817#0" expanded="true" />
+            <element signature="e#22604#22956#0" expanded="true" />
+            <element signature="e#23770#24033#0" expanded="true" />
+            <element signature="e#27635#27854#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/barter.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="186" column="54" lean-forward="false" selection-start-line="186" selection-start-column="54" selection-end-line="186" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/create_barter.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="55" column="39" lean-forward="false" selection-start-line="55" selection-start-column="39" selection-end-line="55" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/editProfile.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
-          <caret line="39" column="34" lean-forward="false" selection-start-line="39" selection-start-column="34" selection-end-line="39" selection-end-column="34" />
+          <caret line="39" column="68" lean-forward="true" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/create_barter.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="100" column="60" lean-forward="false" selection-start-line="100" selection-start-column="60" selection-end-line="100" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/barterDashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="121" column="41" lean-forward="false" selection-start-line="121" selection-start-column="37" selection-end-line="121" selection-end-column="41" />
           <folding />
         </state>
       </provider>

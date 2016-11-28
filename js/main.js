@@ -645,6 +645,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             success: function (results) {
                 $scope[column] = angular.copy(arr);
                 $scope.result = results;
+                $scope.comment = '';
                 $scope.$apply();
             },
             error: function (error) {
