@@ -421,16 +421,11 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         $scope.barterMilestones = milestones;
     }
 
-    $scope.barterUpOwner = function (request) {
+    $scope.barterUpOwner = function (request, index) {
         if (confirm('Are you sure you wanna barter up with this request?')) {
-            var result = $scope.result;
-            result.remove("barterRequests", {
-                deadline: request.deadline,
-                milestone: request.milestone,
-                user: {
-                    objectId: request.user.id || request.user.objectId
-                }
-            });
+            var result = angular.copy($scope.result);
+            result.get('barterRequests').splice(index, 1);
+            result.set("barterRequests", result.get('barterRequests'));
             result.set("barterUpUser", {
                 "__type": "Pointer", "className": "_User",
                 "objectId": request.user.id || request.user.objectId
