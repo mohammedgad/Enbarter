@@ -240,7 +240,7 @@ app.controller('createBarter', function ($scope) {
         Pace.start();
         barter.save(null, {
             success: function (barter) {
-                alert('New object created with objectId: ' + barter.id);
+                // alert('New object created with objectId: ' + barter.id);
                 window.location.href = "/Enbarter/#/barter/" + barter.id;
             },
             error: function (barter, error) {
@@ -315,6 +315,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     query.include('offerCategory');
     query.include('user');
     query.include('barterUpUser');
+    query.include('barterRequests.user');
 
     Pace.start();
     query.get($routeParams.id, {
@@ -365,9 +366,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         var request = {
             deadline: $scope.deadline,
             milestone: milestones,
-            user: Parse.User.current().id,
-            username: Parse.User.current().get('username'),
-            pic: Parse.User.current().get('pic')
+            user: Parse.User.current()
         };
         var result = angular.copy($scope.result);
         result.add("barterRequests", request);
@@ -413,7 +412,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         if (confirm('Are you sure you wanna barter up with this request?')) {
             var result = $scope.result;
             result.remove("barterRequests", JSON.parse(angular.toJson(request)));
-            result.set("barterUpUser", Parse.User.createWithoutData(request.user));
+            result.set("barterUpUser", request.user);
             result.set("barterUpMilestones", request.milestone);
             result.set("barterUpDeadline", request.deadline);
             result.set("state", "bartered");
