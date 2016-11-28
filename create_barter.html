@@ -12,7 +12,7 @@
         </div>
     </section>
     <div class="container">
-        <form role="form">
+        <form role="form" ng-submit="startBarter()">
             <div class="row">
                 <h1>About the barter</h1>
                 <div class="form-group">
@@ -61,11 +61,11 @@
                 <div class="form-group">
                     <label class="control-label" for="formInput1955">External sample link</label>
                     <input type="text" class="form-control" id="formInput1955" placeholder="Placeholder text"
-                           ng-model="offerSampleLink" required>
+                           ng-model="offerSampleLink">
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="exampleInputFile1">Upload Sample Image</label>
-                    <input type="file" class="form-control" id="exampleInputFile1" ng-model="offerSampleImage" required>
+                    <input type="file" class="form-control" id="exampleInputFile1" ng-model="offerSampleImage">
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput1954">Deadline (the time you sayy you gonna produce your
@@ -94,11 +94,11 @@
                 <div class="form-group">
                     <label class="control-label" for="formInput1959">External sample link</label>
                     <input type="text" class="form-control" id="formInput1959" placeholder="Placeholder text"
-                           ng-model="seekSampleLink" required>
+                           ng-model="seekSampleLink">
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="exampleInputFile">Upload Sample Image</label>
-                    <input type="file" class="form-control" id="exampleInputFile" ng-model="seekSampleImage" required>
+                    <input type="file" class="form-control" id="exampleInputFile" ng-model="seekSampleImage">
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput195">Deadline (the time you want what you seek to be
@@ -109,7 +109,7 @@
                            ng-model="seekDeadline" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success btn-lg btn-block" ng-click="startBarter()"
+            <button type="submit" class="btn btn-success btn-lg btn-block"
                     ng-disabled="canStartDisabled">START BARTER
             </button>
         </form>

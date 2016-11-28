@@ -75,9 +75,9 @@
                                                     class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
                         {{m.get('message')}}</p>
                 </div>
-                <form role="form" ng-show="result.get('state')!='completed'">
+                <form role="form" ng-show="result.get('state')!='completed'" ng-submit="sendMessage()">
                     <input type="text" class="form-control" ng-model="message" ng-disabled="cantSend" required>
-                    <button ng-click="sendMessage()" class="btn btn-block btn-info" ng-disabled="cantSend">Send</button>
+                    <button class="btn btn-block btn-info" ng-disabled="cantSend">Send</button>
                 </form>
             </div>
         </div>
