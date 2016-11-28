@@ -127,11 +127,12 @@
 
                 <tr ng-repeat="request in barterRequests">
                     <td class="text-center table-user-img">
-                        <img ng-src="{{request.pic?request.pic.url():'/Enbarter/images/slider/hipster-865295.jpg'}}"
+                        <img ng-src="{{request.user.get('pic')?request.user.get('pic').url():'/Enbarter/images/slider/hipster-865295.jpg'}}"
                              class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
-                        <a href=".#/profile/{{request.user}}" class="username-link">{{request.username}}</a>
+                        <a href=".#/profile/{{request.user.id}}"
+                           class="username-link">{{request.user.get('username')}}</a>
                     </td>
                     <td>{{request.deadline}}</td>
                     <td class="table-action" ng-show="sameAccount()&&!result.get('barterUpUser')">

@@ -99,7 +99,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
 
     $scope.login = function () {
         Pace.start();
-        Parse.User.logIn($scope.email, $scope.password, {
+        Parse.User.logIn($scope.username, $scope.password, {
             success: function (user) {
                 location.reload();
             },
@@ -111,20 +111,23 @@ app.controller('header', function ($scope, $location, $rootScope) {
     }
 
     $scope.signup = function () {
-        var user = new Parse.User();
-        user.set("username", $scope.email);
-        user.set("password", $scope.password);
-        user.set("email", $scope.email);
-        Pace.start();
+        var email = prompt("Enter Email");
+        if (email) {
+            var user = new Parse.User();
+            user.set("username", $scope.username);
+            user.set("password", $scope.password);
+            user.set("email", email);
+            Pace.start();
 
-        user.signUp(null, {
-            success: function (user) {
-                location.reload();
-            },
-            error: function (user, error) {
-                alert("Error: " + error.code + " " + error.message);
-            }
-        }).then(Pace.stop());
+            user.signUp(null, {
+                success: function (user) {
+                    location.reload();
+                },
+                error: function (user, error) {
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            }).then(Pace.stop());
+        } else alert('Email is required');
     }
 
     $scope.logout = function () {
@@ -137,15 +140,18 @@ app.controller('header', function ($scope, $location, $rootScope) {
     }
 
     $scope.passwordReset = function () {
-        Pace.start();
-        Parse.User.requestPasswordReset($scope.email, {
-            success: function () {
-                alert("Request sent");
-            },
-            error: function (error) {
-                alert("Error: " + error.code + " " + error.message);
-            }
-        }).then(Pace.stop());
+        var email = prompt("Enter Email");
+        if (email) {
+            Pace.start();
+            Parse.User.requestPasswordReset(email, {
+                success: function () {
+                    alert("Request sent");
+                },
+                error: function (error) {
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            }).then(Pace.stop());
+        } else alert('Email is required');
     }
 
     if (Parse.User.current()) {
@@ -240,7 +246,7 @@ app.controller('createBarter', function ($scope) {
         Pace.start();
         barter.save(null, {
             success: function (barter) {
-                alert('New object created with objectId: ' + barter.id);
+                // alert('New object created with objectId: ' + barter.id);
                 window.location.href = "/Enbarter/#/barter/" + barter.id;
             },
             error: function (barter, error) {
@@ -315,6 +321,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     query.include('offerCategory');
     query.include('user');
     query.include('barterUpUser');
+    query.include('barterRequests.user');
 
     Pace.start();
     query.get($routeParams.id, {
@@ -365,9 +372,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         var request = {
             deadline: $scope.deadline,
             milestone: milestones,
-            user: Parse.User.current().id,
-            username: Parse.User.current().get('username'),
-            pic: Parse.User.current().get('pic')
+            user: Parse.User.current()
         };
         var result = angular.copy($scope.result);
         result.add("barterRequests", request);
@@ -413,7 +418,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         if (confirm('Are you sure you wanna barter up with this request?')) {
             var result = $scope.result;
             result.remove("barterRequests", JSON.parse(angular.toJson(request)));
-            result.set("barterUpUser", Parse.User.createWithoutData(request.user));
+            result.set("barterUpUser", request.user);
             result.set("barterUpMilestones", request.milestone);
             result.set("barterUpDeadline", request.deadline);
             result.set("state", "bartered");
