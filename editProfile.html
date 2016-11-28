@@ -67,7 +67,9 @@
                             <button ng-click="itemLink=addItemTo(workLinks,itemLink)">Add</button>
 
                         </div>
-                        <button type="submit" class="btn btn-block btn-primary" ng-click="submit()">Submit</button>
+                        <button type="submit" class="btn btn-block btn-primary" ng-click="submit()"
+                                ng-disabled="cantSubmit">Submit
+                        </button>
                     </form>
                 </div>
             </div>

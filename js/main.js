@@ -763,6 +763,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
     }).then(Pace.stop());
 
     $scope.submit = function () {
+        $scope.cantSubmit = true;
         var result = angular.copy($scope.result);
         result.set("username", $scope.username);
         result.set("bio", $scope.bio);
@@ -783,6 +784,9 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             }, error: function (object, error) {
                 alert("Error: " + error.code + " " + error.message);
             }
+        }).then(function () {
+            $scope.cantSubmit = false;
+            $scope.$apply();
         });
     }
 });
