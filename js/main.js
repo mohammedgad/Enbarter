@@ -382,7 +382,6 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         };
         var result = angular.copy($scope.result);
         result.add("barterRequests", request);
-        // result.add("barterRequestsUsers", Parse.User.current());
 
         var user = Parse.User.current();
         user.addUnique("barterSeeks", result);
@@ -424,8 +423,6 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     $scope.barterUpOwner = function (request, index) {
         if (confirm('Are you sure you wanna barter up with this request?')) {
             var result = angular.copy($scope.result);
-            result.get('barterRequests').splice(index, 1);
-            result.set("barterRequests", result.get('barterRequests'));
             result.set("barterUpUser", {
                 "__type": "Pointer", "className": "_User",
                 "objectId": request.user.id || request.user.objectId
@@ -437,7 +434,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             result.save({
                 success: function (results) {
                     $scope.result = results;
-                    $scope.barterRequests.splice($scope.barterRequests.indexOf(request), 1)
+                    $scope.barterRequests = angular.copy((results.get('barterRequests')) ? results.get('barterRequests') : []);
                     $scope.$apply();
                 },
                 error: function (error) {
