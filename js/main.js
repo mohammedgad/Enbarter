@@ -434,7 +434,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             result.save({
                 success: function (results) {
                     $scope.result = results;
-                    $scope.barterRequests = angular.copy((result.get('barterRequests')) ? result.get('barterRequests') : []);
+                    $scope.barterRequests = angular.copy((results.get('barterRequests')) ? results.get('barterRequests') : []);
                     $scope.$apply();
                 },
                 error: function (error) {
