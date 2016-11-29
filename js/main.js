@@ -383,6 +383,16 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         var result = angular.copy($scope.result);
         result.add("barterRequests", request);
 
+        var user = Parse.User.current();
+        user.addUnique("barterSeeks", result);
+        Pace.start();
+        user.save({
+            success: function (results) {
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
         result.save({
             success: function (results) {
                 $scope.result = results;
