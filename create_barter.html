@@ -14,10 +14,10 @@
     <div class="container">
         <form role="form" ng-submit="startBarter()">
             <div class="row">
-                <h1>About the barter</h1>
+                <h1>About the Barter</h1>
                 <div class="form-group">
-                    <label class="control-label" for="formInput121">barter title</label>
-                    <input type="text" class="form-control" id="formInput121" placeholder="Placeholder text"
+                    <label class="control-label" for="formInput121">Barter Title</label>
+                    <input type="text" class="form-control" id="formInput121" placeholder=""
                            ng-model="barterTitle" required>
                 </div>
                 <div class="form-group">
@@ -27,9 +27,9 @@
                 </div>
             </div>
             <div class="row">
-                <h1>What do you wanna offer?</h1>
+                <h1>What Would you Like to Offer?</h1>
                 <div class="form-group">
-                    <label class="control-label" for="formInput226">Your offer Category&nbsp;
+                    <label class="control-label" for="formInput226">Select Your Offer Category
                         <br>
                     </label>
                     <select id="formInput226" class="form-control" ng-model="offerCategory" required>
@@ -37,7 +37,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput2565">Your offer Description</label>
+                    <label class="control-label" for="formInput2565">Your Offer Description</label>
                     <textarea class="form-control" rows="3" id="formInput2565" ng-model="offerDescription"
                               required></textarea>
                 </div>
@@ -47,20 +47,17 @@
                             <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button>
                         </li>
                     </ul>
-                    <label class="control-label" for="formInput256">What are your milestones to create what you offer?
-                        (what
-                        are the steps you will follow to build your offer) separate between every milestone with a
-                        comma
+                    <label class="control-label" for="formInput256">What are the milestones you will follow to create what you offer?
                     </label>
                     <input type="text" class="form-control" id="formInput256" ng-model="offerMilestoneItem">
                     <button class="btn btn-default"
-                            ng-click="offerMilestoneItem=addItemTo(milestones,offerMilestoneItem)">Add
+                            ng-click="offerMilestoneItem=addItemTo(milestones,offerMilestoneItem)">Add Milestone
                     </button>
 
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput1955">External sample link</label>
-                    <input type="text" class="form-control" id="formInput1955" placeholder="Placeholder text"
+                    <label class="control-label" for="formInput1955">External Sample Link</label>
+                    <input type="text" class="form-control" id="formInput1955" placeholder="http://enbarter.com"
                            ng-model="offerSampleLink">
                 </div>
                 <div class="form-group">
@@ -68,18 +65,16 @@
                     <input type="file" class="form-control" id="exampleInputFile1" ng-model="offerSampleImage">
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput1954">Deadline (the time you sayy you gonna produce your
-                        offer
-                        )
+                    <label class="control-label" for="formInput1954">Deadline
                     </label>
                     <input type="number" class="form-control" id="formInput1954"
-                           ng-model="offerDeadline" required>
+                           ng-model="offerDeadline" placeholder="The number of days you believe will need to finish what you offer" required>
                 </div>
             </div>
             <div class="row">
-                <h1>What do you seek?</h1>
+                <h1>What do you Seek?</h1>
                 <div class="form-group">
-                    <label class="control-label" for="formInput226">Your seek Category&nbsp;
+                    <label class="control-label" for="formInput226">Select Your Seek Category
                         <br>
                     </label>
                     <select id="formInput206" class="form-control" ng-model="seekCategory" required>
@@ -87,13 +82,13 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput2564">Your seek Description</label>
+                    <label class="control-label" for="formInput2564">Your Seek Description</label>
                     <textarea class="form-control" rows="3" id="formInput2564" ng-model="seekDescription"
                               required></textarea>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput1959">External sample link</label>
-                    <input type="text" class="form-control" id="formInput1959" placeholder="Placeholder text"
+                    <label class="control-label" for="formInput1959">External Sample Link</label>
+                    <input type="text" class="form-control" id="formInput1959" placeholder="http://enbarter.com"
                            ng-model="seekSampleLink">
                 </div>
                 <div class="form-group">
@@ -101,12 +96,10 @@
                     <input type="file" class="form-control" id="exampleInputFile" ng-model="seekSampleImage">
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput195">Deadline (the time you want what you seek to be
-                        finsihed
-                        )
+                    <label class="control-label" for="formInput195">Deadline
                     </label>
                     <input type="number" class="form-control" id="formInput195"
-                           ng-model="seekDeadline" required>
+                           ng-model="seekDeadline" placeholder="The number of days you believe will need to finish what you seek" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-success btn-lg btn-block"
