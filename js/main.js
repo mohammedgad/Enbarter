@@ -111,23 +111,19 @@ app.controller('header', function ($scope, $location, $rootScope) {
     }
 
     $scope.signup = function () {
-        var email = prompt("Enter Email");
-        if (email) {
-            var user = new Parse.User();
-            user.set("username", $scope.username);
-            user.set("password", $scope.password);
-            user.set("email", email);
-            Pace.start();
-
-            user.signUp(null, {
-                success: function (user) {
-                    location.reload();
-                },
-                error: function (user, error) {
-                    alert("Error: " + error.code + " " + error.message);
-                }
-            }).then(Pace.stop());
-        } else alert('Email is required');
+        var user = new Parse.User();
+        user.set("username", $scope.username);
+        user.set("password", $scope.password);
+        user.set("email", $scope.email);
+        Pace.start();
+        user.signUp(null, {
+            success: function (user) {
+                location.reload();
+            },
+            error: function (user, error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        }).then(Pace.stop());
     }
 
     $scope.logout = function () {
@@ -431,10 +427,10 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             result.set("barterUpDeadline", request.deadline);
             result.set("state", "bartered");
             Pace.start();
+            $scope.barterRequests.splice(index, 1);
             result.save({
                 success: function (results) {
-                    $scope.result = results;
-                    $scope.barterRequests = angular.copy((results.get('barterRequests')) ? results.get('barterRequests') : []);
+                    $scope.result = result;
                     $scope.$apply();
                 },
                 error: function (error) {
