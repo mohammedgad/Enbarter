@@ -80,9 +80,11 @@
                         </h4></a>
 
                         <p>{{result.get('barterDescription')}}</p>
-                        <i class="fa fa-{{result.get('seekCategory').get('icon')}} fa-3x deepocean offer-icon icon-table-size"></i>
+                        <i class="fa fa-{{result.get('seekCategory').get('icon')}} fa-3x deepocean offer-icon icon-table-size"
+                           title="{{result.get('seekCategory').get('name')}}"></i>
                         <i class="fa fa-arrows-h fa-2x deepocean offer-icon icon-table-size"></i>
-                        <i class="fa fa-{{result.get('offerCategory').get('icon')}} fa-3x deepocean offer-icon icon-table-size"></i>
+                        <i class="fa fa-{{result.get('offerCategory').get('icon')}} fa-3x deepocean offer-icon icon-table-size"
+                           title="{{result.get('offerCategory').get('name')}}"></i>
                     </td>
                     <td>{{(result.get('barterRequests'))?result.get('barterRequests').length:0}}</td>
                     <td>
