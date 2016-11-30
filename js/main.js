@@ -165,6 +165,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
                     return false;
                 }).length;
                 $scope.$apply();
+                $("#notificationBeeb")[0].play();
             },
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
