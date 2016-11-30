@@ -1,4 +1,4 @@
-var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize']);
+var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize','ngRaven']);
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/", {
