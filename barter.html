@@ -37,6 +37,8 @@
                     </button>
                     <button type="button" class="btn btn-info btn-lg btn-block disabled"
                             ng-show="!sameAccount()&&(result.get('barterUpUser')||bartered())"
+                            ng-hide="result.get('state')=='completed'"
+
                     >BARTERED
                     </button>
                     <button type="button" class="btn btn-success btn-lg btn-block disabled"
