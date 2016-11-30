@@ -431,10 +431,10 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             result.set("barterUpDeadline", request.deadline);
             result.set("state", "bartered");
             Pace.start();
+            $scope.barterRequests.splice(index, 1);
             result.save({
                 success: function (results) {
-                    $scope.result = results;
-                    $scope.barterRequests = angular.copy((results.get('barterRequests')) ? results.get('barterRequests') : []);
+                    $scope.result = result;
                     $scope.$apply();
                 },
                 error: function (error) {

@@ -125,7 +125,7 @@
                     </td>
                 </tr>
 
-                <tr ng-repeat="request in barterRequests">
+                <tr ng-repeat="request in barterRequests" ng-show="!result.get('barterUpUser')||request.user.id!=result.get('barterUpUser').id">
                     <td class="text-center table-user-img">
                         <img ng-src="{{request.user.get('pic')?request.user.get('pic').url():'/Enbarter/images/slider/hipster-865295.jpg'}}"
                              class="img-responsive center-block barter-creator-img"/>

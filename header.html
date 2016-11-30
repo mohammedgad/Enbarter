@@ -18,13 +18,6 @@
                 </div>
                 <!-- Navigation -->
                 <div class="collapse navbar-collapse" id="nav1">
-                    <button id="signButton" class="btn btn-info pull-right" type="button" data-target="#sign"
-                            data-toggle="modal" ng-hide="isLoggedIn()">Login /
-                        Sign up
-                    </button>
-                    <button id="logoutButton" class="btn btn-danger pull-right" type="button"
-                            ng-click="logout()" ng-show="isLoggedIn()">Logout
-                    </button>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active nav-item">
                             <a href="{{homeLink}}" class="deepocean">Home</a>
@@ -55,6 +48,15 @@
                                         href=".#/notifications">More Notifications</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="nav-item">
+                            <button id="signButton" class="btn btn-info pull-right" type="button" data-target="#sign"
+                                    data-toggle="modal" ng-hide="isLoggedIn()">Login /
+                                Sign up
+                            </button>
+                            <button id="logoutButton" class="btn btn-danger pull-right" type="button"
+                                    ng-click="logout()" ng-show="isLoggedIn()">Logout
+                            </button>
                         </li>
                     </ul>
                     <!--//nav-->
