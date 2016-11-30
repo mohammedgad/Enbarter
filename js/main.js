@@ -1,11 +1,4 @@
 var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize']);
-
-Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
-Parse.serverURL = 'https://enbarter.back4app.io';
-
-// Parse.initialize("myAppId", "js");
-// Parse.serverURL = 'http://localhost:1337/parse';
-
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/", {
@@ -42,6 +35,12 @@ app.config(function ($routeProvider) {
 });
 
 app.run(function ($rootScope, $location) {
+    Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
+    Parse.serverURL = 'https://enbarter.back4app.io';
+
+// Parse.initialize("myAppId", "js");
+// Parse.serverURL = 'http://localhost:1337/parse';
+
     $rootScope.title = 'EnBarter';
     $rootScope.description = "123";
     $rootScope.keywords = "123";
