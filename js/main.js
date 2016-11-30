@@ -1,11 +1,4 @@
 var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize']);
-
-Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
-Parse.serverURL = 'https://enbarter.back4app.io';
-
-// Parse.initialize("myAppId", "js");
-// Parse.serverURL = 'http://localhost:1337/parse';
-
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/", {
@@ -42,6 +35,12 @@ app.config(function ($routeProvider) {
 });
 
 app.run(function ($rootScope, $location) {
+    Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
+    Parse.serverURL = 'https://enbarter.back4app.io';
+
+// Parse.initialize("myAppId", "js");
+// Parse.serverURL = 'http://localhost:1337/parse';
+
     $rootScope.title = 'EnBarter';
     $rootScope.description = "123";
     $rootScope.keywords = "123";
@@ -165,7 +164,6 @@ app.controller('header', function ($scope, $location, $rootScope) {
                     return false;
                 }).length;
                 $scope.$apply();
-                $("#notificationBeeb")[0].play();
             },
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
@@ -178,6 +176,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
             $rootScope.nCount++;
             $scope.notifications.unshift(object);
             $scope.$apply();
+            (new Audio('beeb.mp3')).play();
         });
     }
 });
@@ -555,8 +554,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
 
             $scope.$apply();
-            if ($scope.result.get('state') != 'completed')
-                $scope.reloadChat();
+            $scope.reloadChat();
 
             console.log(result);
 
