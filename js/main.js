@@ -164,7 +164,6 @@ app.controller('header', function ($scope, $location, $rootScope) {
                     return false;
                 }).length;
                 $scope.$apply();
-                $("#notificationBeeb")[0].play();
             },
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
@@ -177,6 +176,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
             $rootScope.nCount++;
             $scope.notifications.unshift(object);
             $scope.$apply();
+            (new Audio('beeb.mp3')).play();
         });
     }
 });
@@ -554,8 +554,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
 
             $scope.$apply();
-            if ($scope.result.get('state') != 'completed')
-                $scope.reloadChat();
+            $scope.reloadChat();
 
             console.log(result);
 

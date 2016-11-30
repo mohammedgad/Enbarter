@@ -39,6 +39,10 @@
                             ng-show="!sameAccount()&&(result.get('barterUpUser')||bartered())"
                     >BARTERED
                     </button>
+                    <button type="button" class="btn btn-success btn-lg btn-block disabled"
+                            ng-show="result.get('state')=='completed'"
+                    >COMPLETED
+                    </button>
                     <button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()" data-toggle="modal"
                             data-target="{{isLoggedIn()?'#reportBarter':'#sign'}}">Report barter
                     </button>
@@ -47,7 +51,7 @@
                         Disable
                     </button>
                     <a href=".#/dashboard/barter/{{result.id}}" class="btn btn-primary btn-sm"
-                       ng-show="(sameAccount()||result.get('barterUpUser').id==userId)&&result.get('state')=='bartered'"
+                       ng-show="(sameAccount()||result.get('barterUpUser').id==userId)"
                     >Dashboard
                     </a>
                 </div>
@@ -125,7 +129,8 @@
                     </td>
                 </tr>
 
-                <tr ng-repeat="request in barterRequests" ng-show="!result.get('barterUpUser')||request.user.id!=result.get('barterUpUser').id">
+                <tr ng-repeat="request in barterRequests"
+                    ng-show="!result.get('barterUpUser')||request.user.id!=result.get('barterUpUser').id">
                     <td class="text-center table-user-img">
                         <img ng-src="{{request.user.get('pic')?request.user.get('pic').url():'/Enbarter/images/slider/hipster-865295.jpg'}}"
                              class="img-responsive center-block barter-creator-img"/>
@@ -165,7 +170,8 @@
                         <label class="control-label" for="formInput1954">Deadline
                         </label>
                         <input type="number" class="form-control" id="formInput1954"
-                               ng-model="deadline" placeholder="The number of days you believe will need to finish what you offer" required>
+                               ng-model="deadline"
+                               placeholder="The number of days you believe will need to finish what you offer" required>
                     </div>
                     <div class="form-group">
                         <ul>
@@ -173,11 +179,14 @@
                                 <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button>
                             </li>
                         </ul>
-                        <label class="control-label" for="formInput256">What are the milestones you will follow to create what you offer?
+                        <label class="control-label" for="formInput256">What are the milestones you will follow to
+                            create what you offer?
                         </label>
 
                         <input type="text" class="form-control" id="formInput256" ng-model="milestoneItem">
-                        <button class="btn btn-default" ng-click="milestoneItem=addItemTo(milestones,milestoneItem)">Add Milestone</button>
+                        <button class="btn btn-default" ng-click="milestoneItem=addItemTo(milestones,milestoneItem)">Add
+                            Milestone
+                        </button>
 
                     </div>
                 </div>
@@ -200,7 +209,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label" for="formInput2568">Why do you think this barter is inappropriate?</label>
+                        <label class="control-label" for="formInput2568">Why do you think this barter is
+                            inappropriate?</label>
                         <textarea class="form-control" rows="3" id="formInput2568"
                                   ng-model="reportDescription" required></textarea>
                     </div>
