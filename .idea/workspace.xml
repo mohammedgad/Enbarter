@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e3cd79b-e06a-4ec3-a556-aa8f97d7565b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/create_barter.html" afterPath="$PROJECT_DIR$/create_barter.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/barter.html" afterPath="$PROJECT_DIR$/barter.html" />
     </list>
     <ignored path="enbarter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,11 +46,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create_barter.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="create_barter.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/create_barter.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
+            <state relative-caret-position="612">
               <caret line="52" column="50" selection-start-line="52" selection-start-column="50" selection-end-line="52" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="barter.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/barter.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="167" column="129" selection-start-line="167" selection-start-column="129" selection-end-line="167" selection-end-column="129" />
               <folding />
             </state>
           </provider>
@@ -135,12 +144,12 @@
         <option value="$PROJECT_DIR$/header.html" />
         <option value="$PROJECT_DIR$/notifications.html" />
         <option value="$PROJECT_DIR$/editProfile.html" />
-        <option value="$PROJECT_DIR$/barter.html" />
         <option value="$PROJECT_DIR$/barterDashboard.html" />
         <option value="$PROJECT_DIR$/js/main.js" />
         <option value="$PROJECT_DIR$/footer.html" />
         <option value="$PROJECT_DIR$/indexContent.html" />
         <option value="$PROJECT_DIR$/create_barter.html" />
+        <option value="$PROJECT_DIR$/barter.html" />
       </list>
     </option>
   </component>
@@ -616,7 +625,7 @@
       <workItem from="1480438824925" duration="1867000" />
       <workItem from="1480442026699" duration="1071000" />
       <workItem from="1480444535996" duration="6308000" />
-      <workItem from="1480511329974" duration="1177000" />
+      <workItem from="1480511329974" duration="1575000" />
     </task>
     <task id="LOCAL-00001" summary="Notifications read">
       <created>1480121795684</created>
@@ -776,7 +785,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59108000" />
+    <option name="totallyTimeSpent" value="59506000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
@@ -973,8 +982,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/create_barter.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
+        <state relative-caret-position="612">
           <caret line="52" column="50" selection-start-line="52" selection-start-column="50" selection-end-line="52" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/barter.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="167" column="129" selection-start-line="167" selection-start-column="129" selection-end-line="167" selection-end-column="129" />
           <folding />
         </state>
       </provider>

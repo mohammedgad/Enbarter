@@ -162,13 +162,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label" for="formInput1954">Deadline (the time you sayy you gonna produce
-                            your
-                            offer
-                            )
+                        <label class="control-label" for="formInput1954">Deadline
                         </label>
                         <input type="number" class="form-control" id="formInput1954"
-                               ng-model="deadline" required>
+                               ng-model="deadline" placeholder="The number of days you believe will need to finish what you offer" required>
                     </div>
                     <div class="form-group">
                         <ul>
@@ -176,15 +173,11 @@
                                 <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button>
                             </li>
                         </ul>
-                        <label class="control-label" for="formInput256">What are your milestones to create what you
-                            offer?
-                            (what
-                            are the steps you will follow to build your offer) separate between every milestone with a
-                            comma
+                        <label class="control-label" for="formInput256">What are the milestones you will follow to create what you offer?
                         </label>
 
                         <input type="text" class="form-control" id="formInput256" ng-model="milestoneItem">
-                        <button class="btn btn-default" ng-click="milestoneItem=addItemTo(milestones,milestoneItem)">Add</button>
+                        <button class="btn btn-default" ng-click="milestoneItem=addItemTo(milestones,milestoneItem)">Add Milestone</button>
 
                     </div>
                 </div>
@@ -203,11 +196,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Report</h4>
+                    <h4 class="modal-title">REPORT BARTER</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label" for="formInput2568">Describe</label>
+                        <label class="control-label" for="formInput2568">Why do you think this barter is inappropriate?</label>
                         <textarea class="form-control" rows="3" id="formInput2568"
                                   ng-model="reportDescription" required></textarea>
                     </div>
