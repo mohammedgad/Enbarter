@@ -276,6 +276,8 @@ function getCategories(successCallback) {
 app.controller('browseCtrl', function ($scope, $routeParams, $location) {
     $scope.offerCat = 'all';
     $scope.seekCat = 'all';
+    $scope.barterState = 'all';
+
     getCategories(function (results) {
         $scope.categories = results;
         $scope.$apply();
@@ -290,6 +292,8 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
             query.equalTo("seekCategory", Category.createWithoutData($scope.seekCat));
         if ($scope.offerCat && $scope.offerCat != 'all')
             query.equalTo("offerCategory", Category.createWithoutData($scope.offerCat));
+        if ($scope.barterState && $scope.barterState != 'all')
+            query.equalTo("state", $scope.barterState);
         if ($scope.query)
             query.containsAll("words", $scope.query.split(" "));
         Pace.start();

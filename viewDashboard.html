@@ -16,12 +16,12 @@
         </div>
         <div class="col-md-10">
             <div class="row">
-                <h3>Dashboards</h3>
+                <h3>Dashboard</h3>
                 <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer offer:hover"
                      ng-show="dashboardActive(barter)">
                     <div class="col-md-8 text-left">
                         <a href="./#/dashboard/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
-                            {{barter.get('barterTitle')}}</h3></a>
+                            {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span> </h3></a>
                         <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
                     </div>
                     <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
@@ -35,7 +35,7 @@
                      ng-show="dashboardActive(barter)">
                     <div class="col-md-8 text-left">
                         <a href="./#/dashboard/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
-                            {{barter.get('barterTitle')}}</h3></a>
+                            {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span> </h3></a>
                         <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
                     </div>
                     <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
