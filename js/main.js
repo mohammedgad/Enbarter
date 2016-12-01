@@ -1,4 +1,4 @@
-var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize','ngRaven']);
+var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize', 'ngRaven']);
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/", {
@@ -157,7 +157,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
         query.limit(10);
         query.find({
             success: function (results) {
-                $scope.notifications = results;
+                $scope.notifications = results || [];
                 $rootScope.nCount = results.filter(function (x) {
                     if (!x.get('read'))
                         return true;
@@ -276,7 +276,7 @@ function getCategories(successCallback) {
 app.controller('browseCtrl', function ($scope, $routeParams, $location) {
     $scope.offerCat = 'all';
     $scope.seekCat = 'all';
-    $scope.barterState = 'all';
+    $scope.barterState = 'created';
 
     getCategories(function (results) {
         $scope.categories = results;
