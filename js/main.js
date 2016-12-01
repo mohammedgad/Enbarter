@@ -276,7 +276,7 @@ function getCategories(successCallback) {
 app.controller('browseCtrl', function ($scope, $routeParams, $location) {
     $scope.offerCat = 'all';
     $scope.seekCat = 'all';
-    $scope.barterState = 'all';
+    $scope.barterState = 'created';
 
     getCategories(function (results) {
         $scope.categories = results;
