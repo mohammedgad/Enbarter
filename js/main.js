@@ -304,6 +304,7 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
         query.find({
             success: function (results) {
                 $scope.results = results;
+
                 if (results.length > 9)
                     $scope.showLoadMore = true;
                 $scope.$apply();
