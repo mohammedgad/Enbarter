@@ -299,6 +299,7 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
         if ($scope.query)
             query.containsAll("words", $scope.query.split(" "));
         query.limit(10);
+        query.descending("createdAt");
         Pace.start();
         query.find({
             success: function (results) {
