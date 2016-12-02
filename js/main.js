@@ -284,9 +284,10 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
     });
 
     var Category = Parse.Object.extend("Category");
-    var query = new Parse.Query(Parse.Object.extend("Barter"));
+    var query;
     $scope.search = function () {
         skip = 0;
+        query = new Parse.Query(Parse.Object.extend("Barter"));
         query.include('seekCategory');
         query.include('offerCategory');
         query.include('user');
@@ -304,6 +305,7 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
         query.find({
             success: function (results) {
                 $scope.results = results;
+
                 if (results.length > 9)
                     $scope.showLoadMore = true;
                 $scope.$apply();
@@ -322,10 +324,9 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
             success: function (results) {
                 if (results.length)
                     $scope.results.push(results);
-                else
+                if (results.length < 10)
                     $scope.showLoadMore = false;
                 $scope.$apply();
-
             },
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);

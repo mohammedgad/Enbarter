@@ -9,7 +9,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label header-form-label">I Offer</label>
-                                <select class="form-control" ng-model="offerCat">
+                                <select class="form-control" ng-model="seekCat">
                                     <option value="all" selected>All Offers</option>
                                     <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.get('name')}}
                                     </option>
@@ -20,7 +20,7 @@
                             <div class="form-group">
                                 <label class="control-label header-form-label">I Seek</label>
                                 <select id="formInput206" class="form-control"
-                                        ng-model="seekCat">
+                                        ng-model="offerCat">
                                     <option value="all" selected>All Seeks</option>
                                     <option ng-repeat="cat in categories" value="{{cat.id}}">{{cat.get('name')}}
                                     </option>
@@ -40,10 +40,10 @@
             <!-- /.container -->
         </div>
     </section>
-    <div class="row page-content" ng-show="results.length">
+    <div class="row page-content" ng-show="results">
         <div class="col-md-8 pull-left">
             <h1>Search Result</h1>
-            <h3>Barter up Media with Website</h3>
+            <h2 ng-hide="results.length">Nothing match your search found!</h2>
         </div>
         <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
             <i class="fa fa-edit fa-3x deepocean offer-icon"></i>
