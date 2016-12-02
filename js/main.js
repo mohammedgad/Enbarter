@@ -284,9 +284,10 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
     });
 
     var Category = Parse.Object.extend("Category");
-    var query = new Parse.Query(Parse.Object.extend("Barter"));
+    var query;
     $scope.search = function () {
         skip = 0;
+        query = new Parse.Query(Parse.Object.extend("Barter"));
         query.include('seekCategory');
         query.include('offerCategory');
         query.include('user');
