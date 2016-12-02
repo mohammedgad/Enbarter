@@ -324,10 +324,9 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
             success: function (results) {
                 if (results.length)
                     $scope.results.push(results);
-                else
+                if (results.length < 10)
                     $scope.showLoadMore = false;
                 $scope.$apply();
-
             },
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
