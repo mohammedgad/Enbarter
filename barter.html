@@ -38,8 +38,7 @@
                             data-target="{{isLoggedIn()?'#barterup':'#sign'}}" data-toggle="modal">BARTER UP
                     </button>
                     <button type="button" class="btn btn-info btn-lg btn-block disabled"
-                            ng-show="!sameAccount()&&(result.get('barterUpUser')||bartered())"
-                            ng-hide="result.get('state')=='completed'"
+                            ng-show="!sameAccount()&&(result.get('barterUpUser')||bartered())&&!result.get('state')=='completed'"
 
                     >BARTERED
                     </button>
