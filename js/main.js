@@ -277,14 +277,16 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
     $scope.offerCat = 'all';
     $scope.seekCat = 'all';
     $scope.barterState = 'created';
-
+    var skip = 0;
     getCategories(function (results) {
         $scope.categories = results;
         $scope.$apply();
     });
+
+    var Category = Parse.Object.extend("Category");
+    var query = new Parse.Query(Parse.Object.extend("Barter"));
     $scope.search = function () {
-        var Category = Parse.Object.extend("Category");
-        var query = new Parse.Query(Parse.Object.extend("Barter"));
+        skip = 0;
         query.include('seekCategory');
         query.include('offerCategory');
         query.include('user');
@@ -296,10 +298,14 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
             query.equalTo("state", $scope.barterState);
         if ($scope.query)
             query.containsAll("words", $scope.query.split(" "));
+        query.limit(10);
+        query.descending("createdAt");
         Pace.start();
         query.find({
             success: function (results) {
                 $scope.results = results;
+                if (results.length > 9)
+                    $scope.showLoadMore = true;
                 $scope.$apply();
             },
             error: function (error) {
@@ -308,6 +314,24 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
         }).then(Pace.stop());
     }
 
+    $scope.loadMore = function () {
+        skip++;
+        query.skip(skip);
+        Pace.start();
+        query.find({
+            success: function (results) {
+                if (results.length)
+                    $scope.results.push(results);
+                else
+                    $scope.showLoadMore = false;
+                $scope.$apply();
+
+            },
+            error: function (error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        }).then(Pace.stop());
+    }
     if ($routeParams.id) {
         $scope.offerCat = $routeParams.id;
         $scope.search();
