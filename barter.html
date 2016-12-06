@@ -30,6 +30,11 @@
                 <div class="bg-white column-shadow div-inside">
                     <h3 class="text-info">Short Description</h3>
                     <p ng-bind="result.get('barterDescription')"></p>
+                    <button type="button" class="btn btn-default btn-block"
+                            ng-click="showMilestones(result.get('offerMilestones'))"
+                            data-target="#barterMilestones" data-toggle="modal">
+                        MileStones
+                    </button>
                     <h4 class="text-danger"
                         ng-bind="'Deadline [ Offer: '+result.get('offerDeadline')+' | Seek: '+result.get('seekDeadline')+']'">
                         Deadline</h4>
