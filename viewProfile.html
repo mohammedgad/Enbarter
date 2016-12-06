@@ -57,6 +57,10 @@
                 <ul>
                     <li ng-repeat="link in result.get('workLinks')"><a href="{{link}}">{{link}}</a></li>
                 </ul>
+                <h3 ng-show="result.get('skills').length">skills</h3>
+                <ul>
+                    <li ng-repeat="skill in result.get('skills')">{{skill}}</li>
+                </ul>
             </div>
         </div>
     </div>
