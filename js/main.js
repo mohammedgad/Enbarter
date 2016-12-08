@@ -678,6 +678,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             chat.set("message", $scope.message);
             chat.set("user", Parse.User.current());
             chat.set("barter", $scope.result);
+            chat.set("offerUser", $scope.result.get("user"));
+            chat.set("barterUpUser", $scope.result.get("barterUpUser"));
 
             chat.save({
                 success: function (results) {
