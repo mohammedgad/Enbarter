@@ -78,10 +78,13 @@
                         other goods or services without an intermediary medium of exchange, mainly money.</p>
                     <div class="row">
                         <div class="col-sm-5 col-xs-12">
-                            <button data-target="#sign"
-                                    data-toggle="modal" class="btn btn-block btn-primary"
-                                    data-loading-text="asd"><span class="fa fa-check"></span>&nbsp; Register now
-                            </button>
+                            <button ng-hide="isLoggedIn()" data-target="#sign"
+                                             data-toggle="modal" class="btn btn-block btn-primary"
+                                             data-loading-text="asd"><span class="fa fa-check"></span>&nbsp; Register now
+                        </button>
+                            <a ng-show="isLoggedIn()" href="./#/create_barter" class="btn btn-block btn-primary"
+                                    data-loading-text="asd"><span class="fa fa-check"></span>&nbsp; Start Barter
+                            </a>
                         </div>
                     </div>
                 </div>
