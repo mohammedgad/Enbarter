@@ -1,3 +1,4 @@
+Raven.config('https://22c41b4449c04f2f9678babd3400566c@sentry.io/118691').install();
 var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize', 'ngRaven']);
 app.config(function ($routeProvider) {
     $routeProvider
@@ -88,6 +89,10 @@ app.run(function ($rootScope, $location) {
             }
         });
     }
+
+    $rootScope.$on('$locationChangeStart', function (event) {
+        showSpinner();
+    });
 });
 
 app.controller('header', function ($scope, $location, $rootScope) {
@@ -97,7 +102,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
     $scope.dashboardLink = ".#/dashboard";
 
     $scope.login = function () {
-        Pace.start();
+        showSpinner();
         Parse.User.logIn($scope.username, $scope.password, {
             success: function (user) {
                 location.reload();
@@ -105,7 +110,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
             error: function (user, error) {
                 alert("Error: " + error.code + " " + error.message);
             }
-        }).then(Pace.stop());
+        }).then(hideSpinner());
 
     }
 
@@ -114,7 +119,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
         user.set("username", $scope.username);
         user.set("password", $scope.password);
         user.set("email", $scope.email);
-        Pace.start();
+        showSpinner();
         user.signUp(null, {
             success: function (user) {
                 location.reload();
@@ -122,22 +127,22 @@ app.controller('header', function ($scope, $location, $rootScope) {
             error: function (user, error) {
                 alert("Error: " + error.code + " " + error.message);
             }
-        }).then(Pace.stop());
+        }).then(hideSpinner());
     }
 
     $scope.logout = function () {
-        Pace.start();
+        showSpinner();
         Parse.User.logOut().then(function () {
-            Pace.stop();
+
             location.href = ".#/";
             location.reload();
-        });
+        }).then(hideSpinner());
     }
 
     $scope.passwordReset = function () {
         var email = prompt("Enter Email");
         if (email) {
-            Pace.start();
+            showSpinner();
             Parse.User.requestPasswordReset(email, {
                 success: function () {
                     alert("Request sent");
@@ -145,7 +150,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
                 error: function (error) {
                     alert("Error: " + error.code + " " + error.message);
                 }
-            }).then(Pace.stop());
+            }).then(hideSpinner());
         } else alert('Email is required');
     }
 
@@ -187,6 +192,7 @@ app.controller('createBarter', function ($scope) {
     getCategories(function (results) {
         $scope.categories = results;
         $scope.$apply();
+        hideSpinner();
     });
 
     $scope.startBarter = function () {
@@ -242,7 +248,7 @@ app.controller('createBarter', function ($scope) {
         barter.set("words", words);
         barter.set("state", "created");
 
-        Pace.start();
+        showSpinner();
         barter.save(null, {
             success: function (barter) {
                 // alert('New object created with objectId: ' + barter.id);
@@ -251,10 +257,10 @@ app.controller('createBarter', function ($scope) {
             error: function (barter, error) {
                 alert('Failed to create new object, with error code: ' + error.message);
             }
-        }).then(Pace.stop()).then(function () {
+        }).then(function () {
             $scope.canStartDisabled = false;
             $scope.$apply();
-        });
+        }).then(hideSpinner());
 
     }
 });
@@ -262,7 +268,7 @@ app.controller('createBarter', function ($scope) {
 
 function getCategories(successCallback) {
     var query = new Parse.Query(Parse.Object.extend("Category"));
-    Pace.start();
+
     query.find({
         success: function (results) {
             successCallback(results);
@@ -270,7 +276,7 @@ function getCategories(successCallback) {
         error: function (error) {
             alert("Error: " + error.code + " " + error.message);
         }
-    }).then(Pace.stop());
+    });
 
 }
 app.controller('browseCtrl', function ($scope, $routeParams, $location) {
@@ -281,11 +287,13 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
     getCategories(function (results) {
         $scope.categories = results;
         $scope.$apply();
+        hideSpinner();
     });
 
     var Category = Parse.Object.extend("Category");
     var query;
     $scope.search = function () {
+        showSpinner();
         skip = 0;
         query = new Parse.Query(Parse.Object.extend("Barter"));
         query.include('seekCategory');
@@ -301,7 +309,7 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
             query.containsAll("words", $scope.query.split(" "));
         query.limit(10);
         query.descending("createdAt");
-        Pace.start();
+
         query.find({
             success: function (results) {
                 $scope.results = results;
@@ -313,13 +321,13 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
             }
-        }).then(Pace.stop());
+        }).then(hideSpinner());
     }
 
     $scope.loadMore = function () {
         skip++;
         query.skip(skip);
-        Pace.start();
+        showSpinner();
         query.find({
             success: function (results) {
                 if (results.length)
@@ -331,7 +339,7 @@ app.controller('browseCtrl', function ($scope, $routeParams, $location) {
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
             }
-        }).then(Pace.stop());
+        }).then(hideSpinner());
     }
     if ($routeParams.id) {
         $scope.offerCat = $routeParams.id;
@@ -351,7 +359,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     query.include('barterUpUser');
     query.include('barterRequests.user');
 
-    Pace.start();
+
     query.get($routeParams.id, {
         success: function (result) {
             $scope.result = result;
@@ -366,7 +374,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $location.path('/');
             $scope.$apply();
         }
-    }).then(Pace.stop());
+    }).then(hideSpinner());
 
     $scope.sameAccount = function () {
         if (Parse.User.current() && $scope.result && $scope.result.get('user').id == Parse.User.current().id)
@@ -378,7 +386,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         var result = angular.copy($scope.result);
         if (result) {
             result.set("state", "disabled");
-            Pace.start();
+            showSpinner();
             result.save({
                 success: function (results) {
                     $scope.result = results;
@@ -387,7 +395,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                 error: function (error) {
                     alert("Error: " + error.code + " " + error.message);
                 }
-            }).then(Pace.stop());
+            }).then(hideSpinner());
         }
     }
 
@@ -410,7 +418,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
         var user = Parse.User.current();
         user.addUnique("barterSeeks", result);
-        Pace.start();
+        showSpinner();
         user.save({
             success: function (results) {
             },
@@ -427,7 +435,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
             }
-        }).then(Pace.stop());
+        }).then(hideSpinner());
     }
 
     $scope.bartered = function () {
@@ -455,8 +463,9 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             result.set("barterUpMilestones", request.milestone);
             result.set("barterUpDeadline", request.deadline);
             result.set("state", "bartered");
-            Pace.start();
+
             $scope.barterRequests.splice(index, 1);
+            showSpinner();
             result.save({
                 success: function (results) {
                     $scope.result = result;
@@ -465,7 +474,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                 error: function (error) {
                     alert("Error: " + error.code + " " + error.message);
                 }
-            }).then(Pace.stop());
+            }).then(hideSpinner());
         }
     }
 
@@ -475,7 +484,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         report.set("user", Parse.User.current());
         report.set("description", $scope.reportDescription);
         report.set("barter", $scope.result);
-        Pace.start();
+        showSpinner();
         report.save({
             success: function (results) {
                 alert("Thank You");
@@ -483,7 +492,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
             }
-        }).then(Pace.stop());
+        }).then(hideSpinner());
     }
 });
 
@@ -503,7 +512,7 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
     query.include('user');
     query.descending("createdAt");
     query.limit(5);
-    Pace.start();
+
     query.find({
         success: function (results) {
             $scope.barters = results;
@@ -512,10 +521,9 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
         error: function (error) {
             alert("Error: " + error.code + " " + error.message);
         }
-    }).then(Pace.stop());
-
+    }).then(hideSpinner());
 });
-var chatIntervalId;
+
 app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $routeParams) {
     $scope.result = null;
     $scope.messages = [];
@@ -527,7 +535,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         var query = new Parse.Query(Chat);
         query.include("user");
         query.equalTo("barter", $scope.result);
-        Pace.start();
+
         query.find({
             success: function (results) {
                 $scope.messages = results;
@@ -536,7 +544,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
             }
-        }).then(Pace.stop());
+        });
 
         var subscription = query.subscribe();
         subscription.on('create', function (object) {
@@ -548,7 +556,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             subscription.unsubscribe();
         });
-    }
+    };
 
     var query = new Parse.Query(Barter);
     query.include('seekCategory');
@@ -557,7 +565,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     query.include('barterUpUser');
 
 
-    Pace.start();
     query.get($routeParams.id, {
         success: function (result) {
             if (!result.get('barterUpUser') && Parse.User.current().id != result.get('user').id) {
@@ -599,20 +606,14 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             $rootScope.$on('$locationChangeStart', function (event, next, current) {
                 subscription.unsubscribe();
             });
-            // if ($scope.result.get('state') != 'completed')
-            //     chatIntervalId = window.setInterval(function () {
-            //         $scope.reloadChat();
-            //     }, 3000);
-            // $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            //     window.clearInterval(chatIntervalId);
-            // });
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
             $location.path('/');
             $scope.$apply();
         }
-    }).then(Pace.stop());
+    }).then(hideSpinner());
+
     $scope.sendMessage = function () {
         if ($scope.result.get('state') != 'completed') {
             $scope.cantSend = true;
@@ -620,7 +621,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             chat.set("message", $scope.message);
             chat.set("user", Parse.User.current());
             chat.set("barter", $scope.result);
-            Pace.start();
+
             chat.save({
                 success: function (results) {
                     $scope.message = "";
@@ -630,13 +631,13 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 error: function (error) {
                     alert("Error: " + error.code + " " + error.message);
                 }
-            }).then(Pace.stop());
+            });
         }
-    }
+    };
     $scope.checkParse = function (o, column) {
         $scope.checkParseColumn = column;
         $scope.checkParseObject = o;
-    }
+    };
 
     $scope.check = function (o, column) {
         var result = angular.copy($scope.result);
@@ -656,7 +657,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             }
         }
         result.set(column, arr);
-        Pace.start();
+        showSpinner();
         result.save({
             success: function (results) {
                 $scope[column] = angular.copy(arr);
@@ -667,8 +668,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
             }
-        }).then(Pace.stop());
-    }
+        }).then(hideSpinner());
+    };
 
     $scope.closeAndRate = function () {
         var result = angular.copy($scope.result);
@@ -679,7 +680,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         if (result.get(oppisite + "Rate"))
             result.set("state", 'completed');
 
-        Pace.start();
+        showSpinner();
         result.save({
             success: function (results) {
                 $scope.result = results;
@@ -688,8 +689,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             error: function (error) {
                 alert("Error: " + error.code + " " + error.message);
             }
-        }).then(Pace.stop());
-    }
+        }).then(hideSpinner());
+    };
 
     $scope.showClose = function (x) {
         var oppisite = (x == 'offer') ? 'barterUp' : 'offer';
@@ -725,13 +726,14 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             var parseFile = new Parse.File(name, file);
             result.set(x + "FinalPic", parseFile);
         }
+        showSpinner();
         result.save({
             success: function () {
 
             }, error: function (object, error) {
                 alert("Error: " + error.code + " " + error.message);
             }
-        });
+        }).then(hideSpinner());
     }
     $scope.canCheck = function (x) {
         if (Parse.User.current().id == $scope.result.get(x).id)
@@ -745,30 +747,29 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
     $scope.result = null;
     var query = new Parse.Query(Parse.User);
     query.include("barterSeeks");
-    Pace.start();
+
     query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
         success: function (result) {
             $scope.result = result;
             $rootScope.title = "Profile: " + result.get('username');
             $scope.$apply();
 
+            var Barter = Parse.Object.extend("Barter");
+            var barterQuery = new Parse.Query(Barter);
+            barterQuery.equalTo("user", Parse.User.current());
+            barterQuery.find({
+                success: function (results) {
+                    $scope.barters = results;
+                    $scope.$apply();
+                }
+            }).then(hideSpinner());
             console.log(result);
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
             $location.path('/');
             $scope.$apply();
-        }
-    }).then(Pace.stop());
-
-
-    var Barter = Parse.Object.extend("Barter");
-    var barterQuery = new Parse.Query(Barter);
-    barterQuery.equalTo("user", Parse.User.current());
-    barterQuery.find({
-        success: function (results) {
-            $scope.barters = results;
-            $scope.$apply();
+            hideSpinner();
         }
     });
 });
@@ -776,7 +777,7 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
 app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $routeParams) {
     $scope.result = null;
     var query = new Parse.Query(Parse.User);
-    Pace.start();
+
     query.get(Parse.User.current() ? Parse.User.current().id : null, {
         success: function (result) {
             $scope.result = result;
@@ -795,7 +796,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             $location.path('/');
             $scope.$apply();
         }
-    }).then(Pace.stop());
+    }).then(hideSpinner());
 
     $scope.submit = function () {
         $scope.cantSubmit = true;
@@ -812,7 +813,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             var parseFile = new Parse.File(name, file);
             result.set("pic", parseFile);
         }
-        Pace.start();
+        showSpinner();
         result.save({
             success: function (result) {
                 location.reload();
@@ -822,7 +823,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
         }).then(function () {
             $scope.cantSubmit = false;
             $scope.$apply();
-        });
+        }).then(hideSpinner());
     }
 });
 
@@ -830,32 +831,31 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
     $scope.result = null;
     var query = new Parse.Query(Parse.User);
     query.include("barterSeeks");
-    Pace.start();
+
     query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
         success: function (result) {
             $scope.result = result;
             $rootScope.title = "Dashboard";
             $scope.$apply();
-
+            var Barter = Parse.Object.extend("Barter");
+            var barterQuery = new Parse.Query(Barter);
+            barterQuery.equalTo("user", Parse.User.current());
+            barterQuery.find({
+                success: function (results) {
+                    $scope.barters = results;
+                    $scope.$apply();
+                }
+            }).then(hideSpinner());
             console.log(result);
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
             $location.path('/');
             $scope.$apply();
-        }
-    }).then(Pace.stop());
-
-
-    var Barter = Parse.Object.extend("Barter");
-    var barterQuery = new Parse.Query(Barter);
-    barterQuery.equalTo("user", Parse.User.current());
-    barterQuery.find({
-        success: function (results) {
-            $scope.barters = results;
-            $scope.$apply();
+            hideSpinner();
         }
     });
+
 
     $scope.dashboardActive = function (barter) {
         if ((barter && barter.get('barterUpUser')) && (Parse.User.current().id == barter.get('user').id || Parse.User.current().id == barter.get('barterUpUser').id))
@@ -885,5 +885,17 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
             $location.path('/');
             $scope.$apply();
         }
-    });
+    }).then(hideSpinner());
 });
+
+function hideSpinner() {
+    $('#divLoading').fadeOut(250, function () {
+        $('#divLoading').removeClass('show');
+    });
+}
+
+function showSpinner() {
+    $('#divLoading').fadeIn(250, function () {
+        $('#divLoading').addClass('show');
+    });
+}
