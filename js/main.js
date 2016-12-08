@@ -143,10 +143,12 @@ app.controller('header', function ($scope, $location, $rootScope) {
                                     location.reload();
                                 },
                                 error: function (user, error) {
+                                    hideSpinner();
                                     $rootScope.alertModal("Oops, something went wrong saving your name.");
                                 }
                             });
                         } else {
+                            hideSpinner();
                             $rootScope.alertModal("Oops something went wrong with facebook.");
                         }
                     });
