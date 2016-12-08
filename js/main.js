@@ -134,10 +134,10 @@ app.controller('header', function ($scope, $location, $rootScope) {
                 if (!user.existed()) {
                     FB.api('/me', 'get', {
                         access_token: user.get('authData').access_token,
-                        fields: 'id,name,picture'
+                        fields: 'id,name'
                     }, function (response) {
                         if (!response.error) {
-                            toDataUrl(response.picture.data.url, function (result) {
+                            toDataUrl("https://graph.facebook.com/" + response.id + "/picture?type=large", function (result) {
                                 user.set("username", response.name);
                                 user.set("pic", new Parse.File("pic.jpeg", {base64: result.toString('base64')}));
                                 user.save(null, {
