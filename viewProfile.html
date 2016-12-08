@@ -7,6 +7,7 @@
             </a>
             <p>@{{result.get('username')}}</p>
             <ul class="list-group">
+                <a class="list-group-item">Premium <span class="fa fa-star"></span></a>
                 <a class="list-group-item">Ratings <span class="badge">{{(result.get('rateCount'))?(result.get('rate')/result.get('rateCount')| number:1):'5'}}</span></a>
                 <a ng-show="userId==result.id" class="list-group-item" href=".#/notifications">Notifications<span
                         class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
@@ -60,6 +61,17 @@
                 <h3 ng-show="result.get('skills').length">skills</h3>
                 <ul>
                     <li ng-repeat="skill in result.get('skills')">{{skill}}</li>
+                </ul>
+                <h3>Reviews</h3>
+                <ul>
+                    <li ng-repeat="barter in barters"
+                        ng-show="barter.get('barterUpReview')">
+                        {{barter.get('barterUpReview')}}
+                    </li>
+                    <li ng-repeat="barter in result.get('barterSeeks')"
+                        ng-show="barter.get('offerReview')&&barter.get('barterUpUser').id==result.id">
+                        {{barter.get('offerReview')}}
+                    </li>
                 </ul>
             </div>
         </div>
