@@ -367,7 +367,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $scope.barterRequests = angular.copy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
 
-            console.log(result);
+
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
@@ -517,11 +517,13 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
         success: function (results) {
             $scope.barters = results;
             $scope.$apply();
+            hideSpinner();
         },
         error: function (error) {
             alert("Error: " + error.code + " " + error.message);
+            hideSpinner();
         }
-    }).then(hideSpinner());
+    });
 });
 
 app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $routeParams) {
@@ -592,7 +594,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             $scope.$apply();
             $scope.reloadChat();
 
-            console.log(result);
 
             var subscription = query.subscribe();
             subscription.on('update', function (object) {
@@ -763,7 +764,7 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
                     $scope.$apply();
                 }
             }).then(hideSpinner());
-            console.log(result);
+
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
@@ -789,7 +790,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             $rootScope.title = "Edit: " + result.get('username');
             $scope.$apply();
 
-            console.log(result);
+
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
@@ -846,7 +847,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
                     $scope.$apply();
                 }
             }).then(hideSpinner());
-            console.log(result);
+
         },
         error: function (object, error) {
             alert("Error: " + error.code + " " + error.message);
