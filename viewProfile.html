@@ -61,6 +61,17 @@
                 <ul>
                     <li ng-repeat="skill in result.get('skills')">{{skill}}</li>
                 </ul>
+                <h3>Reviews</h3>
+                <ul>
+                    <li ng-repeat="barter in barters"
+                        ng-show="barter.get('barterUpReview')">
+                        {{barter.get('barterUpReview')}}
+                    </li>
+                    <li ng-repeat="barter in result.get('barterSeeks')"
+                        ng-show="barter.get('offerReview')&&barter.get('barterUpUser').id==result.id">
+                        {{barter.get('offerReview')}}
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
