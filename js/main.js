@@ -134,14 +134,10 @@ app.controller('header', function ($scope, $location, $rootScope) {
                 if (!user.existed()) {
                     FB.api('/me', 'get', {
                         access_token: user.get('authData').access_token,
-                        fields: 'id,name,gender,picture'
+                        fields: 'id,name,picture'
                     }, function (response) {
-                        console.log(response);
                         if (!response.error) {
-                            var url = response.picture.data.url;
-                            console.log(url);
-                            toDataUrl(url, function (result) {
-                                console.log(result);
+                            toDataUrl(response.picture.data.url, function (result) {
                                 user.set("username", response.name);
                                 user.set("pic", new Parse.File("pic.jpeg", {base64: result.toString('base64')}));
                                 user.save(null, {
@@ -243,7 +239,6 @@ app.controller('header', function ($scope, $location, $rootScope) {
 
         var subscription = query.subscribe();
         subscription.on('create', function (object) {
-            console.log(object);
             $rootScope.nCount++;
             $scope.notifications.unshift(object);
             $scope.$apply();
@@ -615,7 +610,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
 
         var subscription = query.subscribe();
         subscription.on('create', function (object) {
-            console.log(object);
             $scope.messages.push(object);
             $scope.$apply();
         });
@@ -666,7 +660,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 $scope.offerMilestones = angular.copy(result.get('offerMilestones'));
                 $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
                 $scope.$apply();
-                console.log(object);
             });
 
             $rootScope.$on('$locationChangeStart', function (event, next, current) {
