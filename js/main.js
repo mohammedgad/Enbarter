@@ -41,10 +41,32 @@ app.run(function ($rootScope, $location) {
 
 // Parse.initialize("myAppId", "js");
 // Parse.serverURL = 'http://localhost:1337/parse';
-
+    if (!Parse.User.current()) {
+        window.fbAsyncInit = function () {
+            // init the FB JS SDK
+            Parse.FacebookUtils.init({
+                appId: '1394780183887567', // Facebook App ID
+                status: false, // check login status
+                cookie: true, // enable cookies to allow Parse to access the session
+                xfbml: true  // parse XFBML
+            });
+        };
+        (function (d, debug) {
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement('script');
+            js.id = id;
+            js.async = true;
+            js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document, /*debug*/ false));
+    }
     $rootScope.title = 'EnBarter';
-    $rootScope.description = "123";
-    $rootScope.keywords = "123";
+    $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
+    $rootScope.keywords = "Enbarter,Barter,Bartering,Skills,Exchange,Entrepreneur,Service,Help,Direct,Professional,Free,Business";
+    $rootScope.statusCode = 200;
     $rootScope.isLoggedIn = function () {
         if (Parse.User.current())
             return true;
@@ -101,6 +123,16 @@ app.controller('header', function ($scope, $location, $rootScope) {
     $scope.createBarterLink = ".#/create_barter";
     $scope.dashboardLink = ".#/dashboard";
 
+    $scope.fbLogin = function () {
+        Parse.FacebookUtils.logIn(null, {
+            success: function (user) {
+                location.reload();
+            },
+            error: function (user, error) {
+                alert("User cancelled the Facebook login or did not fully authorize.");
+            }
+        });
+    }
     $scope.login = function () {
         showSpinner();
         Parse.User.logIn($scope.username, $scope.password, {
@@ -111,7 +143,6 @@ app.controller('header', function ($scope, $location, $rootScope) {
                 alert("Error: " + error.code + " " + error.message);
             }
         }).then(hideSpinner());
-
     }
 
     $scope.signup = function () {
@@ -888,6 +919,13 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
         }
     }).then(hideSpinner());
 });
+
+app.controller('notFoundCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    hideSpinner();
+    $rootScope.title = 'EnBarter - Not Found';
+    $rootScope.statusCode = 404;
+});
+
 
 function hideSpinner() {
     $('#divLoading').fadeOut(250, function () {
