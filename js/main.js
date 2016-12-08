@@ -43,12 +43,11 @@ app.run(function ($rootScope, $location) {
 // Parse.serverURL = 'http://localhost:1337/parse';
     if (!Parse.User.current()) {
         window.fbAsyncInit = function () {
-            // init the FB JS SDK
             Parse.FacebookUtils.init({
-                appId: '1394780183887567', // Facebook App ID
-                status: false, // check login status
-                cookie: true, // enable cookies to allow Parse to access the session
-                xfbml: true  // parse XFBML
+                appId: '1394780183887567',
+                status: false,
+                cookie: true,
+                xfbml: true
             });
         };
         (function (d, debug) {
