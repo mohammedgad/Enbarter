@@ -128,11 +128,33 @@ app.controller('header', function ($scope, $location, $rootScope) {
     $scope.dashboardLink = ".#/dashboard";
 
     $scope.fbLogin = function () {
+        showSpinner();
         Parse.FacebookUtils.logIn(null, {
             success: function (user) {
-                location.reload();
+                if (!user.existed()) {
+                    FB.api('/me', 'get', {
+                        access_token: user.get('authData').access_token,
+                        fields: 'id,name,gender,picture'
+                    }, function (response) {
+                        if (!response.error) {
+                            user.set("username", response.name);
+                            user.save(null, {
+                                success: function (user) {
+                                    location.reload();
+                                },
+                                error: function (user, error) {
+                                    $rootScope.alertModal("Oops, something went wrong saving your name.");
+                                }
+                            });
+                        } else {
+                            $rootScope.alertModal("Oops something went wrong with facebook.");
+                        }
+                    });
+                } else
+                    location.reload();
             },
             error: function (user, error) {
+                hideSpinner();
                 $rootScope.alertModal("User cancelled the Facebook login or did not fully authorize.");
             }
         });
