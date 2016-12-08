@@ -130,14 +130,12 @@
             <div class="container text-center">
                 <h2>Old is Gold START BARTERING</h2>
                 <h1>start&nbsp;Bartering</h1>
-                <div class="col-md-6 col-md-offset-3 text-center">
+                <div class="col-md-7 col-md-offset-4 text-center">
                     <div class="col-md-6">
+                        <a href="./#/create_barter" ng-show="isLoggedIn()" class="btn btn-block btn-outline btn-outline-lg outline-light">Start a Barter</a>
                         <a data-target="#sign"
-                           data-toggle="modal" class="btn btn-block btn-outline btn-outline-lg outline-light">Register
+                           data-toggle="modal" ng-hide="isLoggedIn()" class="btn btn-block btn-outline btn-outline-lg outline-light">Register
                             now!</a>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="#" class="btn btn-block btn-outline btn-outline-lg outline-light">Find out more</a>
                     </div>
                 </div>
             </div>
