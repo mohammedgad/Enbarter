@@ -131,21 +131,28 @@ app.controller('header', function ($scope, $location, $rootScope) {
         showSpinner();
         Parse.FacebookUtils.logIn(null, {
             success: function (user) {
-                if (!user.existed()) {
+                if (user.existed()) {
                     FB.api('/me', 'get', {
                         access_token: user.get('authData').access_token,
                         fields: 'id,name,gender,picture'
                     }, function (response) {
+                        console.log(response);
                         if (!response.error) {
-                            user.set("username", response.name);
-                            user.save(null, {
-                                success: function (user) {
-                                    location.reload();
-                                },
-                                error: function (user, error) {
-                                    hideSpinner();
-                                    $rootScope.alertModal("Oops, something went wrong saving your name.");
-                                }
+                            var url = response.picture.data.url;
+                            console.log(url);
+                            toDataUrl(url, function (result) {
+                                console.log(result);
+                                user.set("username", response.name);
+                                user.set("pic", new Parse.File("pic.jpeg", {base64: result.toString('base64')}));
+                                user.save(null, {
+                                    success: function (user) {
+                                        location.reload();
+                                    },
+                                    error: function (user, error) {
+                                        hideSpinner();
+                                        $rootScope.alertModal("Oops, something went wrong saving your name.");
+                                    }
+                                });
                             });
                         } else {
                             hideSpinner();
@@ -958,4 +965,18 @@ function showSpinner() {
     $('#divLoading').fadeIn(250, function () {
         $('#divLoading').addClass('show');
     });
+}
+
+function toDataUrl(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    xhr.onload = function () {
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            callback(reader.result);
+        }
+        reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', url);
+    xhr.send();
 }
