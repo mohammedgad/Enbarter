@@ -134,7 +134,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
     }
     $scope.login = function () {
         showSpinner();
-        Parse.User.logIn($scope.username, $scope.password, {
+        Parse.User.logIn($scope.username.toLowerCase(), $scope.password, {
             success: function (user) {
                 location.reload();
             },
@@ -146,9 +146,9 @@ app.controller('header', function ($scope, $location, $rootScope) {
 
     $scope.signup = function () {
         var user = new Parse.User();
-        user.set("username", $scope.username);
+        user.set("username", $scope.username.toLowerCase());
         user.set("password", $scope.password);
-        user.set("email", $scope.email);
+        user.set("email", $scope.email.toLowerCase());
         showSpinner();
         user.signUp(null, {
             success: function (user) {
@@ -173,7 +173,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
         var email = prompt("Enter Email");
         if (email) {
             showSpinner();
-            Parse.User.requestPasswordReset(email, {
+            Parse.User.requestPasswordReset(email.toLowerCase(), {
                 success: function () {
                     alert("Request sent");
                 },
