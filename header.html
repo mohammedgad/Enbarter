@@ -95,7 +95,8 @@
                         Password
                         Reset
                     </button>
-                    <button type="button" class="btn btn-info" ng-click="fbLogin()" data-dismiss="modal">FB Login</button>
+                    <button type="button" class="btn btn-info" ng-click="fbLogin()" data-dismiss="modal">FB Login
+                    </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" data-target="#signup"
                             data-toggle="modal">Signup
                     </button>
@@ -155,6 +156,20 @@
                     <button class="btn btn-danger btn-block pull-right" type="button"
                             ng-click="logout()" ng-show="isLoggedIn()">Logout
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade pg-show-modal" id="alertModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Alert</h4>
+                </div>
+                <div class="modal-footer">
+                    <p class="text-left">{{alertMessage}}</p>
                 </div>
             </div>
         </div>
