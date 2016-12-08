@@ -425,7 +425,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         success: function (result) {
             $scope.result = result;
             $rootScope.title = result.get("barterTitle");
-            $scope.barterRequests = ((result.get('barterRequests')) ? result.get('barterRequests') : []);
+            $scope.barterRequests = angular.copy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
 
 
@@ -443,7 +443,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     }
 
     $scope.disable = function () {
-        var result = ($scope.result);
+        var result = angular.copy($scope.result);
         if (result) {
             result.set("state", "disabled");
             showSpinner();
@@ -473,7 +473,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             milestone: milestones,
             user: Parse.User.current()
         };
-        var result = ($scope.result);
+        var result = angular.copy($scope.result);
         result.add("barterRequests", request);
 
         var user = Parse.User.current();
@@ -489,7 +489,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         result.save({
             success: function (results) {
                 $scope.result = results;
-                $scope.barterRequests.push((request));
+                $scope.barterRequests.push(angular.copy(request));
                 $scope.$apply();
             },
             error: function (error) {
@@ -514,7 +514,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     }
 
     $scope.barterUpOwner = function (request, index) {
-        var result = ($scope.result);
+        var result = angular.copy($scope.result);
         result.set("barterUpUser", {
             "__type": "Pointer", "className": "_User",
             "objectId": request.user.id || request.user.objectId
@@ -534,6 +534,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                 $rootScope.alertModal("Error: " + error.code + " " + error.message);
             }
         }).then(hideSpinner());
+
     }
 
     $scope.reportBarter = function () {
@@ -645,8 +646,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             }
             $scope.result = result;
             $rootScope.title = "Dashboard";
-            $scope.offerMilestones = (result.get('offerMilestones'));
-            $scope.barterUpMilestones = (result.get('barterUpMilestones'));
+            $scope.offerMilestones = angular.copy(result.get('offerMilestones'));
+            $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
 
             $scope.$apply();
             $scope.reloadChat();
@@ -655,8 +656,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             var subscription = query.subscribe();
             subscription.on('update', function (object) {
                 $scope.result = result;
-                $scope.offerMilestones = (result.get('offerMilestones'));
-                $scope.barterUpMilestones = (result.get('barterUpMilestones'));
+                $scope.offerMilestones = angular.copy(result.get('offerMilestones'));
+                $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
                 $scope.$apply();
             });
 
@@ -677,6 +678,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             chat.set("message", $scope.message);
             chat.set("user", Parse.User.current());
             chat.set("barter", $scope.result);
+            chat.set("offerUser", $scope.result.get("user"));
+            chat.set("barterUpUser", $scope.result.get("barterUpUser"));
 
             chat.save({
                 success: function (results) {
@@ -696,7 +699,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     };
 
     $scope.check = function (o, column) {
-        var result = ($scope.result);
+        var result = angular.copy($scope.result);
         var arr = result.get(column);
         for (var i = 0; i < arr.length; i++) {
             if (arr[i].task == o.task) {
@@ -716,7 +719,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         showSpinner();
         result.save({
             success: function (results) {
-                $scope[column] = (arr);
+                $scope[column] = angular.copy(arr);
                 $scope.result = results;
                 $scope.comment = '';
                 $scope.$apply();
@@ -728,7 +731,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     };
 
     $scope.closeAndRate = function () {
-        var result = ($scope.result);
+        var result = angular.copy($scope.result);
         var who = (Parse.User.current().id == result.get('user').id) ? "offer" : "barterUp";
         var oppisite = (who == 'offer') ? 'barterUp' : 'offer';
         result.set(who + "Rate", $scope.rate);
@@ -774,7 +777,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     }
 
     $scope.finalPic = function (x) {
-        var result = ($scope.result);
+        var result = angular.copy($scope.result);
         fileUploadControl = $("#" + x + "FinalPic")[0];
         if (fileUploadControl.files.length > 0) {
             var file = fileUploadControl.files[0];
@@ -854,7 +857,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
 
     $scope.submit = function () {
         $scope.cantSubmit = true;
-        var result = $scope.result;
+        var result = angular.copy($scope.result);
         result.set("username", $scope.username);
         result.set("bio", $scope.bio);
         result.set("birthday", $scope.birthday);
