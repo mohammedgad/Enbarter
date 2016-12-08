@@ -425,7 +425,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         success: function (result) {
             $scope.result = result;
             $rootScope.title = result.get("barterTitle");
-            $scope.barterRequests = angular.copy((result.get('barterRequests')) ? result.get('barterRequests') : []);
+            $scope.barterRequests = ((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
 
 
@@ -443,7 +443,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     }
 
     $scope.disable = function () {
-        var result = angular.copy($scope.result);
+        var result = ($scope.result);
         if (result) {
             result.set("state", "disabled");
             showSpinner();
@@ -473,7 +473,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             milestone: milestones,
             user: Parse.User.current()
         };
-        var result = angular.copy($scope.result);
+        var result = ($scope.result);
         result.add("barterRequests", request);
 
         var user = Parse.User.current();
@@ -489,7 +489,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         result.save({
             success: function (results) {
                 $scope.result = results;
-                $scope.barterRequests.push(angular.copy(request));
+                $scope.barterRequests.push((request));
                 $scope.$apply();
             },
             error: function (error) {
@@ -514,28 +514,26 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     }
 
     $scope.barterUpOwner = function (request, index) {
-        if (confirm('Are you sure you wanna barter up with this request?')) {
-            var result = angular.copy($scope.result);
-            result.set("barterUpUser", {
-                "__type": "Pointer", "className": "_User",
-                "objectId": request.user.id || request.user.objectId
-            });
-            result.set("barterUpMilestones", request.milestone);
-            result.set("barterUpDeadline", request.deadline);
-            result.set("state", "bartered");
+        var result = ($scope.result);
+        result.set("barterUpUser", {
+            "__type": "Pointer", "className": "_User",
+            "objectId": request.user.id || request.user.objectId
+        });
+        result.set("barterUpMilestones", request.milestone);
+        result.set("barterUpDeadline", request.deadline);
+        result.set("state", "bartered");
 
-            $scope.barterRequests.splice(index, 1);
-            showSpinner();
-            result.save({
-                success: function (results) {
-                    $scope.result = result;
-                    $scope.$apply();
-                },
-                error: function (error) {
-                    $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                }
-            }).then(hideSpinner());
-        }
+        $scope.barterRequests.splice(index, 1);
+        showSpinner();
+        result.save({
+            success: function (results) {
+                $scope.result = result;
+                $scope.$apply();
+            },
+            error: function (error) {
+                $rootScope.alertModal("Error: " + error.code + " " + error.message);
+            }
+        }).then(hideSpinner());
     }
 
     $scope.reportBarter = function () {
@@ -647,8 +645,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             }
             $scope.result = result;
             $rootScope.title = "Dashboard";
-            $scope.offerMilestones = angular.copy(result.get('offerMilestones'));
-            $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
+            $scope.offerMilestones = (result.get('offerMilestones'));
+            $scope.barterUpMilestones = (result.get('barterUpMilestones'));
 
             $scope.$apply();
             $scope.reloadChat();
@@ -657,8 +655,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             var subscription = query.subscribe();
             subscription.on('update', function (object) {
                 $scope.result = result;
-                $scope.offerMilestones = angular.copy(result.get('offerMilestones'));
-                $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
+                $scope.offerMilestones = (result.get('offerMilestones'));
+                $scope.barterUpMilestones = (result.get('barterUpMilestones'));
                 $scope.$apply();
             });
 
@@ -698,7 +696,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     };
 
     $scope.check = function (o, column) {
-        var result = angular.copy($scope.result);
+        var result = ($scope.result);
         var arr = result.get(column);
         for (var i = 0; i < arr.length; i++) {
             if (arr[i].task == o.task) {
@@ -718,7 +716,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         showSpinner();
         result.save({
             success: function (results) {
-                $scope[column] = angular.copy(arr);
+                $scope[column] = (arr);
                 $scope.result = results;
                 $scope.comment = '';
                 $scope.$apply();
@@ -730,7 +728,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     };
 
     $scope.closeAndRate = function () {
-        var result = angular.copy($scope.result);
+        var result = ($scope.result);
         var who = (Parse.User.current().id == result.get('user').id) ? "offer" : "barterUp";
         var oppisite = (who == 'offer') ? 'barterUp' : 'offer';
         result.set(who + "Rate", $scope.rate);
@@ -776,7 +774,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     }
 
     $scope.finalPic = function (x) {
-        var result = angular.copy($scope.result);
+        var result = ($scope.result);
         fileUploadControl = $("#" + x + "FinalPic")[0];
         if (fileUploadControl.files.length > 0) {
             var file = fileUploadControl.files[0];
@@ -856,7 +854,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
 
     $scope.submit = function () {
         $scope.cantSubmit = true;
-        var result = angular.copy($scope.result);
+        var result = $scope.result;
         result.set("username", $scope.username);
         result.set("bio", $scope.bio);
         result.set("birthday", $scope.birthday);
