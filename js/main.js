@@ -131,7 +131,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
         showSpinner();
         Parse.FacebookUtils.logIn(null, {
             success: function (user) {
-                if (user.existed()) {
+                if (!user.existed()) {
                     FB.api('/me', 'get', {
                         access_token: user.get('authData').access_token,
                         fields: 'id,name,gender,picture'
