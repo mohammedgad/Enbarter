@@ -13,7 +13,7 @@ app.config(function ($routeProvider) {
     }).when("/create_barter", {
         templateUrl: function () {
             if (!Parse.User.current()) {
-                window.location.href = "/Enbarter";
+                window.location.href = ".";
                 return "indexContent.html";
             }
             return "create_barter.html";
@@ -319,7 +319,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
         barter.save(null, {
             success: function (barter) {
                 // $rootScope.alertModal('New object created with objectId: ' + barter.id);
-                window.location.href = "/Enbarter/#/barter/" + barter.id;
+                window.location.href = "./#/barter/" + barter.id;
                 hideSpinner();
             },
             error: function (barter, error) {
@@ -655,7 +655,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         success: function (result) {
             if (!result.get('barterUpUser') && Parse.User.current().id != result.get('user').id) {
                 // alert("Dashboard can't be accessed because there is no barter user");
-                window.location.href = "/Enbarter/#/barter/" + result.id;
+                window.location.href = "./#/barter/" + result.id;
                 return;
             }
             if (!Parse.User.current() || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
@@ -667,7 +667,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
 
             if (!result.get('barterUpMilestones') || !result.get('offerMilestones') || !result.get('barterUpMilestones').length || !result.get('offerMilestones').length) {
                 // alert("Dashboard can't be accessed because there is no Milestones");
-                window.location.href = "/Enbarter/#/barter/" + result.id;
+                window.location.href = "./#/barter/" + result.id;
                 return;
             }
             $scope.result = result;
