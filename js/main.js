@@ -983,7 +983,7 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
                         $scope.result = result;
                         $rootScope.title = "Profile: " + result.get('username');
                         $scope.$apply();
-
+                        console.log(result);
                         var Barter = Parse.Object.extend("Barter");
                         var barterQuery = new Parse.Query(Barter);
                         barterQuery.equalTo("user", Parse.User.current());

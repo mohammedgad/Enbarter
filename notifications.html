@@ -1,4 +1,4 @@
-<div class="container margin-top30">
+<div class="container margin-top30" ng-controller="notificationsCtrl">
     <div class="row">
         <div class="col-md-2">
             <a href="#" class="thumbnail">
@@ -19,7 +19,7 @@
         <div class="col-md-10">
             <h1 class="page-title text-center">Notification</h1>
 
-            <div ng-controller="notificationsCtrl">
+            <div>
                 <ul class="list-group">
                     <li ng-repeat="result in results" class="list-group-item {{!result.get('read')?'active':''}}"><a
                             ng-click="notificationCheck(result)" style="{{(!result.get('read'))?'color:white':''}}">{{result.get('description')}}</a>
