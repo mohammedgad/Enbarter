@@ -1,6 +1,11 @@
+
+            <h1 class="page-title text-center">Notification</h1>
+
+<div class="container">
 <div ng-controller="notificationsCtrl">
-    <ul class="well">
-        <li ng-repeat="result in results" class="{{!result.get('read')?'bg-black':''}}"><a
-                ng-click="notificationCheck(result)">{{result.get('description')}}</a>
+    <ul class="list-group">
+        <li ng-repeat="result in results" class="list-group-item {{!result.get('read')?'active':''}}"><a
+                ng-click="notificationCheck(result)" style="{{!result.get('read')?'color:white':''}}">{{result.get('description')}}</a>
     </ul>
+</div>
 </div>
