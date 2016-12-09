@@ -350,7 +350,8 @@ function getCategories(successCallback) {
     });
 
 }
-app.controller('browseCtrl', function ($scope, $routeParams, $location) {
+app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $location) {
+    $rootScope.title = "Enbarter | Browse";
     $scope.offerCat = 'all';
     $scope.seekCat = 'all';
     $scope.barterState = 'created';
