@@ -404,8 +404,10 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
         showSpinner();
         query.find({
             success: function (results) {
-                if (results.length)
-                    $scope.results.push(results);
+                if (results.length) {
+                    for (let i = 0; i < results.length; i++)
+                        $scope.results.push(results[i]);
+                }
                 if (results.length < 10)
                     $scope.showLoadMore = false;
                 $scope.$apply();
@@ -439,7 +441,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     query.get($routeParams.id, {
         success: function (result) {
             $scope.result = result;
-            $rootScope.title = "Enbarter | "+result.get("barterTitle");
+            $rootScope.title = "Enbarter | " + result.get("barterTitle");
             $scope.barterRequests = angular.copy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
             hideSpinner();
