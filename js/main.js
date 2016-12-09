@@ -60,7 +60,7 @@ app.run(function ($rootScope, $location) {
             ref.parentNode.insertBefore(js, ref);
         }(document, /*debug*/ false));
     }
-    $rootScope.title = 'EnBarter';
+    $rootScope.title = 'Enbarter';
     $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
     $rootScope.keywords = "Enbarter,Barter,Bartering,Skills,Exchange,Entrepreneur,Service,Help,Direct,Professional,Free,Business";
     $rootScope.statusCode = 200;
@@ -255,7 +255,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
 
 app.controller('createBarter', function ($scope, $rootScope) {
     $scope.milestones = [];
-    $rootScope.title = "Create Barter";
+    $rootScope.title = "Enbarter | Create Barter";
     getCategories(function (results) {
         $scope.categories = results;
         $scope.$apply();
@@ -438,7 +438,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     query.get($routeParams.id, {
         success: function (result) {
             $scope.result = result;
-            $rootScope.title = result.get("barterTitle");
+            $rootScope.title = "Enbarter | "+result.get("barterTitle");
             $scope.barterRequests = angular.copy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
             hideSpinner();
@@ -668,7 +668,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 return;
             }
             $scope.result = result;
-            $rootScope.title = "Dashboard";
+            $rootScope.title = "Enabrter | Dashboard";
             $scope.offerMilestones = angular.copy(result.get('offerMilestones'));
             $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
 
@@ -840,7 +840,7 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
     query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
         success: function (result) {
             $scope.result = result;
-            $rootScope.title = "Profile: " + result.get('username');
+            $rootScope.title = "Enbarter | Profile: " + result.get('username');
             $scope.$apply();
 
             var Barter = Parse.Object.extend("Barter");
@@ -877,7 +877,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             $scope.birthday = result.get('birthday');
             $scope.skills = result.get('skills') ? result.get('skills') : [];
             $scope.workLinks = result.get('workLinks') ? result.get('workLinks') : [];
-            $rootScope.title = "Edit: " + result.get('username');
+            $rootScope.title = "Enbarter | Edit: " + result.get('username');
             $scope.$apply();
             hideSpinner();
 
@@ -928,7 +928,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
     query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
         success: function (result) {
             $scope.result = result;
-            $rootScope.title = "Dashboard";
+            $rootScope.title = "Enbarter } Dashboard";
             $scope.$apply();
             var Barter = Parse.Object.extend("Barter");
             var barterQuery = new Parse.Query(Barter);
@@ -981,9 +981,8 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
             query1.get((Parse.User.current().id), {
                     success: function (result) {
                         $scope.result = result;
-                        $rootScope.title = "Profile: " + result.get('username');
+                        $rootScope.title = "Enbarter | Notifications";
                         $scope.$apply();
-                        console.log(result);
                         var Barter = Parse.Object.extend("Barter");
                         var barterQuery = new Parse.Query(Barter);
                         barterQuery.equalTo("user", Parse.User.current());
@@ -1015,7 +1014,7 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
 
 app.controller('notFoundCtrl', function ($scope, $location, $rootScope, $routeParams) {
     hideSpinner();
-    $rootScope.title = 'EnBarter - Not Found';
+    $rootScope.title = 'Enbarter | Not Found';
     $rootScope.statusCode = 404;
 });
 
