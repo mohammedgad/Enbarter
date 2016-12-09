@@ -15,14 +15,14 @@
                 <a ng-show="userId==result.id" class="list-group-item" href=".#/profile/edit">Edit Profile</a>
             </ul>
         </div>
-        <div class="col-md-10">
+        <div class=" col-md-8" style="padding-left: 30px;">
             <div class="row">
-                <h3>Bio</h3>
-                <p>{{result.get('bio')}}</p>
-                <h3>Email</h3>
+                <h3 ng-show="result.get('bio').length">Bio</h3>
+               <p>{{result.get('bio')}}</p>
+                <h3 ng-show="result.get('email').length">Email</h3>
                 <p>{{result.get('email')}}</p>
                 <h3 ng-show="barters.length">Barters</h3>
-                <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer offer:hover">
+                <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer-profile  offer:hover">
                     <div class="col-md-8 text-left">
                         <a href="./#/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
                             {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span></h3></a>
@@ -39,7 +39,7 @@
 
                 <h3 ng-show="result.get('barterSeeks').length">Barters Requests</h3>
                 <div ng-repeat="barter in result.get('barterSeeks')"
-                     class="row margin-top5 margin-bottom15 text-right offer offer:hover">
+                     class="row margin-top5 margin-bottom15 text-right offer-profile offer:hover">
                     <div class="col-md-8 text-left">
                         <a href="./#/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
                             {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span></h3></a>
@@ -62,7 +62,7 @@
                 <ul>
                     <li ng-repeat="skill in result.get('skills')">{{skill}}</li>
                 </ul>
-                <h3>Reviews</h3>
+                <h3 ng-show="result.get('reviews').length">Reviews</h3>
                 <ul>
                     <li ng-repeat="barter in barters"
                         ng-show="barter.get('barterUpReview')">

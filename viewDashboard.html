@@ -15,11 +15,11 @@
                 <a ng-show="userId==result.id" class="list-group-item" href=".#/profile/edit">Edit Profile</a>
             </ul>
         </div>
-        <div class="col-md-10">
+        <div style="padding-left: 30px;" class="col-md-8 ">
             <div class="row">
                 <h3>Dashboard</h3>
                 <h3 ng-show="!barters.length&&!result.get('barterSeeks').length">Nothing to show!</h3>
-                <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer offer:hover"
+                <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer-profile offer:hover"
                      ng-show="dashboardActive(barter)">
                     <div class="col-md-8 text-left">
                         <a href="./#/dashboard/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
