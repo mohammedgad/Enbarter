@@ -248,8 +248,9 @@ app.controller('header', function ($scope, $location, $rootScope) {
 });
 
 
-app.controller('createBarter', function ($scope) {
+app.controller('createBarter', function ($scope,$rootScope) {
     $scope.milestones = [];
+    $rootScope.title = "Create Barter";
     getCategories(function (results) {
         $scope.categories = results;
         $scope.$apply();
