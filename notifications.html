@@ -1,30 +1,30 @@
 <div class="container margin-top30">
-<div class="row">
-    <div class="col-md-2">
-        <a href="#" class="thumbnail">
-            <img ng-src="{{result.get('pic')?result.get('pic').url():'/Enbarter/images/avatar.png'}}"
-                 alt="">
-        </a>
-        <p>@{{result.get('username')}}</p>
-        <ul class="list-group">
-            <a class="list-group-item">Premium <span class="fa fa-star"></span></a>
-            <a class="list-group-item">Ratings <span class="badge">{{(result.get('rateCount'))?(result.get('rate')/result.get('rateCount')| number:1):'5'}}</span></a>
-            <a ng-show="userId==result.id" class="list-group-item" href=".#/notifications">Notifications<span
-                    class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
-            <a class="list-group-item">Barters<span class="badge">{{barters.length+result.get('barterSeeks').length}}</span></a>
-            <a ng-show="userId==result.id" class="list-group-item" href=".#/profile/edit">Edit Profile</a>
-        </ul>
+    <div class="row">
+        <div class="col-md-2">
+            <a href="#" class="thumbnail">
+                <img ng-src="{{result.get('pic')?result.get('pic').url():'/Enbarter/images/avatar.png'}}"
+                     alt="">
+            </a>
+            <p>@{{result.get('username')}}</p>
+            <ul class="list-group">
+                <a class="list-group-item">Premium <span class="fa fa-star"></span></a>
+                <a class="list-group-item">Ratings <span class="badge">{{(result.get('rateCount'))?(result.get('rate')/result.get('rateCount')| number:1):'5'}}</span></a>
+                <a ng-show="userId==result.id" class="list-group-item" href=".#/notifications">Notifications<span
+                        class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
+                <a class="list-group-item">Barters<span class="badge">{{barters.length+result.get('barterSeeks').length}}</span></a>
+                <a ng-show="userId==result.id" class="list-group-item" href=".#/profile/edit">Edit Profile</a>
+            </ul>
+        </div>
+
+        <div class="col-md-10">
+            <h1 class="page-title text-center">Notification</h1>
+
+            <div ng-controller="notificationsCtrl">
+                <ul class="list-group">
+                    <li ng-repeat="result in results" class="list-group-item {{!result.get('read')?'active':''}}"><a
+                            ng-click="notificationCheck(result)" style="{{(!result.get('read'))?'color:white':''}}">{{result.get('description')}}</a>
+                </ul>
+            </div>
+        </div>
     </div>
-
-    <div class="col-md-10">
-        <h1 class="page-title text-center">Notification</h1>
-
-        <div ng-controller="notificationsCtrl">
-    <ul class="list-group">
-        <li ng-repeat="result in results" class="list-group-item {{!result.get('read')?'active':''}}"><a
-                ng-click="notificationCheck(result)" style="{{!result.get('read')?'color:white':''}}">{{result.get('description')}}</a>
-    </ul>
-</div>
-</div>
-</div>
 </div>
