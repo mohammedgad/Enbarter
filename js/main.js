@@ -279,6 +279,17 @@ app.controller('createBarter', function ($scope, $rootScope) {
             $rootScope.alertModal('Milestones are required!');
             return;
         }
+        var required = ['barterTitle', 'barterDescription', 'offerCategory', 'offerDescription', 'offerDeadline', 'seekCategory', 'seekDescription', 'seekDeadline'];
+        var errors = "";
+        for (var i = 0; i < required.length; i++) {
+            if (!$scope[required[i]])
+                errors += required[i] + "/";
+        }
+        if (errors.length) {
+            $rootScope.alertModal("["+errors + "] is/are Required");
+            return;
+        }
+
         $scope.canStartDisabled = true;
         var Barter = Parse.Object.extend("Barter");
         var Category = Parse.Object.extend("Category");
