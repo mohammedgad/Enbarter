@@ -111,6 +111,7 @@ app.run(function ($rootScope, $location) {
 
     $rootScope.$on('$locationChangeStart', function (event) {
         showSpinner();
+        $("html, body").stop().animate({scrollTop: 0}, '100', 'swing');
     });
 });
 
@@ -286,7 +287,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
                 errors += required[i] + "/";
         }
         if (errors.length) {
-            $rootScope.alertModal("["+errors + "] is/are Required");
+            $rootScope.alertModal("[" + errors + "] is/are Required");
             return;
         }
 
