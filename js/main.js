@@ -163,6 +163,10 @@ app.controller('header', function ($scope, $location, $rootScope) {
         });
     }
     $scope.login = function () {
+        if (!$scope.username || !$scope.password) {
+            $rootScope.alertModal("Username/Password are required!");
+            return;
+        }
         showSpinner();
         Parse.User.logIn($scope.username.toLowerCase(), $scope.password, {
             success: function (user) {
@@ -177,6 +181,10 @@ app.controller('header', function ($scope, $location, $rootScope) {
     }
 
     $scope.signup = function () {
+        if (!$scope.username || !$scope.password || $scope.email) {
+            $rootScope.alertModal("Username/Password/Email are required!");
+            return;
+        }
         var user = new Parse.User();
         user.set("username", $scope.username.toLowerCase());
         user.set("password", $scope.password);
