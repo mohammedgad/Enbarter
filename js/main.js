@@ -5,7 +5,7 @@ if (msie < 8) {
 }
 
 var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize', 'ngRaven']);
-app.config(function ($routeProvider) {
+app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when("/", {
             templateUrl: "indexContent.html"
@@ -32,6 +32,10 @@ app.config(function ($routeProvider) {
     }).otherwise({
         templateUrl: "404.html"
     });
+
+    // $locationProvider.html5Mode(true);
+    // $locationProvider.hashPrefix('!');
+
 });
 
 app.run(function ($rootScope, $location) {
@@ -408,13 +412,12 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
 
     $scope.loadMore = function () {
         skip++;
-        query.skip(skip);
+        query.skip(skip * 10);
         showSpinner();
         query.find({
             success: function (results) {
                 if (results.length) {
-                    for (let i = 0; i < results.length; i++)
-                        $scope.results.push(results[i]);
+                    $scope.results = $scope.results.concat(results);
                 }
                 if (results.length < 10)
                     $scope.showLoadMore = false;
@@ -960,7 +963,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 
         },
         error: function (object, error) {
-            $location.path('/Not');
+            $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -1220,7 +1223,7 @@ function downloadJSAtOnload() {
             ref.parentNode.insertBefore(js, ref);
         }(document, /*debug*/ false));
     }
-    
+
     var element = document.createElement("script");
     element.src = "http://s7.mylivechat.com/livechat2/livechat2.aspx?hccid=99228221&apimode=chatinline";
     document.body.appendChild(element);
