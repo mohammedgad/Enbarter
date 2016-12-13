@@ -36,8 +36,11 @@ app.config(function ($routeProvider) {
 });
 
 app.run(function ($rootScope, $location) {
-    Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
-    Parse.serverURL = 'https://enbarter.back4app.io';
+    // Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
+    // Parse.serverURL = 'https://enbarter.back4app.io';
+
+    Parse.initialize("bfzk0HA7GrGncvgGQhOUqhEdEVbGS11R7F8R5fQf", "jbskJD4lcguHWHa0mabuFoOzFE0cFOUSG1A79BZL");
+    Parse.serverURL = 'https://enbarterdev.back4app.io';
 
     if (!Parse.User.current()) {
         window.fbAsyncInit = function () {
@@ -181,7 +184,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
     }
 
     $scope.signup = function () {
-        if (!$scope.username || !$scope.password || $scope.email) {
+        if (!$scope.username || !$scope.password || !$scope.email) {
             $rootScope.alertModal("Username/Password/Email are required!");
             return;
         }
@@ -461,7 +464,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         success: function (result) {
             $scope.result = result;
             $rootScope.title = "Enbarter | " + result.get("barterTitle");
-            $scope.barterRequests = angular.copy((result.get('barterRequests')) ? result.get('barterRequests') : []);
+            $scope.barterRequests = angularCopy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
             hideSpinner();
 
@@ -480,7 +483,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     }
 
     $scope.disable = function () {
-        var result = angular.copy($scope.result);
+        var result = angularCopy($scope.result);
         if (result) {
             result.set("state", "disabled");
             showSpinner();
@@ -512,7 +515,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             milestone: milestones,
             user: Parse.User.current()
         };
-        var result = angular.copy($scope.result);
+        var result = angularCopy($scope.result);
         result.add("barterRequests", request);
 
         var user = Parse.User.current();
@@ -528,7 +531,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         result.save({
             success: function (results) {
                 $scope.result = results;
-                $scope.barterRequests.push(angular.copy(request));
+                $scope.barterRequests.push(angularCopy(request));
                 $scope.$apply();
                 hideSpinner();
             },
@@ -555,7 +558,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     }
 
     $scope.barterUpOwner = function (request, index) {
-        var result = angular.copy($scope.result);
+        var result = angularCopy($scope.result);
         result.set("barterUpUser", {
             "__type": "Pointer", "className": "_User",
             "objectId": request.user.id || request.user.objectId
@@ -691,8 +694,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             }
             $scope.result = result;
             $rootScope.title = "Enabrter | Dashboard";
-            $scope.offerMilestones = angular.copy(result.get('offerMilestones'));
-            $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
+            $scope.offerMilestones = angularCopy(result.get('offerMilestones'));
+            $scope.barterUpMilestones = angularCopy(result.get('barterUpMilestones'));
 
             $scope.$apply();
             $scope.reloadChat();
@@ -701,8 +704,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             var subscription = query.subscribe();
             subscription.on('update', function (object) {
                 $scope.result = result;
-                $scope.offerMilestones = angular.copy(result.get('offerMilestones'));
-                $scope.barterUpMilestones = angular.copy(result.get('barterUpMilestones'));
+                $scope.offerMilestones = angularCopy(result.get('offerMilestones'));
+                $scope.barterUpMilestones = angularCopy(result.get('barterUpMilestones'));
                 $scope.$apply();
             });
 
@@ -746,7 +749,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     };
 
     $scope.check = function (o, column) {
-        var result = angular.copy($scope.result);
+        var result = angularCopy($scope.result);
         var arr = result.get(column);
         for (var i = 0; i < arr.length; i++) {
             if (arr[i].task == o.task) {
@@ -766,7 +769,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         showSpinner();
         result.save({
             success: function (results) {
-                $scope[column] = angular.copy(arr);
+                $scope[column] = angularCopy(arr);
                 $scope.result = results;
                 $scope.comment = '';
                 $scope.$apply();
@@ -780,7 +783,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     };
 
     $scope.closeAndRate = function () {
-        var result = angular.copy($scope.result);
+        var result = angularCopy($scope.result);
         var who = (Parse.User.current().id == result.get('user').id) ? "offer" : "barterUp";
         var oppisite = (who == 'offer') ? 'barterUp' : 'offer';
         result.set(who + "Rate", $scope.rate);
@@ -828,8 +831,12 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     }
 
     $scope.finalPic = function (x) {
-        var result = angular.copy($scope.result);
         fileUploadControl = $("#" + x + "FinalPic")[0];
+        if (fileUploadControl.files.length == 0) {
+            $rootScope.alertModal("You must attach a file!");
+            return;
+        }
+        var result = angularCopy($scope.result);
         if (fileUploadControl.files.length > 0) {
             var file = fileUploadControl.files[0];
             var name = "photo1.jpg";
@@ -913,7 +920,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
 
     $scope.submit = function () {
         $scope.cantSubmit = true;
-        var result = angular.copy($scope.result);
+        var result = angularCopy($scope.result);
         result.set("username", $scope.username);
         result.set("bio", $scope.bio);
         result.set("birthday", $scope.birthday);
@@ -995,8 +1002,6 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
         success: function (results) {
             $scope.results = results;
             $scope.$apply();
-
-
             var query1 = new Parse.Query(Parse.User);
             query1.include("barterSeeks");
 
@@ -1065,4 +1070,143 @@ function toDataUrl(url, callback) {
     };
     xhr.open('GET', url);
     xhr.send();
+}
+
+
+function angularCopy(source) {
+    function isWindow(obj) {
+        return obj && obj.window === obj;
+    }
+
+    function isScope(obj) {
+        return obj && obj.$evalAsync && obj.$watch;
+    }
+
+    function isBlankObject(value) {
+        return value !== null && typeof value === 'object' && !getPrototypeOf(value);
+    }
+
+    function isFunction(value) {
+        return typeof value === 'function';
+    }
+
+    function setHashKey(obj, h) {
+        if (h) {
+            obj.$$hashKey = h;
+        } else {
+            delete obj.$$hashKey;
+        }
+    }
+
+    var toString = Object.prototype.toString;
+    var isArray = Array.isArray;
+    var getPrototypeOf = Object.getPrototypeOf;
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+    var stackSource = [];
+    var stackDest = [];
+
+    return copyElement(source);
+
+    function copyRecurse(source, destination) {
+        var h = destination.$$hashKey;
+        var key;
+        if (isArray(source)) {
+            for (var i = 0, ii = source.length; i < ii; i++) {
+                destination.push(copyElement(source[i]));
+            }
+        } else if (isBlankObject(source)) {
+            for (key in source) {
+                destination[key] = copyElement(source[key]);
+            }
+        } else if (source && typeof source.hasOwnProperty === 'function') {
+            for (key in source) {
+                if (source.hasOwnProperty(key)) {
+                    destination[key] = copyElement(source[key]);
+                }
+            }
+        } else {
+            for (key in source) {
+                if (hasOwnProperty.call(source, key)) {
+                    destination[key] = copyElement(source[key]);
+                }
+            }
+        }
+        setHashKey(destination, h);
+        return destination;
+    }
+
+    function isObject(value) {
+        return value !== null && typeof value === 'object';
+    }
+
+    function copyElement(source) {
+        if (!isObject(source)) {
+            return source;
+        }
+        var index = stackSource.indexOf(source);
+        if (index !== -1) {
+            return stackDest[index];
+        }
+
+        if (isWindow(source) || isScope(source)) {
+            throw 'Can\'t copy! Making copies of Window or Scope instances is not supported.';
+        }
+
+        var needsRecurse = false;
+        var destination = copyType(source);
+
+        if (destination === undefined) {
+            destination = isArray(source) ? [] : Object.create(getPrototypeOf(source));
+            needsRecurse = true;
+        }
+
+        stackSource.push(source);
+        stackDest.push(destination);
+
+        return needsRecurse
+            ? copyRecurse(source, destination)
+            : destination;
+    }
+
+    function copyType(source) {
+        switch (toString.call(source)) {
+            case '[object Int8Array]':
+            case '[object Int16Array]':
+            case '[object Int32Array]':
+            case '[object Float32Array]':
+            case '[object Float64Array]':
+            case '[object Uint8Array]':
+            case '[object Uint8ClampedArray]':
+            case '[object Uint16Array]':
+            case '[object Uint32Array]':
+                return new source.constructor(copyElement(source.buffer), source.byteOffset, source.length);
+
+            case '[object ArrayBuffer]':
+                if (!source.slice) {
+                    var copied = new ArrayBuffer(source.byteLength);
+                    new Uint8Array(copied).set(new Uint8Array(source));
+                    return copied;
+                }
+                return source.slice(0);
+
+            case '[object Boolean]':
+            case '[object Number]':
+            case '[object String]':
+            case '[object Date]':
+                return new source.constructor(source.valueOf());
+
+            case '[object RegExp]':
+                var re = new RegExp(source.source, source.toString().match(/[^/]*$/)[0]);
+                re.lastIndex = source.lastIndex;
+                return re;
+
+            case '[object Blob]':
+                return new source.constructor([source], {type: source.type});
+        }
+
+        if (isFunction(source.cloneNode)) {
+            return source.cloneNode(true);
+        }
+    }
 }
