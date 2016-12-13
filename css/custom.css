@@ -1,16 +1,2 @@
 /* Put your custom styles here */
 
-#signButton, #logoutButton{
-    margin-top:5px;
-}
-#barter-browse-info{
-    padding-left: 30px;
-}
-
-.offer-profile
-{
-    background-color: #eee;
-    padding-left: 20px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #e8e8e8;
-}

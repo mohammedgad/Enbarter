@@ -10,13 +10,12 @@
     <meta name="fragment" content="!">
     <link rel="shortcut icon" href="ico/favicon.png">
     <!-- Core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet">
     <!-- Style Library -->
     <link href="css/style-library-1.css" rel="stylesheet">
-    <link href="css/plugins.css" rel="stylesheet">
+    <!--<link href="css/plugins.css" rel="stylesheet">-->
     <link href="css/blocks.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -43,6 +42,21 @@
             right: 0;
             top: 0;
         }
+
+        #signButton, #logoutButton {
+            margin-top: 5px;
+        }
+
+        #barter-browse-info {
+            padding-left: 30px;
+        }
+
+        .offer-profile {
+            background-color: #eee;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e8e8e8;
+        }
     </style>
 </head>
 <body>
@@ -53,9 +67,10 @@
 
 <div ng-include="'footer.html'"></div>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/plugins.js"></script>
-<script type="text/javascript" src="js/bskit-scripts.js"></script>
+<script type="text/javascript"
+        src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="js/plugins.js"></script>-->
+<!--<script type="text/javascript" src="js/bskit-scripts.js"></script>-->
 
 
 <script>
@@ -84,7 +99,7 @@
         a.appendChild(r);
     })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
 </script>
-<script type="text/javascript" async="async" defer="defer" data-cfasync="false"
-        src="//mylivechat.com/chatinline.aspx?hccid=99228221"></script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-584fd4d3f9f8431f"></script>
+<script type="text/javascript" src="//mylivechat.com/chatinline.aspx?hccid=99228221"></script>
 </body>
 </html>
