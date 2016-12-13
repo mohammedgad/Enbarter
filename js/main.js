@@ -41,27 +41,6 @@ app.run(function ($rootScope, $location) {
     Parse.initialize("bfzk0HA7GrGncvgGQhOUqhEdEVbGS11R7F8R5fQf", "jbskJD4lcguHWHa0mabuFoOzFE0cFOUSG1A79BZL");
     Parse.serverURL = 'https://enbarterdev.back4app.io';
 
-    if (!Parse.User.current()) {
-        window.fbAsyncInit = function () {
-            Parse.FacebookUtils.init({
-                appId: '1394780183887567',
-                status: false,
-                cookie: true,
-                xfbml: true
-            });
-        };
-        (function (d, debug) {
-            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement('script');
-            js.id = id;
-            js.async = true;
-            js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
-            ref.parentNode.insertBefore(js, ref);
-        }(document, /*debug*/ false));
-    }
     $rootScope.title = 'Enbarter';
     $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
     $rootScope.keywords = "Enbarter,Barter,Bartering,Skills,Exchange,Entrepreneur,Service,Help,Direct,Professional,Free,Business";
@@ -1220,6 +1199,28 @@ function angularCopy(source) {
 
 
 function downloadJSAtOnload() {
+    if (!Parse.User.current()) {
+        window.fbAsyncInit = function () {
+            Parse.FacebookUtils.init({
+                appId: '1394780183887567',
+                status: false,
+                cookie: true,
+                xfbml: true
+            });
+        };
+        (function (d, debug) {
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement('script');
+            js.id = id;
+            js.async = true;
+            js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document, /*debug*/ false));
+    }
+    
     var element = document.createElement("script");
     element.src = "http://s7.mylivechat.com/livechat2/livechat2.aspx?hccid=99228221&apimode=chatinline";
     document.body.appendChild(element);
