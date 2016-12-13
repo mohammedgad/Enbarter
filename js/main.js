@@ -879,6 +879,8 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
 
             var Barter = Parse.Object.extend("Barter");
             var barterQuery = new Parse.Query(Barter);
+            barterQuery.include('seekCategory');
+            barterQuery.include('offerCategory');
             barterQuery.equalTo("user", Parse.User.current());
             barterQuery.find({
                 success: function (results) {
