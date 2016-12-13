@@ -11,13 +11,7 @@ app.config(function ($routeProvider) {
     }).when("/barter/:id", {
         templateUrl: "barter.html"
     }).when("/create_barter", {
-        templateUrl: function () {
-            if (!Parse.User.current()) {
-                window.location.href = ".";
-                return "indexContent.html";
-            }
-            return "create_barter.html";
-        }
+        templateUrl: "create_barter.html"
     }).when("/dashboard", {
         templateUrl: "viewDashboard.html"
     }).when("/dashboard/barter/:id", {
@@ -272,7 +266,9 @@ app.controller('createBarter', function ($scope, $rootScope) {
         $scope.$apply();
         hideSpinner();
     });
-
+    if (!Parse.User.current()) {
+        $rootScope.alertModal("Please Login to be able to create a new barter!");
+    }
     $scope.startBarter = function () {
         if (!Parse.User.current()) {
             $rootScope.alertModal("Not loggedIn");
