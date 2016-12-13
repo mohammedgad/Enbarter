@@ -1221,7 +1221,7 @@ function angularCopy(source) {
 
 function downloadJSAtOnload() {
     var element = document.createElement("script");
-    element.src = "//mylivechat.com/chatinline.aspx?hccid=99228221";
+    element.src = "http://s7.mylivechat.com/livechat2/livechat2.aspx?hccid=99228221&apimode=chatinline";
     document.body.appendChild(element);
     element = document.createElement("script");
     element.src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-584fd4d3f9f8431f";
