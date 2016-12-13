@@ -1,4 +1,9 @@
 Raven.config('https://22c41b4449c04f2f9678babd3400566c@sentry.io/118691').install();
+var msie = document.documentMode;
+if (msie < 8) {
+    alert("Please use a modern browser to be able to use Enbarter!");
+}
+
 var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize', 'ngRaven']);
 app.config(function ($routeProvider) {
     $routeProvider
@@ -380,7 +385,11 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
     getCategories(function (results) {
         $scope.categories = results;
         $scope.$apply();
-        hideSpinner();
+        if ($routeParams.id) {
+            $scope.seekCat = $routeParams.id;
+            $scope.search();
+        } else
+            hideSpinner();
     });
 
     var Category = Parse.Object.extend("Category");
@@ -438,10 +447,6 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
                 hideSpinner();
             }
         });
-    }
-    if ($routeParams.id) {
-        $scope.offerCat = $routeParams.id;
-        $scope.search();
     }
 });
 
