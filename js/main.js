@@ -374,6 +374,9 @@ function getCategories(successCallback) {
 }
 app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $location) {
     $rootScope.title = "Enbarter | Browse";
+    $rootScope.description += " | Browse Barters";
+    $rootScope.keywords += " ,browse,search,find";
+
     $scope.offerCat = 'all';
     $scope.seekCat = 'all';
     $scope.barterState = 'created';
@@ -464,6 +467,8 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         success: function (result) {
             $scope.result = result;
             $rootScope.title = "Enbarter | " + result.get("barterTitle");
+            $rootScope.description = result.get("barterTitle") + " " + result.get("barterDescription");
+            $rootScope.keywords = $rootScope.description.replace(" ", ",");
             $scope.barterRequests = angularCopy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
             hideSpinner();
