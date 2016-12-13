@@ -111,6 +111,7 @@ app.run(function ($rootScope, $location) {
 
     $rootScope.$on('$locationChangeStart', function (event) {
         showSpinner();
+        $("html, body").stop().animate({scrollTop: 0}, '100', 'swing');
     });
 });
 
@@ -163,6 +164,10 @@ app.controller('header', function ($scope, $location, $rootScope) {
         });
     }
     $scope.login = function () {
+        if (!$scope.username || !$scope.password) {
+            $rootScope.alertModal("Username/Password are required!");
+            return;
+        }
         showSpinner();
         Parse.User.logIn($scope.username.toLowerCase(), $scope.password, {
             success: function (user) {
@@ -177,6 +182,10 @@ app.controller('header', function ($scope, $location, $rootScope) {
     }
 
     $scope.signup = function () {
+        if (!$scope.username || !$scope.password || $scope.email) {
+            $rootScope.alertModal("Username/Password/Email are required!");
+            return;
+        }
         var user = new Parse.User();
         user.set("username", $scope.username.toLowerCase());
         user.set("password", $scope.password);
@@ -271,6 +280,17 @@ app.controller('createBarter', function ($scope, $rootScope) {
             $rootScope.alertModal('Milestones are required!');
             return;
         }
+        var required = ['barterTitle', 'barterDescription', 'offerCategory', 'offerDescription', 'offerDeadline', 'seekCategory', 'seekDescription', 'seekDeadline'];
+        var errors = "";
+        for (var i = 0; i < required.length; i++) {
+            if (!$scope[required[i]])
+                errors += required[i] + "/";
+        }
+        if (errors.length) {
+            $rootScope.alertModal("[" + errors + "] is/are Required");
+            return;
+        }
+
         $scope.canStartDisabled = true;
         var Barter = Parse.Object.extend("Barter");
         var Category = Parse.Object.extend("Category");
