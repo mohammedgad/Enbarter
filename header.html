@@ -20,19 +20,24 @@
                 <div class="collapse navbar-collapse" id="nav1">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active nav-item">
-                            <a href="{{homeLink}}" class="deepocean">Home</a>
+                            <a href="{{homeLink}}" class="deepocean" data-toggle="collapse"
+                               data-target=".navbar-collapse">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{browseLink}}" class="deepocean">browse</a>
+                            <a href="{{browseLink}}" class="deepocean" data-toggle="collapse"
+                               data-target=".navbar-collapse">browse</a>
                         </li>
                         <li class="nav-item" ng-show="isLoggedIn()">
-                            <a href="{{createBarterLink}}" class="deepocean">Create Barter</a>
+                            <a href="{{createBarterLink}}" class="deepocean" data-toggle="collapse"
+                               data-target=".navbar-collapse">Create Barter</a>
                         </li>
                         <li class="nav-item" ng-show="isLoggedIn()">
-                            <a href=".#/profile/{{userId}}" class="deepocean">Profile</a>
+                            <a href=".#/profile/{{userId}}" class="deepocean" data-toggle="collapse"
+                               data-target=".navbar-collapse">Profile</a>
                         </li>
                         <li class="nav-item" ng-show="isLoggedIn()">
-                            <a href="{{dashboardLink}}" class="deepocean">Dashboard</a>
+                            <a href="{{dashboardLink}}" class="deepocean" data-toggle="collapse"
+                               data-target=".navbar-collapse">Dashboard</a>
                         </li>
                         <li class="nav-item dropdown" ng-show="isLoggedIn()">
                             <a class="deepocean dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
@@ -95,7 +100,8 @@
                         Password
                         Reset
                     </button>
-                    <button type="button" class="btn btn-info" ng-click="fbLogin()" data-dismiss="modal"><span class="fa fa-facebook-official"></span> Login
+                    <button type="button" class="btn btn-info" ng-click="fbLogin()" data-dismiss="modal"><span
+                            class="fa fa-facebook-official"></span> Login
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" data-target="#signup"
                             data-toggle="modal">Signup
