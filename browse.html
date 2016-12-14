@@ -43,7 +43,7 @@
     <div class="row page-content" ng-show="results.length==0">
         <div class="col-md-8 pull-left">
             <h1>Search Result</h1>
-            <h5 ng-hide="results.length">Nothing match your search found! <br/> <a href=".#/create_barter" class="btn btn-success">Create your own!</a></h5>
+            <h5 ng-hide="results.length">Nothing match your search found! <br/> <a href="/create_barter" class="btn btn-success">Create your own!</a></h5>
         </div>
         <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
             <i class="fa fa-edit fa-3x deepocean offer-icon"></i>
@@ -77,7 +77,7 @@
                     </td>
                     <td>{{(result.get('barterRequests'))?result.get('barterRequests').length:0}}</td>
                     <td>
-                        <a href=".#/profile/{{result.get('user').id}}" class="username-link">{{result.get('user').get('username')}}</a>
+                        <a href="/profile/{{result.get('user').id}}" class="username-link">{{result.get('user').get('username')}}</a>
                         <br/>
                     </td>
                 </tr>

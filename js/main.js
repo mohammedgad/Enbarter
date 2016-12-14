@@ -42,8 +42,11 @@ app.run(function ($rootScope, $location) {
     // Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
     // Parse.serverURL = 'https://enbarter.back4app.io';
 
-    Parse.initialize("bfzk0HA7GrGncvgGQhOUqhEdEVbGS11R7F8R5fQf", "jbskJD4lcguHWHa0mabuFoOzFE0cFOUSG1A79BZL");
-    Parse.serverURL = 'https://enbarterdev.back4app.io';
+    // Parse.initialize("bfzk0HA7GrGncvgGQhOUqhEdEVbGS11R7F8R5fQf", "jbskJD4lcguHWHa0mabuFoOzFE0cFOUSG1A79BZL");
+    // Parse.serverURL = 'https://enbarterdev.back4app.io';
+
+    Parse.initialize("EnbarterApp", "28e0691b32ab");
+    Parse.serverURL = 'http://api.enbarterdev.ml/v1';
 
     $rootScope.title = 'Enbarter';
     $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
@@ -105,10 +108,10 @@ app.controller('header', function ($scope, $location, $rootScope) {
         $scope.alertMessage = message;
         $('#alertModal').modal();
     }
-    $scope.homeLink = ".#/";
-    $scope.browseLink = ".#/browse";
-    $scope.createBarterLink = ".#/create_barter";
-    $scope.dashboardLink = ".#/dashboard";
+    $scope.homeLink = "/";
+    $scope.browseLink = "/browse";
+    $scope.createBarterLink = "/create_barter";
+    $scope.dashboardLink = "/dashboard";
 
     $scope.fbLogin = function () {
         showSpinner();
@@ -191,7 +194,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
         showSpinner();
         Parse.User.logOut().then(function () {
 
-            location.href = ".#/";
+            location.href = "/";
             location.reload();
             hideSpinner();
         });
@@ -592,12 +595,12 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
 
 app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParams) {
-    $scope.catSoft = ".#/browse/0NFJVql0U9";
-    $scope.catWrite = ".#/browse/zSBhtFd8ZE";
-    $scope.catMedia = ".#/browse/Wb8uqGgkdG";
-    $scope.catData = ".#/browse/4TtjWA9W5e";
-    $scope.catMarket = ".#/browse/7lY1lEwRny";
-    $scope.catOther = ".#/browse/U8MCGz0C2B";
+    $scope.catSoft = "/browse/0NFJVql0U9";
+    $scope.catWrite = "/browse/zSBhtFd8ZE";
+    $scope.catMedia = "/browse/Wb8uqGgkdG";
+    $scope.catData = "/browse/4TtjWA9W5e";
+    $scope.catMarket = "/browse/7lY1lEwRny";
+    $scope.catOther = "/browse/U8MCGz0C2B";
 
 
     var query = new Parse.Query(Parse.Object.extend("Barter"));
