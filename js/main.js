@@ -94,6 +94,9 @@ app.run(function ($rootScope, $location) {
     $rootScope.$on('$locationChangeStart', function (event) {
         showSpinner();
         $("html, body").stop().animate({scrollTop: 0}, '100', 'swing');
+    });
+
+    $rootScope.$on('$routeChangeSuccess', function (event) {
         $rootScope.statusCode = 200;
         $rootScope.currentUrl = window.location.href || document.URL;
     });
