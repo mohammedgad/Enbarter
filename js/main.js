@@ -94,6 +94,7 @@ app.run(function ($rootScope, $location) {
     $rootScope.$on('$locationChangeStart', function (event) {
         showSpinner();
         $("html, body").stop().animate({scrollTop: 0}, '100', 'swing');
+        $rootScope.statusCode = 200;
     });
 });
 
@@ -595,6 +596,9 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
     $scope.catData = "/browse/4TtjWA9W5e";
     $scope.catMarket = "/browse/7lY1lEwRny";
     $scope.catOther = "/browse/U8MCGz0C2B";
+    $rootScope.title = 'Enbarter';
+    $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
+    $rootScope.keywords = "Enbarter,Barter,Bartering,Skills,Exchange,Entrepreneur,Service,Help,Direct,Professional,Free,Business";
 
 
     var query = new Parse.Query(Parse.Object.extend("Barter"));
