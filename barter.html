@@ -58,7 +58,7 @@
                             ng-hide="!sameAccount()||result.get('state')=='disabled'||result.get('state')=='bartered'">
                         Disable
                     </button>
-                    <a href="/dashboard/barter/{{result.id}}" class="btn btn-primary btn-sm"
+                    <a href="/dashboard/barter/{{result.get('barterDashboard').id}}" class="btn btn-primary btn-sm"
                        ng-show="(sameAccount()||result.get('barterUpUser').id==userId)&&(result.get('state')=='bartered'||result.get('state')=='completed')"
                     >Dashboard
                     </a>

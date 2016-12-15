@@ -19,10 +19,12 @@
             <div class="row">
                 <h3>Dashboard</h3>
                 <h3 ng-show="!barters.length&&!result.get('barterSeeks').length">Nothing to show!</h3>
-                <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer-profile offer:hover"
+                <div ng-repeat="barter in barters"
+                     class="row margin-top5 margin-bottom15 text-right offer-profile offer:hover"
                      ng-show="dashboardActive(barter)">
                     <div class="col-md-8 text-left">
-                        <a href="./#/dashboard/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
+                        <a href="./dashboard/barter/{{barter.get('barterDashboard').id}}"><h3
+                                class="offer-list-item-h1">
                             {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span></h3></a>
                         <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
                     </div>
@@ -38,7 +40,8 @@
                      class="row margin-top5 margin-bottom15 text-right offer offer:hover"
                      ng-show="dashboardActive(barter)">
                     <div class="col-md-8 text-left">
-                        <a href="./#/dashboard/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
+                        <a href="./dashboard/barter/{{barter.get('barterDashboard').id}}"><h3
+                                class="offer-list-item-h1">
                             {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span></h3></a>
                         <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
                     </div>

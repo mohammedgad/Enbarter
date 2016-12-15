@@ -82,7 +82,7 @@
                                              data-toggle="modal" class="btn btn-block btn-primary"
                                              data-loading-text="asd"><span class="fa fa-check"></span>&nbsp; Register now
                         </button>
-                            <a ng-show="isLoggedIn()" href="./#/create_barter" class="btn btn-block btn-primary"
+                            <a ng-show="isLoggedIn()" href="./create_barter" class="btn btn-block btn-primary"
                                     data-loading-text="asd"><span class="fa fa-check"></span>&nbsp; Start Barter
                             </a>
                         </div>
@@ -110,7 +110,7 @@
         <div class="container">
             <div ng-repeat="barter in barters" class="row margin-top5 margin-bottom15 text-right offer offer:hover">
                 <div class="col-md-8 text-left">
-                    <a href="./#/barter/{{barter.id}}"><h3 class="offer-list-item-h1">{{barter.get('barterTitle')}}
+                    <a href="./barter/{{barter.id}}"><h3 class="offer-list-item-h1">{{barter.get('barterTitle')}}
                         <span class="badge">{{barter.get('state')}}</span></h3></a>
                     <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
                 </div>
@@ -132,7 +132,7 @@
                 <h1>start&nbsp;Bartering</h1>
                 <div class="col-md-7 col-md-offset-4 text-center">
                     <div class="col-md-6">
-                        <a href="./#/create_barter" ng-show="isLoggedIn()" class="btn btn-block btn-outline btn-outline-lg outline-light">Start a Barter</a>
+                        <a href="./create_barter" ng-show="isLoggedIn()" class="btn btn-block btn-outline btn-outline-lg outline-light">Start a Barter</a>
                         <a data-target="#sign"
                            data-toggle="modal" ng-hide="isLoggedIn()" class="btn btn-block btn-outline btn-outline-lg outline-light">Register
                             now!</a>

@@ -34,14 +34,16 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: "404.html"
     });
 
-    $locationProvider.html5Mode(true);
-    $locationProvider.hashPrefix('!');
-
+    // $locationProvider.html5Mode(true);
+    // $locationProvider.hashPrefix('!');
 });
 
 app.run(function ($rootScope, $location) {
-    Parse.initialize("EnbarterApp", "28e0691b32ab");
-    Parse.serverURL = 'http://api.enbarterdev.ml/v1';
+    // Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
+    // Parse.serverURL = 'https://enbarter.back4app.io';
+
+    Parse.initialize("bfzk0HA7GrGncvgGQhOUqhEdEVbGS11R7F8R5fQf", "jbskJD4lcguHWHa0mabuFoOzFE0cFOUSG1A79BZL");
+    Parse.serverURL = 'https://enbarterdev.back4app.io';
 
     $rootScope.title = 'Enbarter';
     $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
@@ -328,7 +330,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
         barter.save(null, {
             success: function (barter) {
                 // $rootScope.alertModal('New object created with objectId: ' + barter.id);
-                window.location.href = "./#/barter/" + barter.id;
+                window.location.href = "./barter/" + barter.id;
                 hideSpinner();
             },
             error: function (barter, error) {
@@ -549,27 +551,48 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
     $scope.barterUpOwner = function (request, index) {
         var result = angularCopy($scope.result);
-        result.set("barterUpUser", {
+
+        var BarterDashboard = Parse.Object.extend("BarterDashboard");
+        var barterDashboard = new BarterDashboard();
+        barterDashboard.set("barterUpUser", {
             "__type": "Pointer", "className": "_User",
             "objectId": request.user.id || request.user.objectId
         });
-        result.set("barterUpMilestones", request.milestone);
-        result.set("barterUpDeadline", request.deadline);
-        result.set("state", "bartered");
-
-        $scope.barterRequests.splice(index, 1);
-        showSpinner();
-        result.save({
+        barterDashboard.set("barterUpMilestones", request.milestone);
+        barterDashboard.set("barterUpDeadline", request.deadline);
+        barterDashboard.set('user', result.get('user'));
+        barterDashboard.set('barter', result);
+        barterDashboard.set('offerMilestones', result.get('offerMilestones'));
+        barterDashboard.set('offerDeadline', result.get('offerDeadline'));
+        barterDashboard.save({
             success: function (results) {
-                $scope.result = result;
-                $scope.$apply();
-                hideSpinner();
-            },
-            error: function (error) {
+                result.set("barterUpUser", {
+                    "__type": "Pointer", "className": "_User",
+                    "objectId": request.user.id || request.user.objectId
+                });
+                result.set("barterUpMilestones", request.milestone);
+                result.set("barterUpDeadline", request.deadline);
+                result.set("state", "bartered");
+                result.set('barterDashboard', results);
+                $scope.barterRequests.splice(index, 1);
+                showSpinner();
+                result.save({
+                    success: function (results) {
+                        $scope.result = result;
+                        $scope.$apply();
+                        hideSpinner();
+                    },
+                    error: function (error) {
+                        $rootScope.alertModal("Error: " + error.code + " " + error.message);
+                        hideSpinner();
+                    }
+                });
+            }, error: function (error) {
                 $rootScope.alertModal("Error: " + error.code + " " + error.message);
                 hideSpinner();
             }
         });
+
 
     }
 
@@ -632,11 +655,12 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     $scope.offerMilestones = [];
     var Barter = Parse.Object.extend("Barter");
     var Chat = Parse.Object.extend("Chat");
+    var BarterDashboard = Parse.Object.extend("BarterDashboard");
 
     $scope.reloadChat = function () {
         var query = new Parse.Query(Chat);
         query.include("user");
-        query.equalTo("barter", $scope.result);
+        query.equalTo("BarterDashboard", $scope.result);
 
         query.find({
             success: function (results) {
@@ -659,9 +683,10 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         });
     };
 
-    var query = new Parse.Query(Barter);
-    query.include('seekCategory');
-    query.include('offerCategory');
+    var query = new Parse.Query(BarterDashboard);
+    query.include('barter');
+    query.include('barter.seekCategory');
+    query.include('barter.offerCategory');
     query.include('user');
     query.include('barterUpUser');
 
@@ -670,7 +695,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         success: function (result) {
             if (!result.get('barterUpUser') && Parse.User.current().id != result.get('user').id) {
                 // alert("Dashboard can't be accessed because there is no barter user");
-                window.location.href = "./#/barter/" + result.id;
+                window.location.href = "./barter/" + result.id;
                 return;
             }
             if (!Parse.User.current() || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
@@ -682,7 +707,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
 
             if (!result.get('barterUpMilestones') || !result.get('offerMilestones') || !result.get('barterUpMilestones').length || !result.get('offerMilestones').length) {
                 // alert("Dashboard can't be accessed because there is no Milestones");
-                window.location.href = "./#/barter/" + result.id;
+                window.location.href = "./barter/" + result.id;
                 return;
             }
             $scope.result = result;
@@ -692,19 +717,19 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
 
             $scope.$apply();
             $scope.reloadChat();
+            if ($scope.result.get('barter').get('state') != 'completed') {
+                var subscription = query.subscribe();
+                subscription.on('update', function (object) {
+                    $scope.result = object;
+                    $scope.offerMilestones = angularCopy(object.get('offerMilestones'));
+                    $scope.barterUpMilestones = angularCopy(object.get('barterUpMilestones'));
+                    $scope.$apply();
+                });
 
-
-            var subscription = query.subscribe();
-            subscription.on('update', function (object) {
-                $scope.result = result;
-                $scope.offerMilestones = angularCopy(result.get('offerMilestones'));
-                $scope.barterUpMilestones = angularCopy(result.get('barterUpMilestones'));
-                $scope.$apply();
-            });
-
-            $rootScope.$on('$locationChangeStart', function (event, next, current) {
-                subscription.unsubscribe();
-            });
+                $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                    subscription.unsubscribe();
+                });
+            }
             hideSpinner();
         },
         error: function (object, error) {
@@ -715,12 +740,12 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     });
 
     $scope.sendMessage = function () {
-        if ($scope.result.get('state') != 'completed') {
+        if ($scope.result.get('barter').get('state') != 'completed') {
             $scope.cantSend = true;
             var chat = new Chat();
             chat.set("message", $scope.message);
             chat.set("user", Parse.User.current());
-            chat.set("barter", $scope.result);
+            chat.set("BarterDashboard", $scope.result);
             chat.set("offerUser", $scope.result.get("user"));
             chat.set("barterUpUser", $scope.result.get("barterUpUser"));
 
@@ -776,7 +801,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     };
 
     $scope.closeAndRate = function () {
-        var result = angularCopy($scope.result);
+        var result = angularCopy($scope.result.get('barter'));
         var who = (Parse.User.current().id == result.get('user').id) ? "offer" : "barterUp";
         var oppisite = (who == 'offer') ? 'barterUp' : 'offer';
         result.set(who + "Rate", $scope.rate);
@@ -787,7 +812,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         showSpinner();
         result.save({
             success: function (results) {
-                $scope.result = results;
+                $scope.result.set('barter', results);
                 $scope.$apply();
                 hideSpinner();
             },
@@ -800,7 +825,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
 
     $scope.showClose = function (x) {
         var oppisite = (x == 'offer') ? 'barterUp' : 'offer';
-        if ($scope.result && ((x == 'offer' && Parse.User.current().id == $scope.result.get('user').id) || (x == 'barterUp' && Parse.User.current().id == $scope.result.get('barterUpUser').id) || ($scope.result.get(oppisite + "Rate"))))
+        if ($scope.result && ((x == 'offer' && Parse.User.current().id == $scope.result.get('user').id) || (x == 'barterUp' && Parse.User.current().id == $scope.result.get('barterUpUser').id) || ($scope.result.get('barter').get(oppisite + "Rate"))))
             return false;
         if ($scope.result && $scope.result.get(x + 'FinalPic'))
             return true;
