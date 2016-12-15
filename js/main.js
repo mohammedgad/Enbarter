@@ -3,6 +3,7 @@ var msie = document.documentMode;
 if (msie < 8) {
     alert("Please use a modern browser to be able to use Enbarter!");
 }
+window.prerenderReady = false;
 
 var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize', 'ngRaven']);
 app.config(function ($routeProvider, $locationProvider) {
@@ -1044,6 +1045,7 @@ function hideSpinner() {
     $('#divLoading').fadeOut(250, function () {
         $('#divLoading').removeClass('show');
     });
+    window.prerenderReady = true;
 }
 
 function showSpinner() {
