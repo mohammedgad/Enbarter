@@ -95,6 +95,7 @@ app.run(function ($rootScope, $location) {
         showSpinner();
         $("html, body").stop().animate({scrollTop: 0}, '100', 'swing');
         $rootScope.statusCode = 200;
+        $rootScope.currentUrl = window.location.href || document.URL;
     });
 });
 
