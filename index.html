@@ -5,19 +5,24 @@
     <title ng-bind="title">Enbarter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="{{keywords}}"/>
-    <meta name="description" content="{{description}}"/>
+    <meta name="description" content="{{description | limitTo : 160}}"/>
     <meta name="prerender-status-code" content="{{statusCode}}">
     <meta property="og:title" content="{{title}}"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:description" content="{{description}}"/>
+    <meta property="og:description" content="{{description | limitTo : 300}}"/>
     <meta property="og:image" content="http://enbarter.com/logo-blue.png"/>
     <meta property="og:url" content="{{currentUrl}}"/>
     <meta name="twitter:site" content="@enbarter">
     <meta property="og:site_name" content="Enbarter">
     <meta property="fb:app_id" content="1394780183887567"/>
-
-
+    <meta name="twitter:image" content="http://enbarter.com/logo-blue.png">
+    <meta name="twitter:creator" content="@enbarter">
+    <meta name="twitter:title" content="{{title}}">
+    <meta name="twitter:description" content="{{description | limitTo : 200}}">
+    <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
     <meta name="fragment" content="!">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <base href="/">
 
     <link rel="icon" href="images/icon-blue-32x32.png" sizes="32x32"/>
