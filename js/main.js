@@ -108,6 +108,7 @@ app.run(function ($rootScope, $location) {
 app.controller('header', function ($scope, $location, $rootScope) {
     $rootScope.alertModal = function (message) {
         $scope.alertMessage = message;
+        $scope.$apply();
         $('#alertModal').modal();
     }
     $scope.homeLink = "/";
