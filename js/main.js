@@ -39,12 +39,6 @@ app.config(function ($routeProvider, $locationProvider) {
 });
 
 app.run(function ($rootScope, $location) {
-    // Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
-    // Parse.serverURL = 'https://enbarter.back4app.io';
-
-    // Parse.initialize("bfzk0HA7GrGncvgGQhOUqhEdEVbGS11R7F8R5fQf", "jbskJD4lcguHWHa0mabuFoOzFE0cFOUSG1A79BZL");
-    // Parse.serverURL = 'https://enbarterdev.back4app.io';
-
     Parse.initialize("EnbarterApp", "28e0691b32ab");
     Parse.serverURL = 'http://api.enbarterdev.ml/v1';
 
@@ -112,7 +106,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
     $scope.browseLink = "/browse";
     $scope.createBarterLink = "/create_barter";
     $scope.dashboardLink = "/dashboard";
-
+    $rootScope.currentUrl = window.location.href || document.URL;
     $scope.fbLogin = function () {
         showSpinner();
         Parse.FacebookUtils.logIn(null, {
