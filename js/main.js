@@ -4,7 +4,9 @@ if (msie < 8) {
     alert("Please use a modern browser to be able to use Enbarter!");
 }
 window.prerenderReady = false;
-
+String.prototype.paddingLeft = function (paddingValue) {
+    return String(paddingValue + this).slice(-paddingValue.length);
+};
 var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize', 'ngRaven']);
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -34,8 +36,8 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: "404.html"
     });
 
-    // $locationProvider.html5Mode(true);
-    // $locationProvider.hashPrefix('!');
+    $locationProvider.html5Mode(true);
+    $locationProvider.hashPrefix('!');
 });
 
 app.run(function ($rootScope, $location) {
@@ -921,16 +923,18 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
 
     query.get(Parse.User.current() ? Parse.User.current().id : null, {
         success: function (result) {
+            console.log(result);
             $scope.result = result;
             $scope.username = result.get('username');
             $scope.bio = result.get('bio');
-            $scope.birthday = result.get('birthday');
+            if (result.get('birthday')) {
+                $scope.birthday = result.get('birthday').getFullYear().toString().paddingLeft("0000") + '-' + result.get('birthday').getMonth().toString().paddingLeft("00") + '-' + result.get('birthday').getDate().toString().paddingLeft("00");
+            }
             $scope.skills = result.get('skills') ? result.get('skills') : [];
             $scope.workLinks = result.get('workLinks') ? result.get('workLinks') : [];
             $rootScope.title = "Enbarter | Edit: " + result.get('username');
             $scope.$apply();
             hideSpinner();
-
         },
         error: function (object, error) {
             $location.path('/NotFound');
@@ -944,7 +948,8 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
         var result = angularCopy($scope.result);
         result.set("username", $scope.username);
         result.set("bio", $scope.bio);
-        result.set("birthday", $scope.birthday);
+        if ($scope.birthday)
+            result.set("birthday", new Date($scope.birthday));
         result.set("skills", $scope.skills);
         result.set("workLinks", $scope.workLinks);
         fileUploadControl = $("#exampleInputFile1")[0];
@@ -961,11 +966,10 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
                 hideSpinner();
             }, error: function (object, error) {
                 $rootScope.alertModal("Error: " + error.code + " " + error.message);
+                $scope.cantSubmit = false;
+                $scope.$apply();
                 hideSpinner();
             }
-        }).then(function () {
-            $scope.cantSubmit = false;
-            $scope.$apply();
         });
     }
 });
