@@ -9,10 +9,10 @@
             <ul class="list-group">
                 <a class="list-group-item">Premium <span class="fa fa-star"></span></a>
                 <a class="list-group-item">Ratings <span class="badge">{{(result.get('rateCount'))?(result.get('rate')/result.get('rateCount')| number:1):'5'}}</span></a>
-                <a ng-show="userId==result.id" class="list-group-item" href="/#!/notifications">Notifications<span
+                <a ng-show="userId==result.id" class="list-group-item" href="/notifications">Notifications<span
                         class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
                 <a class="list-group-item">Barters<span class="badge">{{barters.length+result.get('barterSeeks').length}}</span></a>
-                <a ng-show="userId==result.id" class="list-group-item" href="/#!/profile/edit">Edit Profile</a>
+                <a ng-show="userId==result.id" class="list-group-item" href="/profile/edit">Edit Profile</a>
             </ul>
         </div>
         <div style="padding-left: 30px;" class="col-md-8 ">
@@ -23,7 +23,7 @@
                      class="row margin-top5 margin-bottom15 text-right offer-profile offer:hover"
                      ng-show="dashboardActive(barter)">
                     <div class="col-md-8 text-left">
-                        <a href="/#!/dashboard/barter/{{barter.get('barterDashboard').id}}"><h3
+                        <a href="/dashboard/barter/{{barter.get('barterDashboard').id}}"><h3
                                 class="offer-list-item-h1">
                             {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span></h3></a>
                         <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
@@ -40,7 +40,7 @@
                      class="row margin-top5 margin-bottom15 text-right offer offer:hover"
                      ng-show="dashboardActive(barter)">
                     <div class="col-md-8 text-left">
-                        <a href="/#!/dashboard/barter/{{barter.get('barterDashboard').id}}"><h3
+                        <a href="/dashboard/barter/{{barter.get('barterDashboard').id}}"><h3
                                 class="offer-list-item-h1">
                             {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span></h3></a>
                         <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>

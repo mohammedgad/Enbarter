@@ -113,10 +113,10 @@ app.controller('header', function ($scope, $location, $rootScope) {
         $scope.$apply();
         $('#alertModal').modal();
     }
-    $scope.homeLink = "/#!";
-    $scope.browseLink = "/#!/browse";
-    $scope.createBarterLink = "/#!/create_barter";
-    $scope.dashboardLink = "/#!/dashboard";
+    $scope.homeLink = "/";
+    $scope.browseLink = "/browse";
+    $scope.createBarterLink = "/create_barter";
+    $scope.dashboardLink = "/dashboard";
     $rootScope.currentUrl = window.location.href || document.URL;
     $scope.fbLogin = function () {
         showSpinner();
@@ -336,7 +336,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
         barter.save(null, {
             success: function (barter) {
                 // $rootScope.alertModal('New object created with objectId: ' + barter.id);
-                window.location.href = "/#!/barter/" + barter.id;
+                window.location.href = "/barter/" + barter.id;
                 hideSpinner();
             },
             error: function (barter, error) {
@@ -468,7 +468,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
         },
         error: function (object, error) {
-            $location.path('/#!/NotFound');
+            $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -624,12 +624,12 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
 
 app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParams) {
-    $scope.catSoft = "/#!/browse/0NFJVql0U9";
-    $scope.catWrite = "/#!/browse/zSBhtFd8ZE";
-    $scope.catMedia = "/#!/browse/Wb8uqGgkdG";
-    $scope.catData = "/#!/browse/4TtjWA9W5e";
-    $scope.catMarket = "/#!/browse/7lY1lEwRny";
-    $scope.catOther = "/#!/browse/U8MCGz0C2B";
+    $scope.catSoft = "/browse/0NFJVql0U9";
+    $scope.catWrite = "/browse/zSBhtFd8ZE";
+    $scope.catMedia = "/browse/Wb8uqGgkdG";
+    $scope.catData = "/browse/4TtjWA9W5e";
+    $scope.catMarket = "/browse/7lY1lEwRny";
+    $scope.catOther = "/browse/U8MCGz0C2B";
     $rootScope.title = 'Enbarter';
     $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
     $rootScope.keywords = "Enbarter,Barter,Bartering,Skills,Exchange,Entrepreneur,Service,Help,Direct,Professional,Free,Business";
@@ -702,7 +702,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         success: function (result) {
             if (!result.get('barterUpUser') && Parse.User.current().id != result.get('user').id) {
                 // alert("Dashboard can't be accessed because there is no barter user");
-                window.location.href = "/#!/barter/" + result.id;
+                window.location.href = "/barter/" + result.id;
                 return;
             }
             if (!Parse.User.current() || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
@@ -714,7 +714,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
 
             if (!result.get('barterUpMilestones') || !result.get('offerMilestones') || !result.get('barterUpMilestones').length || !result.get('offerMilestones').length) {
                 // alert("Dashboard can't be accessed because there is no Milestones");
-                window.location.href = "/#!/barter/" + result.id;
+                window.location.href = "/barter/" + result.id;
                 return;
             }
             $scope.result = result;
@@ -740,7 +740,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             hideSpinner();
         },
         error: function (object, error) {
-            $location.path('/#!/NotFound');
+            $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -914,7 +914,7 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
 
         },
         error: function (object, error) {
-            $location.path('/#!/NotFound');
+            $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -940,7 +940,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             hideSpinner();
         },
         error: function (object, error) {
-            $location.path('/#!/NotFound');
+            $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -1002,7 +1002,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 
         },
         error: function (object, error) {
-            $location.path('/#!/NotFound');
+            $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }

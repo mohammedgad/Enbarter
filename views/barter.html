@@ -20,7 +20,7 @@
             <div class="col-md-3">
                 <div class="bg-white column-shadow div-inside text-center">
                     <h3 class="text-info">Barter Creator</h3>
-                    <a href="/#!/profile/{{result.get('user').id}}" class="username-link"
+                    <a href="/profile/{{result.get('user').id}}" class="username-link"
                        ng-bind="result.get('user').get('username')"></a>
                     <img src="{{(result.get('user').get('pic'))?result.get('user').get('pic').url():'images/avatar.png'}}"
                          class="img-responsive center-block barter-creator-img"/>
@@ -58,7 +58,7 @@
                             ng-hide="!sameAccount()||result.get('state')=='disabled'||result.get('state')=='bartered'">
                         Disable
                     </button>
-                    <a href="/#!/dashboard/barter/{{result.get('barterDashboard').id}}" class="btn btn-primary btn-sm"
+                    <a href="/dashboard/barter/{{result.get('barterDashboard').id}}" class="btn btn-primary btn-sm"
                        ng-show="(sameAccount()||result.get('barterUpUser').id==userId)&&(result.get('state')=='bartered'||result.get('state')=='completed')"
                     >Dashboard
                     </a>
@@ -119,7 +119,7 @@
                              class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
-                        <a href="/#!/profile/{{result.get('barterUpUser').id}}" class="username-link">{{result.get('barterUpUser').get('username')}}</a>
+                        <a href="/profile/{{result.get('barterUpUser').id}}" class="username-link">{{result.get('barterUpUser').get('username')}}</a>
                         <br>
                         <a class="label label-default">Ratings <span class="badge">{{(result.get('barterUpUser').get('rateCount'))?(result.get('barterUpUser').get('rate')/result.get('barterUpUser').get('rateCount')| number:1):'5'}}</span></a>
 
@@ -144,7 +144,7 @@
                              class="img-responsive center-block barter-creator-img"/>
                     </td>
                     <td>
-                        <a href="/#!/profile/{{request.user.id}}"
+                        <a href="/profile/{{request.user.id}}"
                            class="username-link">{{request.user.get('username')}}</a>
                         <br>
                         <a class="label label-default">Ratings <span class="badge">{{(rrequest.user.get('rateCount'))?(request.user.get('rate')/request.user.get('rateCount')| number:1):'5'}}</span></a>
