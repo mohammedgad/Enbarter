@@ -1,0 +1,81 @@
+<div ng-controller="editProfileCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <a href="#" class="thumbnail">
+                    <img ng-src="{{result.get('pic')?result.get('pic').url():'./images/avatar.png'}}"
+                         alt="">
+                </a>
+                <ul class="list-group">
+                    <a class="list-group-item">Ratings <span class="badge">{{(result.get('rateCount'))?(result.get('rate')/result.get('rateCount')| number:1):'5'}}</span></a>
+                    <a ng-show="userId==result.id" class="list-group-item" href="/#!/notifications">Notifications<span
+                            class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
+                    <a class="list-group-item">Barters<span class="badge">{{barters.length+result.get('barterSeeks').length}}</span></a>
+                    <a ng-show="userId==result.id" class="list-group-item" href="/#!/profile/edit">Edit Profile</a>
+                </ul>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <form role="form">
+                        <div class="form-group">
+                            <label class="control-label" for="exampleInputEmail1">Username</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1"
+                                   placeholder="Enter username" ng-model='username'>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="formInput481">Bio</label>
+                            <textarea class="form-control" rows="3" id="formInput481" ng-model="bio"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="formInput397">Date of Birth</label>
+                            <input type="date" class="form-control" id="formInput397"
+                                   ng-model="birthday">
+                        </div>
+                        <div class="form-group">
+                            <a href="#" class="thumbnail">
+                                <img ng-src="{{result.get('pic')?result.get('pic').url():'./images/avatar.png'}}"
+                                     alt="">
+                            </a>
+                            <label class="control-label" for="exampleInputFile1">Upload your Avatar</label>
+                            <input type="file" class="form-control" id="exampleInputFile1" ng-model="avatar">
+                        </div>
+                        <div class="form-group">
+                            <ul>
+                                <li ng-repeat="skill in skills">
+                                    {{skill}}
+                                    <button class="btn-link" ng-click="removeItemFrom(skills,skill)">X</button>
+                                </li>
+                            </ul>
+                            <label class="control-label" for="formInput48">Skills</label>
+                            <input type="text" class="form-control" id="formInput48" ng-model="skillItem">
+                            <button class="btn btn-default" ng-click="skillItem=addItemTo(skills,skillItem)">Add Skill
+                            </button>
+                        </div>
+                        <!--TODO<div class="form-group">-->
+                        <!--<label class="control-label" for="exampleInputFile">Upload samples of your work ()</label>-->
+                        <!--<input type="file" id="exampleInputFile">-->
+                        <!--<button ng-click="addItemTo(samples)">Add</button>-->
+                        <!--</div>-->
+                        <div class="form-group">
+                            <ul>
+                                <li ng-repeat="link in workLinks"><a href="{{link}}">{{link}}</a>
+                                    <button class="btn-link" ng-click="removeItemFrom(workLinks,link)">X</button>
+                                </li>
+                            </ul>
+                            <label class="control-label" for="formInput295">Links to my Work</label>
+                            <input type="url" class="form-control" id="formInput295" placeholder="http://example.com"
+                                   ng-model="itemLink">
+                            <button class="btn btn-default" ng-click="itemLink=addItemTo(workLinks,itemLink)">Add Link
+                            </button>
+
+                        </div>
+                        <button type="submit" class="btn btn-block btn-primary" ng-click="submit()"
+                                ng-disabled="cantSubmit">Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

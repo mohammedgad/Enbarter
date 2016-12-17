@@ -1,0 +1,80 @@
+<div class="container margin-top30" ng-controller="showProfileCtrl">
+    <div class="row">
+        <div class="col-md-2">
+            <a href="#" class="thumbnail">
+                <img ng-src="{{result.get('pic')?result.get('pic').url():'./images/avatar.png'}}"
+                     alt="">
+            </a>
+            <p>@{{result.get('username')}}</p>
+            <ul class="list-group">
+                <a class="list-group-item">Premium <span class="fa fa-star"></span></a>
+                <a class="list-group-item">Ratings <span class="badge">{{(result.get('rateCount'))?(result.get('rate')/result.get('rateCount')| number:1):'5'}}</span></a>
+                <a ng-show="userId==result.id" class="list-group-item" href="/#!/notifications">Notifications<span
+                        class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
+                <a class="list-group-item">Barters<span class="badge">{{barters.length+result.get('barterSeeks').length}}</span></a>
+                <a ng-show="userId==result.id" class="list-group-item" href="/#!/profile/edit">Edit Profile</a>
+            </ul>
+        </div>
+        <div class=" col-md-8" style="padding-left: 30px;">
+            <div class="row">
+                <h3 ng-show="result.get('bio').length">Bio</h3>
+                <p>{{result.get('bio')}}</p>
+                <h3 ng-show="result.get('email').length">Email</h3>
+                <p>{{result.get('email')}}</p>
+                <h3 ng-show="barters.length">Barters</h3>
+                <div ng-repeat="barter in barters"
+                     class="row margin-top5 margin-bottom15 text-right offer-profile  offer:hover">
+                    <div class="col-md-8 text-left">
+                        <a href="/#!/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
+                            {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span></h3></a>
+                        <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
+                    </div>
+                    <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
+                        <i class="fa fa-{{barter.get('seekCategory').get('icon')}} fa-3x deepocean offer-icon"
+                           title="{{barter.get('seekCategory').get('name')}}"></i>
+                        <i class="fa fa-arrows-h fa-2x deepocean offer-icon"></i>
+                        <i class="fa fa-{{barter.get('offerCategory').get('icon')}} fa-3x deepocean offer-icon"
+                           title="{{barter.get('offerCategory').get('name')}}"></i>
+                    </div>
+                </div>
+
+                <h3 ng-show="result.get('barterSeeks').length">Barters Requests</h3>
+                <div ng-repeat="barter in result.get('barterSeeks')"
+                     class="row margin-top5 margin-bottom15 text-right offer-profile offer:hover">
+                    <div class="col-md-8 text-left">
+                        <a href="/#!/barter/{{barter.id}}"><h3 class="offer-list-item-h1">
+                            {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span></h3></a>
+                        <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
+                    </div>
+                    <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
+                        <i class="fa fa-{{barter.get('seekCategory').get('icon')}} fa-3x deepocean offer-icon"
+                           title="{{barter.get('seekCategory').get('name')}}"></i>
+                        <i class="fa fa-arrows-h fa-2x deepocean offer-icon"></i>
+                        <i class="fa fa-{{barter.get('offerCategory').get('icon')}} fa-3x deepocean offer-icon"
+                           title="{{barter.get('offerCategory').get('name')}}"></i>
+                    </div>
+                </div>
+
+                <h3 ng-show="result.get('workLinks').length">Samples of my work</h3>
+                <ul>
+                    <li ng-repeat="link in result.get('workLinks')"><a href="{{link}}">{{link}}</a></li>
+                </ul>
+                <h3 ng-show="result.get('skills').length">skills</h3>
+                <ul>
+                    <li ng-repeat="skill in result.get('skills')">{{skill}}</li>
+                </ul>
+                <h3>Reviews</h3>
+                <ul>
+                    <li ng-repeat="barter in barters"
+                        ng-show="barter.get('barterUpReview')">
+                        {{barter.get('barterUpReview')}}
+                    </li>
+                    <li ng-repeat="barter in result.get('barterSeeks')"
+                        ng-show="barter.get('offerReview')&&barter.get('barterUpUser').id==result.id">
+                        {{barter.get('offerReview')}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

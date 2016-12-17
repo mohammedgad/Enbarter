@@ -1,0 +1,111 @@
+<div ng-controller="createBarter">
+    <section id="content-3-3" class="content-block-nopad content-3-3"
+             style="background-image:url('/images/slider/books-1163695.jpg');">
+        <div class="overlay overlay-blue">
+            <div class="container text-center">
+                <h1 class="page-title">{{barterTitle}}</h1>
+                <div class="col-md-4 margin-top20 text-center margin-bottom20 col-xs-offset-4">
+                    <i class="fa fa-edit fa-3x offer-icon white"></i>
+                </div>
+            </div>
+            <!-- /.container -->
+        </div>
+    </section>
+    <div class="container">
+        <form role="form" ng-submit="startBarter()">
+            <div class="row">
+                <h1>About the Barter</h1>
+                <div class="form-group">
+                    <label class="control-label" for="formInput121">Barter Title</label>
+                    <input type="text" class="form-control" id="formInput121" placeholder=""
+                           ng-model="barterTitle" required>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput167">Barter Brief Summary</label>
+                    <textarea ng-model="barterDescription" class="form-control" rows="3" id="formInput167"
+                              required></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <h1>What Would you Like to Offer?</h1>
+                <div class="form-group">
+                    <label class="control-label" for="formInput226">Select Your Offer Category
+                        <br>
+                    </label>
+                    <select id="formInput226" class="form-control" ng-model="offerCategory" required>
+                        <option ng-repeat="cat in categories" value="{{$index}}">{{cat.get('name')}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput2565">Your Offer Description</label>
+                    <textarea class="form-control" rows="3" id="formInput2565" ng-model="offerDescription"
+                              required></textarea>
+                </div>
+                <div class="form-group">
+                    <ul>
+                        <li ng-repeat="o in milestones">{{o}}
+                            <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button>
+                        </li>
+                    </ul>
+                    <label class="control-label" for="formInput256">What are the milestones you will follow to create what you offer?
+                    </label>
+                    <input type="text" class="form-control" id="formInput256" ng-model="offerMilestoneItem">
+                    <a class="btn btn-default"
+                            ng-click="offerMilestoneItem=addItemTo(milestones,offerMilestoneItem)">Add Milestone
+                    </a>
+
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput1955">External Sample Link</label>
+                    <input type="text" class="form-control" id="formInput1955" placeholder="http://example.com"
+                           ng-model="offerSampleLink">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="exampleInputFile1">Upload Sample Image</label>
+                    <input type="file" class="form-control" id="exampleInputFile1" ng-model="offerSampleImage">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput1954">Deadline
+                    </label>
+                    <input type="number" class="form-control" id="formInput1954"
+                           ng-model="offerDeadline" placeholder="The number of days you believe will need to finish what you offer" required>
+                </div>
+            </div>
+            <div class="row">
+                <h1>What do you Seek?</h1>
+                <div class="form-group">
+                    <label class="control-label" for="formInput226">Select Your Seek Category
+                        <br>
+                    </label>
+                    <select id="formInput206" class="form-control" ng-model="seekCategory" required>
+                        <option ng-repeat="cat in categories" value="{{$index}}">{{cat.get('name')}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput2564">Your Seek Description</label>
+                    <textarea class="form-control" rows="3" id="formInput2564" ng-model="seekDescription"
+                              required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput1959">External Sample Link</label>
+                    <input type="text" class="form-control" id="formInput1959" placeholder="http://example.com"
+                           ng-model="seekSampleLink">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="exampleInputFile">Upload Sample Image</label>
+                    <input type="file" class="form-control" id="exampleInputFile" ng-model="seekSampleImage">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="formInput195">Deadline
+                    </label>
+                    <input type="number" class="form-control" id="formInput195"
+                           ng-model="seekDeadline" placeholder="The number of days you believe will need to finish what you seek" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg btn-block"
+                    ng-disabled="canStartDisabled">START BARTER
+            </button>
+        </form>
+    </div>
+
+</div>
