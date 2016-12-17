@@ -111,7 +111,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
         $scope.$apply();
         $('#alertModal').modal();
     }
-    $scope.homeLink = "/#!/";
+    $scope.homeLink = "/#!";
     $scope.browseLink = "/#!/browse";
     $scope.createBarterLink = "/#!/create_barter";
     $scope.dashboardLink = "/#!/dashboard";
@@ -196,8 +196,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
     $scope.logout = function () {
         showSpinner();
         Parse.User.logOut().then(function () {
-
-            location.href = "/";
+            location.href = "/#!";
             location.reload();
             hideSpinner();
         });
@@ -331,7 +330,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
         barter.save(null, {
             success: function (barter) {
                 // $rootScope.alertModal('New object created with objectId: ' + barter.id);
-                window.location.href = "./barter/" + barter.id;
+                window.location.href = "/#!/barter/" + barter.id;
                 hideSpinner();
             },
             error: function (barter, error) {
@@ -463,7 +462,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
         },
         error: function (object, error) {
-            $location.path('#!/NotFound');
+            $location.path('/#!/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -677,6 +676,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         subscription.on('create', function (object) {
             $scope.messages.push(object);
             $scope.$apply();
+            (new Audio('beeb.mp3')).play();
         });
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
@@ -696,19 +696,19 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         success: function (result) {
             if (!result.get('barterUpUser') && Parse.User.current().id != result.get('user').id) {
                 // alert("Dashboard can't be accessed because there is no barter user");
-                window.location.href = "./barter/" + result.id;
+                window.location.href = "/#!/barter/" + result.id;
                 return;
             }
             if (!Parse.User.current() || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
                 // alert("Error: Not allowed");
-                $location.path('/');
+                $location.path('/#!');
                 $scope.$apply();
                 return;
             }
 
             if (!result.get('barterUpMilestones') || !result.get('offerMilestones') || !result.get('barterUpMilestones').length || !result.get('offerMilestones').length) {
                 // alert("Dashboard can't be accessed because there is no Milestones");
-                window.location.href = "./barter/" + result.id;
+                window.location.href = "/#!/barter/" + result.id;
                 return;
             }
             $scope.result = result;
@@ -734,7 +734,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             hideSpinner();
         },
         error: function (object, error) {
-            $location.path('#!/NotFound');
+            $location.path('/#!/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -908,7 +908,7 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
 
         },
         error: function (object, error) {
-            $location.path('#!/NotFound');
+            $location.path('/#!/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -934,7 +934,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             hideSpinner();
         },
         error: function (object, error) {
-            $location.path('#!/NotFound');
+            $location.path('/#!/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -996,7 +996,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 
         },
         error: function (object, error) {
-            $location.path('#!/NotFound');
+            $location.path('/#!/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -1013,7 +1013,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 
 app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $routeParams) {
     if (!Parse.User.current()) {
-        $location.path('/');
+        $location.path('/#!');
         $scope.$apply();
     }
     var Notification = Parse.Object.extend('Notification');
@@ -1054,7 +1054,7 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
             );
         },
         error: function (error) {
-            $location.path('/');
+            $location.path('/#!');
             $scope.$apply();
             hideSpinner();
         }
