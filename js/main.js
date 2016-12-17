@@ -1,8 +1,10 @@
 Raven.config('https://22c41b4449c04f2f9678babd3400566c@sentry.io/118691').install();
 var msie = document.documentMode;
-if (msie < 9) {
+if (navigator.userAgent.match(/(MSIE)/) != null) {
     hideSpinner();
-    alert("Please use a modern browser to be able to use Enbarter!");
+    alert("To Enjoy enbarter kindly use a modern browser!");
+} else if (navigator.userAgent.match(/(iPhone|Android)/) != null) {
+    alert("To Enjoy enbarter kindly use a enbarter mobile app!");
 }
 window.prerenderReady = false;
 String.prototype.paddingLeft = function (paddingValue) {
