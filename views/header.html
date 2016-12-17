@@ -20,27 +20,22 @@
                 <div class="collapse navbar-collapse" id="nav1">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active nav-item">
-                            <a href="{{homeLink}}" class="deepocean" data-toggle="collapse"
-                               data-target=".navbar-collapse">Home</a>
+                            <a href="{{homeLink}}" class="deepocean">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{browseLink}}" class="deepocean" data-toggle="collapse"
-                               data-target=".navbar-collapse">browse</a>
+                            <a href="{{browseLink}}" class="deepocean">browse</a>
                         </li>
                         <li class="nav-item" ng-show="isLoggedIn()">
-                            <a href="{{createBarterLink}}" class="deepocean" data-toggle="collapse"
-                               data-target=".navbar-collapse">Create Barter</a>
+                            <a href="{{createBarterLink}}" class="deepocean">Create Barter</a>
                         </li>
                         <li class="nav-item" ng-show="isLoggedIn()">
-                            <a href="/#!/profile/{{userId}}" class="deepocean" data-toggle="collapse"
-                               data-target=".navbar-collapse">Profile</a>
+                            <a href="/#!/profile/{{userId}}" class="deepocean">Profile</a>
                         </li>
                         <li class="nav-item" ng-show="isLoggedIn()">
-                            <a href="{{dashboardLink}}" class="deepocean" data-toggle="collapse"
-                               data-target=".navbar-collapse">Dashboard</a>
+                            <a href="{{dashboardLink}}" class="deepocean">Dashboard</a>
                         </li>
                         <li class="nav-item dropdown" ng-show="isLoggedIn()">
-                            <a class="deepocean dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
+                            <a id="dontClose" class="deepocean dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                                data-delay="0" data-close-others="false"><i class="fa fa-bell" aria-hidden="true"></i>
                                 <span
                                         class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>

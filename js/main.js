@@ -8,6 +8,7 @@ window.prerenderReady = false;
 String.prototype.paddingLeft = function (paddingValue) {
     return String(paddingValue + this).slice(-paddingValue.length);
 };
+
 var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize', 'ngRaven']);
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -248,6 +249,10 @@ app.controller('header', function ($scope, $location, $rootScope) {
             (new Audio('beeb.mp3')).play();
         });
     }
+
+    $('.navbar-collapse a:not(#dontClose),.navbar-collapse button').click(function () {
+        $(".navbar-collapse").collapse('hide');
+    });
 });
 
 
@@ -1295,3 +1300,4 @@ if (window.addEventListener)
 else if (window.attachEvent)
     window.attachEvent("onload", downloadJSAtOnload);
 else window.onload = downloadJSAtOnload;
+
