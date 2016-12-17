@@ -1,6 +1,7 @@
 Raven.config('https://22c41b4449c04f2f9678babd3400566c@sentry.io/118691').install();
 var msie = document.documentMode;
-if (msie < 8) {
+if (msie < 9) {
+    hideSpinner();
     alert("Please use a modern browser to be able to use Enbarter!");
 }
 window.prerenderReady = false;
@@ -11,29 +12,29 @@ var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitiz
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when("/", {
-            templateUrl: "indexContent.html"
+            templateUrl: "views/indexContent.html"
         }).when("/browse", {
-        templateUrl: "browse.html"
+        templateUrl: "views/browse.html"
     }).when("/browse/:id", {
-        templateUrl: "browse.html"
+        templateUrl: "views/browse.html"
     }).when("/barter/:id", {
-        templateUrl: "barter.html"
+        templateUrl: "views/barter.html"
     }).when("/create_barter", {
-        templateUrl: "create_barter.html"
+        templateUrl: "views/create_barter.html"
     }).when("/dashboard", {
-        templateUrl: "viewDashboard.html"
+        templateUrl: "views/viewDashboard.html"
     }).when("/dashboard/barter/:id", {
-        templateUrl: "barterDashboard.html"
+        templateUrl: "views/barterDashboard.html"
     }).when("/profile/edit", {
-        templateUrl: "editProfile.html"
+        templateUrl: "views/editProfile.html"
     }).when("/profile/:id", {
-        templateUrl: "viewProfile.html"
+        templateUrl: "views/viewProfile.html"
     }).when("/profile", {
-        templateUrl: "viewProfile.html"
+        templateUrl: "views/viewProfile.html"
     }).when("/notifications", {
-        templateUrl: "notifications.html"
+        templateUrl: "views/notifications.html"
     }).otherwise({
-        templateUrl: "404.html"
+        templateUrl: "views/404.html"
     });
 
     $locationProvider.html5Mode(true);
@@ -41,11 +42,8 @@ app.config(function ($routeProvider, $locationProvider) {
 });
 
 app.run(function ($rootScope, $location) {
-    // Parse.initialize("N39ZdgBHC1a0NDJNMXwFQ4yIePsXTbgEcwHhFY7u", "5trl769gcrMUSG2lcumx1Biq976NcPSPEg8tbG8p");
-    // Parse.serverURL = 'https://enbarter.back4app.io';
-
-    Parse.initialize("bfzk0HA7GrGncvgGQhOUqhEdEVbGS11R7F8R5fQf", "jbskJD4lcguHWHa0mabuFoOzFE0cFOUSG1A79BZL");
-    Parse.serverURL = 'https://enbarterdev.back4app.io';
+    Parse.initialize("EnbarterApp", "28e0691b32ab");
+    Parse.serverURL = 'http://api.enbarterdev.ml/v1';
 
     $rootScope.title = 'Enbarter';
     $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
@@ -113,10 +111,10 @@ app.controller('header', function ($scope, $location, $rootScope) {
         $scope.$apply();
         $('#alertModal').modal();
     }
-    $scope.homeLink = "/";
-    $scope.browseLink = "/browse";
-    $scope.createBarterLink = "/create_barter";
-    $scope.dashboardLink = "/dashboard";
+    $scope.homeLink = "/#!/";
+    $scope.browseLink = "/#!/browse";
+    $scope.createBarterLink = "/#!/create_barter";
+    $scope.dashboardLink = "/#!/dashboard";
     $rootScope.currentUrl = window.location.href || document.URL;
     $scope.fbLogin = function () {
         showSpinner();
@@ -465,7 +463,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
         },
         error: function (object, error) {
-            $location.path('/NotFound');
+            $location.path('#!/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -621,12 +619,12 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
 
 app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParams) {
-    $scope.catSoft = "/browse/0NFJVql0U9";
-    $scope.catWrite = "/browse/zSBhtFd8ZE";
-    $scope.catMedia = "/browse/Wb8uqGgkdG";
-    $scope.catData = "/browse/4TtjWA9W5e";
-    $scope.catMarket = "/browse/7lY1lEwRny";
-    $scope.catOther = "/browse/U8MCGz0C2B";
+    $scope.catSoft = "/#!/browse/0NFJVql0U9";
+    $scope.catWrite = "/#!/browse/zSBhtFd8ZE";
+    $scope.catMedia = "/#!/browse/Wb8uqGgkdG";
+    $scope.catData = "/#!/browse/4TtjWA9W5e";
+    $scope.catMarket = "/#!/browse/7lY1lEwRny";
+    $scope.catOther = "/#!/browse/U8MCGz0C2B";
     $rootScope.title = 'Enbarter';
     $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
     $rootScope.keywords = "Enbarter,Barter,Bartering,Skills,Exchange,Entrepreneur,Service,Help,Direct,Professional,Free,Business";
@@ -736,7 +734,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             hideSpinner();
         },
         error: function (object, error) {
-            $location.path('/NotFound');
+            $location.path('#!/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -910,7 +908,7 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
 
         },
         error: function (object, error) {
-            $location.path('/NotFound');
+            $location.path('#!/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -923,7 +921,6 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
 
     query.get(Parse.User.current() ? Parse.User.current().id : null, {
         success: function (result) {
-            console.log(result);
             $scope.result = result;
             $scope.username = result.get('username');
             $scope.bio = result.get('bio');
@@ -937,7 +934,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             hideSpinner();
         },
         error: function (object, error) {
-            $location.path('/NotFound');
+            $location.path('#!/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -999,7 +996,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 
         },
         error: function (object, error) {
-            $location.path('/NotFound');
+            $location.path('#!/NotFound');
             $scope.$apply();
             hideSpinner();
         }
