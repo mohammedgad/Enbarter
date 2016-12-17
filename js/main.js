@@ -129,7 +129,7 @@ app.controller('header', function ($scope, $location, $rootScope) {
                         if (!response.error) {
                             toDataUrl("https://graph.facebook.com/" + response.id + "/picture?type=large", function (result) {
                                 user.set("username", response.name);
-                                user.set("pic", new Parse.File("pic.jpeg", {base64: result.toString('base64')}));
+                                user.set("pic", new Parse.File("pic.jpg", {base64: result.toString('base64')}));
                                 user.save(null, {
                                     success: function (user) {
                                         location.reload();
@@ -783,7 +783,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 fileUploadControl = $("#formInput25675")[0];
                 if (fileUploadControl.files.length > 0) {
                     var file = fileUploadControl.files[0];
-                    var name = "photo1.jpg";
+                    var name = $("#formInput25675").val().substring(($("#formInput25675").val().indexOf('\\') >= 0 ? $("#formInput25675").val().lastIndexOf('\\') : $("#formInput25675").val().lastIndexOf('/')) + 1);
                     var parseFile = new Parse.File(name, file);
                     arr[i].file = parseFile;
                 }
@@ -863,7 +863,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         var result = angularCopy($scope.result);
         if (fileUploadControl.files.length > 0) {
             var file = fileUploadControl.files[0];
-            var name = "photo1.jpg";
+            var name = $("#" + x + "FinalPic").val().substring(($("#" + x + "FinalPic").val().indexOf('\\') >= 0 ? $("#" + x + "FinalPic").val().lastIndexOf('\\') : $("#" + x + "FinalPic").val().lastIndexOf('/')) + 1);
             var parseFile = new Parse.File(name, file);
             result.set(x + "FinalPic", parseFile);
         }
