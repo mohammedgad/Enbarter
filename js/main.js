@@ -72,7 +72,7 @@ app.run(function ($rootScope, $location) {
         }
     }
 
-    if ($location.search()['_escaped_fragment_'] && $location.path() == '/' && $location.path() != $location.search()['_escaped_fragment_']) {
+    if ($location.search()['_escaped_fragment_'] && $location.search()['_escaped_fragment_'].length > 0 && $location.path() == '/' && $location.path() != $location.search()['_escaped_fragment_']) {
         $location.path($location.search()['_escaped_fragment_']);
     }
 
