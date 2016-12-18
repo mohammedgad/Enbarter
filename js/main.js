@@ -2,6 +2,7 @@ if (navigator.userAgent.match(/(MSIE)/) != null) {
     hideSpinner();
     alert("You are now using enbarter in legacy mode, Kindly use enbarter a modern browser to enjoy the full experience!");
 } else if (navigator.userAgent.match(/(iPhone|Android)/) != null) {
+    hideSpinner();
     alert("You are now using enbarter in legacy mode, Kindly use enbarter mobile app to enjoy the full experience!");
 }
 Raven.config('https://22c41b4449c04f2f9678babd3400566c@sentry.io/118691').install();
@@ -71,6 +72,9 @@ app.run(function ($rootScope, $location) {
         }
     }
 
+    if ($location.search()['_escaped_fragment_'] && $location.path() == '/' && $location.path() != $location.search()['_escaped_fragment_']) {
+        $location.path($location.search()['_escaped_fragment_']);
+    }
 
     $rootScope.notificationCheck = function (notification) {
         if (notification.get('read')) {
