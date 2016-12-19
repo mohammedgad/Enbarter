@@ -41,11 +41,7 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: "views/404.html"
     });
 
-    $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: true,
-        rewriteLinks: true
-    });
+    $locationProvider.html5Mode(true);
     $locationProvider.hashPrefix('!');
 });
 
