@@ -40,7 +40,11 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: "views/404.html"
     });
 
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: true,
+        rewriteLinks: true
+    });
     $locationProvider.hashPrefix('!');
 });
 
@@ -74,6 +78,7 @@ app.run(function ($rootScope, $location) {
 
     if ($location.search()['_escaped_fragment_'] && $location.search()['_escaped_fragment_'].length > 0 && $location.path() == '/' && $location.path() != $location.search()['_escaped_fragment_']) {
         $location.path($location.search()['_escaped_fragment_']);
+        prerender = true;
     }
 
     $rootScope.notificationCheck = function (notification) {
@@ -101,8 +106,12 @@ app.run(function ($rootScope, $location) {
     }
 
     $rootScope.$on('$locationChangeStart', function (event) {
-        showSpinner();
-        $("html, body").stop().animate({scrollTop: 0}, '100', 'swing');
+        if (prerender)
+            prerender = false;
+        else {
+            showSpinner();
+            $("html, body").stop().animate({scrollTop: 0}, '100', 'swing');
+        }
     });
 
     $rootScope.$on('$routeChangeSuccess', function (event) {
