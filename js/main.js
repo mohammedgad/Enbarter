@@ -1,7 +1,7 @@
-if (navigator.userAgent.match(/(MSIE)/) != null) {
+if (navigator.userAgent.match(/(MSIE)/)) {
     hideSpinner();
     alert("You are now using enbarter in legacy mode, Kindly use enbarter a modern browser to enjoy the full experience!");
-} else if (navigator.userAgent.match(/(iPhone|Android)/) != null) {
+} else if (navigator.userAgent.match(/(iPhone|Android)/)) {
     hideSpinner();
     alert("You are now using enbarter in legacy mode, Kindly use enbarter mobile app to enjoy the full experience!");
 }
@@ -1300,9 +1300,10 @@ function downloadJSAtOnload() {
         a.appendChild(r);
     })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
 }
-if (window.addEventListener)
-    window.addEventListener("load", downloadJSAtOnload, false);
-else if (window.attachEvent)
-    window.attachEvent("onload", downloadJSAtOnload);
-else window.onload = downloadJSAtOnload;
-
+if (!navigator.userAgent.match(/(Prerender)/)) {
+    if (window.addEventListener)
+        window.addEventListener("load", downloadJSAtOnload, false);
+    else if (window.attachEvent)
+        window.attachEvent("onload", downloadJSAtOnload);
+    else window.onload = downloadJSAtOnload;
+}
