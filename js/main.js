@@ -1,3 +1,4 @@
+var prerender = false;
 if (navigator.userAgent.match(/(MSIE)/)) {
     hideSpinner();
     alert("You are now using enbarter in legacy mode, Kindly use enbarter a modern browser to enjoy the full experience!");
