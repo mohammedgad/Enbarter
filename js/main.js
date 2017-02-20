@@ -1,8 +1,8 @@
 var prerender = false;
-if (navigator.userAgent.match(/(MSIE)/)) {
+if (navigator.userAgent.match(/(MSIE)/) != null) {
     hideSpinner();
     alert("You are now using enbarter in legacy mode, Kindly use enbarter a modern browser to enjoy the full experience!");
-} else if (navigator.userAgent.match(/(iPhone|Android)/)) {
+} else if (navigator.userAgent.match(/(iPhone|Android)/) != null) {
     hideSpinner();
     alert("You are now using enbarter in legacy mode, Kindly use enbarter mobile app to enjoy the full experience!");
 }
@@ -46,7 +46,7 @@ app.config(function ($routeProvider, $locationProvider) {
 });
 
 app.run(function ($rootScope, $location) {
-    Parse.initialize("EnbarterApp", "28e0691b32ab");
+    Parse.initialize("EnbarterApp", "Ad06@!30");
     Parse.serverURL = 'http://api.enbarterdev.ml/v1';
 
     $rootScope.title = 'Enbarter';
@@ -1274,7 +1274,7 @@ function downloadJSAtOnload() {
         }(document, /*debug*/ false));
     }
 
-    if (!navigator.userAgent.match(/(Prerender)/)) {
+    if (navigator.userAgent.match(/(Prerender)/) == null) {
         var element = document.createElement("script");
         element.src = "http://s7.mylivechat.com/livechat2/livechat2.aspx?hccid=99228221&apimode=chatinline";
         document.body.appendChild(element);
