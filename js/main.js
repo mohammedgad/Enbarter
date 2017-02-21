@@ -471,7 +471,8 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
         },
         error: function (object, error) {
-            $location.path('/NotFound');
+            if ($routeParams.id)
+                $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -743,7 +744,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             hideSpinner();
         },
         error: function (object, error) {
-            $location.path('/NotFound');
+            if ($routeParams.id)
+                $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -917,7 +919,8 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
 
         },
         error: function (object, error) {
-            $location.path('/NotFound');
+            if (($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null))
+                $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -943,7 +946,8 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             hideSpinner();
         },
         error: function (object, error) {
-            $location.path('/NotFound');
+            if (Parse.User.current() ? Parse.User.current().id : null)
+                $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
@@ -1005,7 +1009,8 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 
         },
         error: function (object, error) {
-            $location.path('/NotFound');
+            if (($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null))
+                $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
