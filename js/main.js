@@ -1,11 +1,4 @@
 var prerender = false;
-if (navigator.userAgent.match(/(MSIE)/) != null) {
-    hideSpinner();
-    alert("You are now using enbarter in legacy mode, Kindly use enbarter a modern browser to enjoy the full experience!");
-} else if (navigator.userAgent.match(/(iPhone|Android)/) != null) {
-    hideSpinner();
-    alert("You are now using enbarter in legacy mode, Kindly use enbarter mobile app to enjoy the full experience!");
-}
 Raven.config('https://22c41b4449c04f2f9678babd3400566c@sentry.io/118691').install();
 window.prerenderReady = false;
 String.prototype.paddingLeft = function (paddingValue) {
@@ -47,7 +40,7 @@ app.config(function ($routeProvider, $locationProvider) {
 
 app.run(function ($rootScope, $location) {
     Parse.initialize("EnbarterApp", "Ad06@!30");
-    Parse.serverURL = 'http://api.enbarterdev.ml/v1';
+    Parse.serverURL = 'https://api.enbarterdev.ml/v1';
 
     $rootScope.title = 'Enbarter';
     $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
@@ -1276,7 +1269,7 @@ function downloadJSAtOnload() {
 
     if (navigator.userAgent.match(/(Prerender)/) == null) {
         var element = document.createElement("script");
-        element.src = "http://s7.mylivechat.com/livechat2/livechat2.aspx?hccid=99228221&apimode=chatinline";
+        element.src = "//s7.mylivechat.com/livechat2/livechat2.aspx?hccid=99228221&apimode=chatinline";
         document.body.appendChild(element);
         element = document.createElement("script");
         element.src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-584fd4d3f9f8431f";
@@ -1306,6 +1299,13 @@ function downloadJSAtOnload() {
             r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
             a.appendChild(r);
         })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
+    }
+    if (navigator.userAgent.match(/(MSIE)/) != null) {
+        hideSpinner();
+        alert("You are now using enbarter in legacy mode, Kindly use enbarter a modern browser to enjoy the full experience!");
+    } else if (navigator.userAgent.match(/(iPhone|Android)/) != null) {
+        hideSpinner();
+        alert("You are now using enbarter in legacy mode, Kindly use enbarter mobile app to enjoy the full experience!");
     }
 }
 
