@@ -5,7 +5,7 @@ String.prototype.paddingLeft = function (paddingValue) {
     return String(paddingValue + this).slice(-paddingValue.length);
 };
 
-var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize', 'ngRaven']);
+var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize']);
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when("/", {
