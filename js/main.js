@@ -98,10 +98,10 @@ app.run(function ($rootScope, $location) {
     $rootScope.$on('$locationChangeStart', function (event) {
         if (prerender)
             prerender = false;
-        else {
-            showSpinner();
-            $("html, body").stop().animate({scrollTop: 0}, '100', 'swing');
-        }
+
+        showSpinner();
+        $("html, body").stop().animate({scrollTop: 0}, '100', 'swing');
+
     });
 
     $rootScope.$on('$routeChangeSuccess', function (event) {
