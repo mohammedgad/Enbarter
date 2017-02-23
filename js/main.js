@@ -700,7 +700,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     query.include('barter.offerCategory');
     query.include('user');
     query.include('barterUpUser');
-    query.equalTo("barter", '{__type: "Pointer", className: "Barter", objectId: "' + $routeParams.id + '"}');
+    query.equalTo("barter", {__type: "Pointer", className: "Barter", objectId: $routeParams.id});
 
     query.find({
         success: function (results) {
@@ -999,7 +999,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
     query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
         success: function (result) {
             $scope.result = result;
-            $rootScope.title = "Enbarter } Dashboard";
+            $rootScope.title = "Enbarter | Dashboard";
             $scope.$apply();
             var Barter = Parse.Object.extend("Barter");
             var barterQuery = new Parse.Query(Barter);
