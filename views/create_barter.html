@@ -3,9 +3,10 @@
              style="background-image:url('/images/slider/books-1163695.jpg');">
         <div class="overlay overlay-blue">
             <div class="container text-center">
-                <h1 class="page-title">{{barterTitle}}</h1>
+                <h1 class="page-title">{{barterTitle1||'Offer'}} For {{barterTitle2||'Seek'}}</h1>
                 <div class="col-md-4 margin-top20 text-center margin-bottom20 col-xs-offset-4">
-                    <i class="fa fa-edit fa-3x offer-icon white"></i>
+                    <i class="glyphicon glyphicon-edit
+ fa-3x offer-icon white"></i>
                 </div>
             </div>
             <!-- /.container -->
@@ -59,15 +60,6 @@
 
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput1955">External Sample Link</label>
-                    <input type="text" class="form-control" id="formInput1955" placeholder="http://example.com"
-                           ng-model="offerSampleLink">
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="exampleInputFile1">Upload Sample Image</label>
-                    <input type="file" class="form-control" id="exampleInputFile1" ng-model="offerSampleImage">
-                </div>
-                <div class="form-group">
                     <label class="control-label" for="formInput1954">Deadline
                     </label>
                     <input type="number" class="form-control" id="formInput1954"
@@ -89,15 +81,6 @@
                     <label class="control-label" for="formInput2564">Your Seek Description</label>
                     <textarea class="form-control" rows="3" id="formInput2564" ng-model="seekDescription"
                               required></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="formInput1959">External Sample Link</label>
-                    <input type="text" class="form-control" id="formInput1959" placeholder="http://example.com"
-                           ng-model="seekSampleLink">
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="exampleInputFile">Upload Sample Image</label>
-                    <input type="file" class="form-control" id="exampleInputFile" ng-model="seekSampleImage">
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput195">Deadline

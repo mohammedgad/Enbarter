@@ -315,29 +315,9 @@ app.controller('createBarter', function ($scope, $rootScope) {
             milestones.push({checked: false, task: $scope.milestones[i]});
         }
         barter.set("offerMilestones", milestones);
-        barter.set("offerSampleLink", $scope.offerSampleLink);
-        //file upload
-        fileUploadControl = $("#exampleInputFile1")[0];
-        if (fileUploadControl.files.length > 0) {
-            var file = fileUploadControl.files[0];
-            var name = "photo.jpg";
-
-            var parseFile = new Parse.File(name, file);
-            barter.set("offerSampleImage", parseFile);
-        }
         barter.set("offerDeadline", $scope.offerDeadline);
         barter.set("seekCategory", $scope.categories[$scope.seekCategory]);
         barter.set("seekDescription", $scope.seekDescription);
-        barter.set("seekSampleLink", $scope.seekSampleLink);
-        // upload
-        fileUploadControl = $("#exampleInputFile")[0];
-        if (fileUploadControl.files.length > 0) {
-            var file = fileUploadControl.files[0];
-            var name = "photo1.jpg";
-
-            var parseFile = new Parse.File(name, file);
-            barter.set("seekSampleImage", parseFile);
-        }
         barter.set("seekDeadline", $scope.seekDeadline);
         barter.set("user", Parse.User.current());
         var text = $scope.barterTitle + " " + $scope.offerDescription + " " + $scope.seekDescription;
@@ -919,7 +899,8 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
     $scope.result = null;
     var query = new Parse.Query(Parse.User);
     query.include("barterSeeks");
-
+    query.include('barterSeeks.seekCategory');
+    query.include('barterSeeks.offerCategory');
     query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
         success: function (result) {
             $scope.result = result;
@@ -928,15 +909,13 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
 
             var Barter = Parse.Object.extend("Barter");
             var barterQuery = new Parse.Query(Barter);
-            barterQuery.include('seekCategory');
-            barterQuery.include('offerCategory');
             barterQuery.equalTo("user", result);
             var barterQuery1 = new Parse.Query(Barter);
-            barterQuery1.include('seekCategory');
-            barterQuery1.include('offerCategory');
             barterQuery1.equalTo("barterUpUser", result);
 
             var mainQuery = Parse.Query.or(barterQuery, barterQuery1);
+            mainQuery.include('seekCategory');
+            mainQuery.include('offerCategory');
             mainQuery.find({
                 success: function (results) {
                     $scope.barters = results;
@@ -1018,6 +997,8 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
     $scope.result = null;
     var query = new Parse.Query(Parse.User);
     query.include("barterSeeks");
+    query.include('barterSeeks.seekCategory');
+    query.include('barterSeeks.offerCategory');
 
     query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
         success: function (result) {
@@ -1027,15 +1008,13 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 
             var Barter = Parse.Object.extend("Barter");
             var barterQuery = new Parse.Query(Barter);
-            barterQuery.include('seekCategory');
-            barterQuery.include('offerCategory');
             barterQuery.equalTo("user", Parse.User.current());
             var barterQuery1 = new Parse.Query(Barter);
-            barterQuery1.include('seekCategory');
-            barterQuery1.include('offerCategory');
             barterQuery1.equalTo("barterUpUser", Parse.User.current());
 
             var mainQuery = Parse.Query.or(barterQuery, barterQuery1);
+            mainQuery.include('seekCategory');
+            mainQuery.include('offerCategory');
             mainQuery.find({
                 success: function (results) {
                     $scope.barters = results;
@@ -1079,7 +1058,8 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
             $scope.$apply();
             var query1 = new Parse.Query(Parse.User);
             query1.include("barterSeeks");
-
+            query1.include('barterSeeks.seekCategory');
+            query1.include('barterSeeks.offerCategory');
             query1.get((Parse.User.current().id), {
                     success: function (result) {
                         $scope.result = result;
@@ -1089,15 +1069,13 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
 
                         var Barter = Parse.Object.extend("Barter");
                         var barterQuery = new Parse.Query(Barter);
-                        barterQuery.include('seekCategory');
-                        barterQuery.include('offerCategory');
                         barterQuery.equalTo("user", Parse.User.current());
                         var barterQuery1 = new Parse.Query(Barter);
-                        barterQuery1.include('seekCategory');
-                        barterQuery1.include('offerCategory');
                         barterQuery1.equalTo("barterUpUser", Parse.User.current());
 
                         var mainQuery = Parse.Query.or(barterQuery, barterQuery1);
+                        mainQuery.include('seekCategory');
+                        mainQuery.include('offerCategory');
                         mainQuery.find({
                             success: function (results) {
                                 $scope.barters = results;

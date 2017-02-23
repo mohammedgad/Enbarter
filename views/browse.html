@@ -46,9 +46,9 @@
             <h5 ng-hide="results.length">Nothing match your search found! <br/> <a href="/create_barter" class="btn btn-success">Create your own!</a></h5>
         </div>
         <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
-            <i class="fa fa-edit fa-3x deepocean offer-icon"></i>
-            <i class="fa fa-arrows-h fa-2x deepocean offer-icon"></i>
-            <i class="fa fa-photo fa-3x deepocean offer-icon"></i>
+            <i class="glyphicon glyphicon-edit fa-3x deepocean offer-icon"></i>
+            <i class="glyphicon glyphicon-transfer fa-3x deepocean offer-icon"></i>
+            <i class="glyphicon glyphicon-picture fa-3x deepocean offer-icon"></i>
         </div>
     </div>
     <div class="page-content container-fluid" ng-show="results.length">
@@ -69,10 +69,10 @@
                         </h4></a>
 
                         <p>{{result.get('barterDescription')}}</p>
-                        <i class="fa fa-{{result.get('seekCategory').get('icon')}} fa-3x deepocean offer-icon icon-table-size"
+                        <i class="glyphicon glyphicon-{{result.get('seekCategory').get('icon')}} fa-2x deepocean offer-icon icon-table-size"
                            title="{{result.get('seekCategory').get('name')}}"></i>
-                        <i class="fa fa-arrows-h fa-2x deepocean offer-icon icon-table-size"></i>
-                        <i class="fa fa-{{result.get('offerCategory').get('icon')}} fa-3x deepocean offer-icon icon-table-size"
+                        <i class="glyphicon glyphicon-transfer fa-2x deepocean offer-icon icon-table-size"></i>
+                        <i class="glyphicon glyphicon-{{result.get('offerCategory').get('icon')}} fa-2x deepocean offer-icon icon-table-size"
                            title="{{result.get('offerCategory').get('name')}}"></i>
                     </td>
                     <td>{{(result.get('barterRequests'))?result.get('barterRequests').length:0}}</td>

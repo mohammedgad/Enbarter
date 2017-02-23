@@ -43,21 +43,21 @@
             <div class="row">
                 <div class="col-sm-4 col-xs-12 text-center">
                     <div class="icon-outline">
-                        <span class="fa fa-hourglass"></span>
+                        <span class="glyphicon glyphicon-hourglass"></span>
                     </div>
                     <h3>Save Time</h3>
                     <p>Instantly Barter Up!</p>
                 </div>
                 <div class="col-sm-4 col-xs-12 text-center">
                     <div class="icon-outline">
-                        <span class="fa fa-money"></span>
+                        <span class="glyphicon glyphicon-usd"></span>
                     </div>
                     <h3>Save Money</h3>
                     <p>All barters for the low, low price of absolutely free.</p>
                 </div>
                 <div class="col-sm-4 col-xs-12 text-center">
                     <div class="icon-outline">
-                        <span class="fa fa-fort-awesome"></span>
+                        <span class="glyphicon glyphicon-send"></span>
                     </div>
                     <h3>Reach your Goal</h3>
                     <p>Your work gets done, and so does others'!</p>
@@ -80,10 +80,10 @@
                         <div class="col-sm-5 col-xs-12">
                             <button ng-hide="isLoggedIn()" data-target="#sign"
                                              data-toggle="modal" class="btn btn-block btn-primary"
-                                             data-loading-text="asd"><span class="fa fa-check"></span>&nbsp; Register now
+                                             data-loading-text="asd"><span class="glyphicon glyphicon-check"></span>&nbsp; Register now
                         </button>
                             <a ng-show="isLoggedIn()" href="/create_barter" class="btn btn-block btn-primary"
-                                    data-loading-text="asd"><span class="fa fa-check"></span>&nbsp; Start Barter
+                                    data-loading-text="asd"><span class="glyphicon glyphicon-check"></span>&nbsp; Start Barter
                             </a>
                         </div>
                     </div>
@@ -115,10 +115,10 @@
                     <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
                 </div>
                 <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
-                    <i class="fa fa-{{barter.get('seekCategory').get('icon')}} fa-3x deepocean offer-icon"
+                    <i class="glyphicon glyphicon-{{barter.get('seekCategory').get('icon')}} fa-3x deepocean offer-icon"
                        title="{{barter.get('seekCategory').get('name')}}"></i>
-                    <i class="fa fa-arrows-h fa-2x deepocean offer-icon"></i>
-                    <i class="fa fa-{{barter.get('offerCategory').get('icon')}} fa-3x deepocean offer-icon"
+                    <i class="glyphicon glyphicon-transfer fa-3x deepocean offer-icon"></i>
+                    <i class="glyphicon glyphicon-{{barter.get('offerCategory').get('icon')}} fa-3x deepocean offer-icon"
                        title="{{barter.get('offerCategory').get('name')}}"></i>
                 </div>
             </div>

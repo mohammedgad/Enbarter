@@ -35,8 +35,10 @@
                             <a href="{{dashboardLink}}" class="deepocean">Dashboard</a>
                         </li>
                         <li class="nav-item dropdown" ng-show="isLoggedIn()">
-                            <a id="dontClose" class="deepocean dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-                               data-delay="0" data-close-others="false"><i class="fa fa-bell" aria-hidden="true"></i>
+                            <a id="dontClose" class="deepocean dropdown-toggle" data-toggle="dropdown"
+                               data-hover="dropdown"
+                               data-delay="0" data-close-others="false"><i class="glyphicon glyphicon-bell"
+                                                                           aria-hidden="true"></i>
                                 <span
                                         class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
                             <ul class="dropdown-menu">
@@ -96,7 +98,7 @@
                         Reset
                     </button>
                     <button type="button" class="btn btn-info" ng-click="fbLogin()" data-dismiss="modal"><span
-                            class="fa fa-facebook-official"></span> Login
+                            class="">fb</span> Login
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal" data-target="#signup"
                             data-toggle="modal">Signup
