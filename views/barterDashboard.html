@@ -70,13 +70,15 @@
                 <div class="chatbox well" style="
     height: 300px;
     overflow-y: scroll;
-" scroll-glue>
-                    <p ng-repeat="m in messages"><a href="/profile/{{m.get('user').id}}"
-                                                    class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
+" id="messageBox">
+                    <p ng-repeat="m in messages" on-finish-render="ngRepeatFinished"><a
+                            href="/profile/{{m.get('user').id}}"
+                            class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
                         {{m.get('message')}}</p>
                 </div>
                 <form role="form" ng-show="result.get('barter').get('state')!='completed'" ng-submit="sendMessage()">
-                    <input type="text" id="messageInput" class="form-control" ng-model="message" ng-disabled="cantSend" required>
+                    <input type="text" id="messageInput" class="form-control" ng-model="message" ng-disabled="cantSend"
+                           required>
                     <button class="btn btn-block btn-info" ng-disabled="cantSend">Send</button>
                 </form>
             </div>

@@ -5,7 +5,7 @@ String.prototype.paddingLeft = function (paddingValue) {
     return String(paddingValue + this).slice(-paddingValue.length);
 };
 
-var app = angular.module("BarterApp", ["ngRoute", 'luegg.directives', 'ngSanitize']);
+var app = angular.module("BarterApp", ["ngRoute", 'ngSanitize']);
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
         .when("/", {
@@ -109,7 +109,18 @@ app.run(function ($rootScope, $location) {
         $rootScope.currentUrl = window.location.href || document.URL;
     });
 });
-
+app.directive('onFinishRender', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            if (scope.$last === true) {
+                $timeout(function () {
+                    scope.$emit(attr.onFinishRender);
+                });
+            }
+        }
+    }
+});
 app.controller('header', function ($scope, $location, $rootScope) {
     $rootScope.alertModal = function (message) {
         $scope.alertMessage = message;
@@ -470,7 +481,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
         },
         error: function (object, error) {
-            if ($routeParams.id)
+            if ($location.path().includes("/barter"))
                 $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
@@ -665,7 +676,10 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     var Barter = Parse.Object.extend("Barter");
     var Chat = Parse.Object.extend("Chat");
     var BarterDashboard = Parse.Object.extend("BarterDashboard");
-
+    $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+        if (!$('#messageBox').is(":hover"))
+            $("#messageBox").animate({scrollTop: document.getElementById('messageBox').scrollHeight}, 600);
+    });
     $scope.reloadChat = function () {
         var query = new Parse.Query(Chat);
         query.include("user");
@@ -751,7 +765,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             }
         },
         error: function (object, error) {
-            if ($routeParams.id)
+            if ($location.path().includes("/dashboard/barter"))
                 $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
@@ -935,7 +949,7 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
 
         },
         error: function (object, error) {
-            if (($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null))
+            if ($location.path().includes("/profile"))
                 $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
@@ -962,7 +976,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             hideSpinner();
         },
         error: function (object, error) {
-            if (Parse.User.current() ? Parse.User.current().id : null)
+            if ($location.path().includes("/profile/edit"))
                 $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
@@ -1034,7 +1048,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 
         },
         error: function (object, error) {
-            if (($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null))
+            if ($location.path().includes("/dashboard"))
                 $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
