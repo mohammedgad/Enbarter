@@ -15,15 +15,17 @@
         <form role="form" ng-submit="startBarter()">
             <div class="row">
                 <h1>About the Barter</h1>
-                <div class="form-group">
-                    <label class="control-label" for="formInput121">Barter Title</label>
-                    <input type="text" class="form-control" id="formInput121" placeholder=""
-                           ng-model="barterTitle" required>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="formInput167">Barter Brief Summary</label>
-                    <textarea ng-model="barterDescription" class="form-control" rows="3" id="formInput167"
-                              required></textarea>
+                <strong class="control-label col-sm-1 ">Barter Title</strong>
+                <div class="form-group text-center">
+                    <div>
+                        <div class="col-xs-3"><input type="text" class="form-control" id="formInput121"
+                                                     placeholder="Offer"
+                                                     ng-model="barterTitle1" required></div>
+                        <div class="col-xs-1 h5">For</div>
+                        <div class="col-xs-3"><input type="text" class="form-control" placeholder="Seek"
+                                                     ng-model="barterTitle2" required></div>
+                    </div>
+
                 </div>
             </div>
             <div class="row">
@@ -47,11 +49,12 @@
                             <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button>
                         </li>
                     </ul>
-                    <label class="control-label" for="formInput256">What are the milestones you will follow to create what you offer?
+                    <label class="control-label" for="formInput256">What are the milestones you will follow to create
+                        what you offer?
                     </label>
                     <input type="text" class="form-control" id="formInput256" ng-model="offerMilestoneItem">
                     <a class="btn btn-default"
-                            ng-click="offerMilestoneItem=addItemTo(milestones,offerMilestoneItem)">Add Milestone
+                       ng-click="offerMilestoneItem=addItemTo(milestones,offerMilestoneItem)">Add Milestone
                     </a>
 
                 </div>
@@ -68,7 +71,8 @@
                     <label class="control-label" for="formInput1954">Deadline
                     </label>
                     <input type="number" class="form-control" id="formInput1954"
-                           ng-model="offerDeadline" placeholder="The number of days you believe will need to finish what you offer" required>
+                           ng-model="offerDeadline"
+                           placeholder="The number of days you believe will need to finish what you offer" required>
                 </div>
             </div>
             <div class="row">
@@ -99,7 +103,8 @@
                     <label class="control-label" for="formInput195">Deadline
                     </label>
                     <input type="number" class="form-control" id="formInput195"
-                           ng-model="seekDeadline" placeholder="The number of days you believe will need to finish what you seek" required>
+                           ng-model="seekDeadline"
+                           placeholder="The number of days you believe will need to finish what you seek" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-success btn-lg btn-block"

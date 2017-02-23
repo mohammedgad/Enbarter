@@ -280,7 +280,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
             $rootScope.alertModal('Milestones are required!');
             return;
         }
-        var required = ['barterTitle', 'barterDescription', 'offerCategory', 'offerDescription', 'offerDeadline', 'seekCategory', 'seekDescription', 'seekDeadline'];
+        var required = ['barterTitle1', 'barterTitle2', 'offerCategory', 'offerDescription', 'offerDeadline', 'seekCategory', 'seekDescription', 'seekDeadline'];
         var errors = "";
         for (var i = 0; i < required.length; i++) {
             if (!$scope[required[i]])
@@ -296,8 +296,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
         var Category = Parse.Object.extend("Category");
         var barter = new Barter();
 
-        barter.set("barterTitle", $scope.barterTitle);
-        barter.set("barterDescription", $scope.barterDescription);
+        barter.set("barterTitle", $scope.barterTitle1 + " For " + $scope.barterTitle2);
         barter.set("offerCategory", $scope.categories[$scope.offerCategory]);
         barter.set("offerDescription", $scope.offerDescription);
         var milestones = [];
@@ -330,10 +329,10 @@ app.controller('createBarter', function ($scope, $rootScope) {
         }
         barter.set("seekDeadline", $scope.seekDeadline);
         barter.set("user", Parse.User.current());
-        var text = $scope.barterTitle + " " + $scope.barterDescription + " " + $scope.offerDescription + " " + $scope.seekDescription;
+        var text = $scope.barterTitle + " " + $scope.offerDescription + " " + $scope.seekDescription;
         var words = text.split(" ");
         barter.set("words", words);
-        barter.set("state", "created");
+        barter.set("state", "new");
 
         showSpinner();
         barter.save(null, {
@@ -377,7 +376,7 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
 
     $scope.offerCat = 'all';
     $scope.seekCat = 'all';
-    $scope.barterState = 'created';
+    $scope.barterState = 'new';
     var skip = 0;
     getCategories(function (results) {
         $scope.categories = results;
@@ -463,7 +462,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         success: function (result) {
             $scope.result = result;
             $rootScope.title = "Enbarter | " + result.get("barterTitle");
-            $rootScope.description = result.get("barterTitle") + " " + result.get("barterDescription");
+            $rootScope.description = result.get("barterTitle") + " " + result.get("offerDescription") + " " + result.get("seekDescription");
             $rootScope.keywords = $rootScope.description.replace(" ", ",");
             $scope.barterRequests = angularCopy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
