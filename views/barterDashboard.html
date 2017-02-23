@@ -76,7 +76,7 @@
                         {{m.get('message')}}</p>
                 </div>
                 <form role="form" ng-show="result.get('barter').get('state')!='completed'" ng-submit="sendMessage()">
-                    <input type="text" class="form-control" ng-model="message" ng-disabled="cantSend" required>
+                    <input type="text" id="messageInput" class="form-control" ng-model="message" ng-disabled="cantSend" required>
                     <button class="btn btn-block btn-info" ng-disabled="cantSend">Send</button>
                 </form>
             </div>

@@ -11,7 +11,7 @@
                 <a class="list-group-item">Ratings <span class="badge">{{(result.get('rateCount'))?(result.get('rate')/result.get('rateCount')| number:1):'5'}}</span></a>
                 <a ng-show="userId==result.id" class="list-group-item" href="/notifications">Notifications<span
                         class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
-                <a class="list-group-item">Barters<span class="badge">{{barters.length+result.get('barterSeeks').length}}</span></a>
+                <a class="list-group-item">Barters<span class="badge">{{barters.length}}</span></a>
                 <a ng-show="userId==result.id" class="list-group-item" href="/profile/edit">Edit Profile</a>
             </ul>
         </div>
