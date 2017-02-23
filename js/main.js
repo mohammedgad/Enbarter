@@ -700,48 +700,55 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     query.include('barter.offerCategory');
     query.include('user');
     query.include('barterUpUser');
+    query.equalTo("barter", '{__type: "Pointer", className: "Barter", objectId: "' + $routeParams.id + '"}');
 
-
-    query.get($routeParams.id, {
-        success: function (result) {
-            if (!result.get('barterUpUser') && Parse.User.current().id != result.get('user').id) {
-                // alert("Dashboard can't be accessed because there is no barter user");
-                window.location.href = "/barter/" + result.id;
-                return;
-            }
-            if (!Parse.User.current() || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
-                // alert("Error: Not allowed");
-                $location.path('/#!');
-                $scope.$apply();
-                return;
-            }
-
-            if (!result.get('barterUpMilestones') || !result.get('offerMilestones') || !result.get('barterUpMilestones').length || !result.get('offerMilestones').length) {
-                // alert("Dashboard can't be accessed because there is no Milestones");
-                window.location.href = "/barter/" + result.id;
-                return;
-            }
-            $scope.result = result;
-            $rootScope.title = "Enabrter | Dashboard";
-            $scope.offerMilestones = angularCopy(result.get('offerMilestones'));
-            $scope.barterUpMilestones = angularCopy(result.get('barterUpMilestones'));
-
-            $scope.$apply();
-            $scope.reloadChat();
-            if ($scope.result.get('barter').get('state') != 'completed') {
-                var subscription = query.subscribe();
-                subscription.on('update', function (object) {
-                    $scope.result = object;
-                    $scope.offerMilestones = angularCopy(object.get('offerMilestones'));
-                    $scope.barterUpMilestones = angularCopy(object.get('barterUpMilestones'));
+    query.find({
+        success: function (results) {
+            if (results[0]) {
+                result = results[0];
+                if (!result.get('barterUpUser') && Parse.User.current().id != result.get('user').id) {
+                    // alert("Dashboard can't be accessed because there is no barter user");
+                    window.location.href = "/barter/" + result.id;
+                    return;
+                }
+                if (!Parse.User.current() || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
+                    // alert("Error: Not allowed");
+                    $location.path('/#!');
                     $scope.$apply();
-                });
+                    return;
+                }
 
-                $rootScope.$on('$locationChangeStart', function (event, next, current) {
-                    subscription.unsubscribe();
-                });
+                if (!result.get('barterUpMilestones') || !result.get('offerMilestones') || !result.get('barterUpMilestones').length || !result.get('offerMilestones').length) {
+                    // alert("Dashboard can't be accessed because there is no Milestones");
+                    window.location.href = "/barter/" + result.id;
+                    return;
+                }
+                $scope.result = result;
+                $rootScope.title = "Enabrter | Dashboard";
+                $scope.offerMilestones = angularCopy(result.get('offerMilestones'));
+                $scope.barterUpMilestones = angularCopy(result.get('barterUpMilestones'));
+
+                $scope.$apply();
+                $scope.reloadChat();
+                if ($scope.result.get('barter').get('state') != 'completed') {
+                    var subscription = query.subscribe();
+                    subscription.on('update', function (object) {
+                        $scope.result = object;
+                        $scope.offerMilestones = angularCopy(object.get('offerMilestones'));
+                        $scope.barterUpMilestones = angularCopy(object.get('barterUpMilestones'));
+                        $scope.$apply();
+                    });
+
+                    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                        subscription.unsubscribe();
+                    });
+                }
+                hideSpinner();
+            } else {
+                $location.path('/NotFound');
+                $scope.$apply();
+                hideSpinner();
             }
-            hideSpinner();
         },
         error: function (object, error) {
             if ($routeParams.id)
@@ -906,7 +913,7 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
             var barterQuery = new Parse.Query(Barter);
             barterQuery.include('seekCategory');
             barterQuery.include('offerCategory');
-            barterQuery.equalTo("user", Parse.User.current());
+            barterQuery.equalTo("user", result);
             barterQuery.find({
                 success: function (results) {
                     $scope.barters = results;
