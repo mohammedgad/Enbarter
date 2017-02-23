@@ -686,7 +686,8 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         subscription.on('create', function (object) {
             $scope.messages.push(object);
             $scope.$apply();
-            (new Audio('beeb.mp3')).play();
+            if (object.get('user').id != Parse.User.current().id)
+                (new Audio('beeb.mp3')).play();
         });
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
@@ -914,7 +915,13 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
             barterQuery.include('seekCategory');
             barterQuery.include('offerCategory');
             barterQuery.equalTo("user", result);
-            barterQuery.find({
+            var barterQuery1 = new Parse.Query(Barter);
+            barterQuery1.include('seekCategory');
+            barterQuery1.include('offerCategory');
+            barterQuery1.equalTo("barterUpUser", result);
+
+            var mainQuery = Parse.Query.or(barterQuery, barterQuery1);
+            mainQuery.find({
                 success: function (results) {
                     $scope.barters = results;
                     $scope.$apply();
