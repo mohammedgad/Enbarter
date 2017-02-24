@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-10">
                 <div class="row">
-                    <form role="form">
+                    <form role="form" name="aForm">
                         <div class="form-group">
                             <label class="control-label" for="bioText">Bio</label>
                             <textarea class="form-control summernote" rows="3" id="bioText"></textarea>
@@ -59,8 +59,10 @@
                             </ul>
                             <label class="control-label" for="formInput295">Links to my Work</label>
                             <input type="url" class="form-control" id="formInput295" placeholder="http://example.com"
-                                   ng-model="itemLink">
-                            <button class="btn btn-default" ng-click="itemLink=addItemTo(workLinks,itemLink)">Add Link
+                                   ng-model="itemLink" name="itemLink">
+                            <button class="btn btn-default"
+                                    ng-click="itemLink=aForm.itemLink.$valid?addItemTo(workLinks,itemLink):itemLink">
+                                Add Link
                             </button>
 
                         </div>
