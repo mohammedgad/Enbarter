@@ -1,0 +1,41 @@
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+
+<script>
+
+    $.ajax({
+        type: "GET",
+        url: "http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js",
+        success: function () {
+            $('.summernote').summernote({
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['undo', ['undo', 'redo']]
+                ],
+                height: 200,
+                callbacks: {
+                    onKeydown: function (e) {
+                        var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
+                        var key = e.keyCode;
+                        allowed_keys = [8, 37, 38, 39, 40, 46]
+                        if (num > 400 && $.inArray(key, allowed_keys) == -1) {
+                            e.preventDefault();
+                            e.stopPropagation()
+                        }
+                    }, onPaste: function (e) {
+                        var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
+                        num += ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text').replace(/(<([^>]+)>)/ig, "").length;
+                        if (num > 400) {
+                            e.preventDefault();
+                            e.stopPropagation()
+                        }
+                    }
+                }
+            });
+        },
+        dataType: "script",
+        cache: true
+    });
+
+</script>

@@ -121,11 +121,16 @@ app.directive('onFinishRender', function ($timeout) {
         }
     }
 });
-app.controller('header', function ($scope, $location, $rootScope) {
+app.controller('header', function ($scope, $location, $rootScope, $sce) {
     $rootScope.alertModal = function (message) {
         $scope.alertMessage = message;
         $scope.$apply();
         $('#alertModal').modal();
+    }
+
+    $rootScope.youtubeModal = function (link) {
+        $scope.youtubeLink = $sce.trustAsResourceUrl(link);
+        $('#youtubeModal').modal();
     }
     $scope.homeLink = "/";
     $scope.browseLink = "/browse";
@@ -291,7 +296,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
             $rootScope.alertModal('Milestones are required!');
             return;
         }
-        var required = ['barterTitle1', 'barterTitle2', 'offerCategory', 'offerDescription', 'offerDeadline', 'seekCategory', 'seekDescription', 'seekDeadline'];
+        var required = ['barterTitle1', 'barterTitle2', 'offerCategory', 'offerDeadline', 'seekCategory', 'seekDeadline'];
         var errors = "";
         for (var i = 0; i < required.length; i++) {
             if (!$scope[required[i]])
@@ -309,7 +314,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
 
         barter.set("barterTitle", $scope.barterTitle1 + " For " + $scope.barterTitle2);
         barter.set("offerCategory", $scope.categories[$scope.offerCategory]);
-        barter.set("offerDescription", $scope.offerDescription);
+        barter.set("offerDescription", $('#offerDescription').summernote('code'));
         var milestones = [];
         for (var i = 0; i < $scope.milestones.length; i++) {
             milestones.push({checked: false, task: $scope.milestones[i]});
@@ -317,10 +322,10 @@ app.controller('createBarter', function ($scope, $rootScope) {
         barter.set("offerMilestones", milestones);
         barter.set("offerDeadline", $scope.offerDeadline);
         barter.set("seekCategory", $scope.categories[$scope.seekCategory]);
-        barter.set("seekDescription", $scope.seekDescription);
+        barter.set("seekDescription", $('#seekDescription').summernote('code'));
         barter.set("seekDeadline", $scope.seekDeadline);
         barter.set("user", Parse.User.current());
-        var text = $scope.barterTitle + " " + $scope.offerDescription + " " + $scope.seekDescription;
+        var text = $scope.barterTitle + " " + $('#offerDescription').summernote('code').replace(/(<([^>]+)>)/ig, "") + " " + $('#seekDescription').summernote('code').replace(/(<([^>]+)>)/ig, "");
         var words = text.split(" ");
         barter.set("words", words);
         barter.set("state", "new");
@@ -437,7 +442,7 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
 });
 
 
-app.controller('barterCtrl', function ($scope, $location, $rootScope, $routeParams) {
+app.controller('barterCtrl', function ($scope, $location, $rootScope, $routeParams, $sce) {
     $scope.result = null;
     $scope.milestones = [];
     var Barter = Parse.Object.extend("Barter");
@@ -453,7 +458,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         success: function (result) {
             $scope.result = result;
             $rootScope.title = "Enbarter | " + result.get("barterTitle");
-            $rootScope.description = result.get("barterTitle") + " " + result.get("offerDescription") + " " + result.get("seekDescription");
+            $rootScope.description = result.get("barterTitle") + " " + result.get("words");
             $rootScope.keywords = $rootScope.description.replace(" ", ",");
             $scope.barterRequests = angularCopy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
@@ -945,6 +950,13 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             $scope.result = result;
             $scope.username = result.get('username');
             $scope.bio = result.get('bio');
+            if ($('.summernote'))
+                $('.summernote').summernote('code', result.get('bio'));
+            else {
+                setTimeout(function () {
+                    $('.summernote').summernote('code', result.get('bio'));
+                }, 3000);
+            }
             if (result.get('birthday')) {
                 $scope.birthday = result.get('birthday').getFullYear().toString().paddingLeft("0000") + '-' + result.get('birthday').getMonth().toString().paddingLeft("00") + '-' + result.get('birthday').getDate().toString().paddingLeft("00");
             }
@@ -966,7 +978,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
         $scope.cantSubmit = true;
         var result = angularCopy($scope.result);
         result.set("username", $scope.username);
-        result.set("bio", $scope.bio);
+        result.set("bio", $('#bioText').summernote('code'));
         if ($scope.birthday)
             result.set("birthday", new Date($scope.birthday));
         result.set("skills", $scope.skills);

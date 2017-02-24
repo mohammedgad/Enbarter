@@ -40,8 +40,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput2565">Your Offer Description</label>
-                    <textarea class="form-control" rows="3" id="formInput2565" ng-model="offerDescription"
+                    <label class="control-label" for="offerDescription">Your Offer Description</label>
+                    <textarea class="form-control summernote" rows="3" id="offerDescription"
                               required></textarea>
                 </div>
                 <div class="form-group">
@@ -78,8 +78,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="formInput2564">Your Seek Description</label>
-                    <textarea class="form-control" rows="3" id="formInput2564" ng-model="seekDescription"
+                    <label class="control-label" for="seekDescription">Your Seek Description</label>
+                    <textarea class="form-control summernote" rows="3" id="seekDescription"
                               required></textarea>
                 </div>
                 <div class="form-group">
@@ -97,3 +97,5 @@
     </div>
 
 </div>
+
+<div ng-include="'views/textEditor.html'"></div>

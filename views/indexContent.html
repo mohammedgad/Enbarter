@@ -79,19 +79,23 @@
                     <div class="row">
                         <div class="col-sm-5 col-xs-12">
                             <button ng-hide="isLoggedIn()" data-target="#sign"
-                                             data-toggle="modal" class="btn btn-block btn-primary"
-                                             data-loading-text="asd"><span class="glyphicon glyphicon-check"></span>&nbsp; Register now
-                        </button>
+                                    data-toggle="modal" class="btn btn-block btn-primary"
+                                    data-loading-text="asd"><span class="glyphicon glyphicon-check"></span>&nbsp;
+                                Register now
+                            </button>
                             <a ng-show="isLoggedIn()" href="/create_barter" class="btn btn-block btn-primary"
-                                    data-loading-text="asd"><span class="glyphicon glyphicon-check"></span>&nbsp; Start Barter
+                               data-loading-text="asd"><span class="glyphicon glyphicon-check"></span>&nbsp; Start
+                                Barter
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-5 col-sm-offset-1">
                     <div class="embed-responsive embed-responsive-16by9">
-  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/VLHUaW0D92M"></iframe>
-</div>
+                        <div ng-click="youtubeModal('https://www.youtube.com/embed/VLHUaW0D92M')"
+                             class="ytp-thumbnail-overlay-image"
+                             style="background-image: url('youtube.png');width: 374px;height: 210px;"></div>
+                    </div>
                 </div>
             </div>
             <!--// END Row -->
@@ -132,9 +136,11 @@
                 <h1>start&nbsp;Bartering</h1>
                 <div class="col-md-7 col-md-offset-4 text-center">
                     <div class="col-md-6">
-                        <a href="/create_barter" ng-show="isLoggedIn()" class="btn btn-block btn-outline btn-outline-lg outline-light">Start a Barter</a>
+                        <a href="/create_barter" ng-show="isLoggedIn()"
+                           class="btn btn-block btn-outline btn-outline-lg outline-light">Start a Barter</a>
                         <a data-target="#sign"
-                           data-toggle="modal" ng-hide="isLoggedIn()" class="btn btn-block btn-outline btn-outline-lg outline-light">Register
+                           data-toggle="modal" ng-hide="isLoggedIn()"
+                           class="btn btn-block btn-outline btn-outline-lg outline-light">Register
                             now!</a>
                     </div>
                 </div>

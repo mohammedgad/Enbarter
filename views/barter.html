@@ -69,7 +69,7 @@
             <div class="col-md-6">
                 <div class="column-shadow div-inside bg-deepocean white">
                     <h3>I Offer</h3>
-                    <p class="white">{{result.get('offerDescription')}}</p>
+                    <p class="white" ng-bind-html="result.get('offerDescription')"></p>
                     <div ng-if="result.get('offerSampleImage')">
                         <h3>Sample</h3>
                         <a href="{{result.get('offerSampleImage').url()}}" class="thumbnail">
@@ -85,7 +85,7 @@
             <div class="col-md-6 text-primary">
                 <div class="column-shadow div-inside bg-white">
                     <h3>I Seek</h3>
-                    <p class="deepocean">{{result.get('seekDescription')}}</p>
+                    <p class="deepocean" ng-bind-html="result.get('seekDescription')"></p>
                     <div ng-if="result.get('seekSampleImage')">
                         <h3>Sample</h3>
                         <a href="{{result.get('seekSampleImage').url()}}" class="thumbnail">
@@ -242,8 +242,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <ul>
-                            <li ng-repeat="o in barterMilestones">{{o.task}}
+                        <ul class="list-group">
+                            <li ng-repeat="o in barterMilestones" class="list-group-item">{{o.task}}
                             </li>
                         </ul>
                     </div>
