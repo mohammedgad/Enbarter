@@ -1,4 +1,5 @@
 var prerender = false;
+var rootS;
 Raven.config('https://22c41b4449c04f2f9678babd3400566c@sentry.io/118691').install();
 window.prerenderReady = false;
 String.prototype.paddingLeft = function (paddingValue) {
@@ -41,7 +42,7 @@ app.config(function ($routeProvider, $locationProvider) {
 app.run(function ($rootScope, $location) {
     Parse.initialize("EnbarterApp", "Ad06@!30");
     Parse.serverURL = 'https://api.enbarterdev.ml/v1';
-
+    rootS = $rootScope;
     $rootScope.title = 'Enbarter';
     $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
     $rootScope.keywords = "Enbarter,Barter,Bartering,Skills,Exchange,Entrepreneur,Service,Help,Direct,Professional,Free,Business";
@@ -129,9 +130,11 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
     }
 
     $rootScope.youtubeModal = function (link) {
-        $scope.youtubeLink = $sce.trustAsResourceUrl(link);
+        $scope.youtubeLink = $sce.trustAsResourceUrl(link);        $scope.$apply();
+
         $('#youtubeModal').modal();
     }
+
     $scope.homeLink = "/";
     $scope.browseLink = "/browse";
     $scope.createBarterLink = "/create_barter";
@@ -1126,6 +1129,11 @@ function hideSpinner() {
         $('#divLoading').removeClass('show');
     });
     window.prerenderReady = true;
+
+    $('a[href*="embed"]').on('click', function (e) {
+        e.preventDefault();
+        rootS.youtubeModal($(this).attr('href'));
+    });
 }
 
 function showSpinner() {
