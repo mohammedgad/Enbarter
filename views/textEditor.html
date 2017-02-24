@@ -1,7 +1,7 @@
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
 
 <script>
-
+    showSpinner();
     $.ajax({
         type: "GET",
         url: "http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js",
@@ -10,7 +10,7 @@
                 toolbar: [
                     ['style', ['bold', 'italic', 'underline', 'clear']],
                     ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['insert', ['link', 'picture']],
+                    ['insert', ['link', 'picture', 'hr']],
                     ['undo', ['undo', 'redo']]
                 ],
                 height: 200,
@@ -30,6 +30,9 @@
                             e.preventDefault();
                             e.stopPropagation()
                         }
+                    },
+                    onInit: function () {
+                        hideSpinner();
                     }
                 }
             });
