@@ -951,7 +951,6 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
     query.get(Parse.User.current() ? Parse.User.current().id : null, {
         success: function (result) {
             $scope.result = result;
-            $scope.username = result.get('username');
             $scope.bio = result.get('bio');
             if ($('.summernote'))
                 $('.summernote').summernote('code', result.get('bio'));
@@ -980,7 +979,6 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
     $scope.submit = function () {
         $scope.cantSubmit = true;
         var result = angularCopy($scope.result);
-        result.set("username", $scope.username);
         result.set("bio", $('#bioText').summernote('code'));
         if ($scope.birthday)
             result.set("birthday", new Date($scope.birthday));
