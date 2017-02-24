@@ -155,12 +155,10 @@
                     </td>
                     <td>{{request.deadline}}</td>
                     <td class="table-action" ng-show="sameAccount()&&!result.get('barterUpUser')">
-                        <button type="button" class="btn btn-info" ng-click="showMilestones(request.milestone)"
+                        <button type="button" class="btn btn-info"
+                                ng-click="showMilestones(request.milestone,request,$index)"
                                 data-target="#barterMilestones" data-toggle="modal">
-                            MileStones
-                        </button>
-                        <button type="button" class="btn btn-danger" ng-click="barterUpOwner(request,$index)">Barter
-                            up
+                            Barter up
                         </button>
                     </td>
                 </tr>
@@ -246,13 +244,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <ul class="list-group">
-                            <li ng-repeat="o in barterMilestones" class="list-group-item">{{o.task}}
+                        <ul>
+                            <li ng-repeat="o in barterMilestones">{{o.task}}
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button ng-show="milestonesOffer" type="button" class="btn btn-success"
+                            ng-click="barterUpOwner(milestonesOffer,milestonesOfferIndex)" data-dismiss="modal">Accept
+                    </button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>

@@ -554,8 +554,10 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         return false;
     }
 
-    $scope.showMilestones = function (milestones) {
-        $scope.barterMilestones = milestones;
+    $scope.showMilestones = function (milestones, offer, index) {
+        $scope.barterMilestones = angularCopy(milestones);
+        $scope.milestonesOffer = offer;
+        $scope.milestonesOfferIndex = index;
     }
 
     $scope.barterUpOwner = function (request, index) {
@@ -573,6 +575,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         barterDashboard.set('barter', result);
         barterDashboard.set('offerMilestones', result.get('offerMilestones'));
         barterDashboard.set('offerDeadline', result.get('offerDeadline'));
+        showSpinner();
         barterDashboard.save({
             success: function (results) {
                 result.set("barterUpUser", {
@@ -584,7 +587,6 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                 result.set("state", "bartered");
                 result.set('barterDashboard', results);
                 $scope.barterRequests.splice(index, 1);
-                showSpinner();
                 result.save({
                     success: function (results) {
                         $scope.result = result;

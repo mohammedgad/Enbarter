@@ -62,21 +62,21 @@
                 </div>
 
                 <h3 ng-show="result.get('workLinks').length">Samples of my work</h3>
-                <ul class="list-group">
-                    <li ng-repeat="link in result.get('workLinks')"><a href="{{link}}" class="list-group-item">{{link}}</a></li>
+                <ul>
+                    <li ng-repeat="link in result.get('workLinks')"><a href="{{link}}">{{link}}</a></li>
                 </ul>
                 <h3 ng-show="result.get('skills').length">skills</h3>
-                <ul class="list-group">
-                    <li ng-repeat="skill in result.get('skills')" class="list-group-item">{{skill}}</li>
+                <ul>
+                    <li ng-repeat="skill in result.get('skills')">{{skill}}</li>
                 </ul>
                 <h3>Reviews</h3>
-                <ul class="list-group">
+                <ul>
                     <li ng-repeat="barter in barters"
-                        ng-show="barter.get('barterUpReview')&&barter.get('user').id==result.id" class="list-group-item">
+                        ng-show="barter.get('barterUpReview')&&barter.get('user').id==result.id">
                         {{barter.get('barterUpReview')}}
                     </li>
                     <li ng-repeat="barter in result.get('barterSeeks')"
-                        ng-show="barter.get('offerReview')&&barter.get('barterUpUser').id==result.id" class="list-group-item">
+                        ng-show="barter.get('offerReview')&&barter.get('barterUpUser').id==result.id">
                         {{barter.get('offerReview')}}
                     </li>
                 </ul>
