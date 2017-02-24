@@ -130,7 +130,8 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
     }
 
     $rootScope.youtubeModal = function (link) {
-        $scope.youtubeLink = $sce.trustAsResourceUrl(link);        $scope.$apply();
+        $scope.youtubeLink = $sce.trustAsResourceUrl(link);
+        $scope.$apply();
 
         $('#youtubeModal').modal();
     }
@@ -1318,9 +1319,6 @@ function downloadJSAtOnload() {
     }
 
     if (navigator.userAgent.match(/(Prerender)/) == null) {
-        var element = document.createElement("script");
-        element.src = "//s7.mylivechat.com/livechat2/livechat2.aspx?hccid=99228221&apimode=chatinline";
-        document.body.appendChild(element);
         element = document.createElement("script");
         element.src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-584fd4d3f9f8431f";
         document.body.appendChild(element);
