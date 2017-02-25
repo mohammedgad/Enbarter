@@ -36,23 +36,6 @@
                            title="{{barter.get('offerCategory').get('name')}}"></i>
                     </div>
                 </div>
-                <div ng-repeat="barter in result.get('barterSeeks')"
-                     class="row margin-top5 margin-bottom15 text-right offer offer:hover"
-                     ng-show="dashboardActive(barter)">
-                    <div class="col-md-8 text-left">
-                        <a href="/dashboard/barter/{{barter.id}}"><h3
-                                class="offer-list-item-h1">
-                            {{barter.get('barterTitle')}} <span class="badge">{{barter.get('state')}}</span></h3></a>
-                        <p class="offer-list-item-p">{{barter.get('barterDescription') | limitTo : 100 : 0}}</p>
-                    </div>
-                    <div class="col-md-4 margin-top20 deepocean text-center margin-bottom20">
-                        <i class="glyphicon glyphicon-{{barter.get('seekCategory').get('icon')}} fa-2x deepocean offer-icon"
-                           title="{{barter.get('seekCategory').get('name')}}"></i>
-                        <i class="glyphicon glyphicon-transfer fa-2x deepocean offer-icon"></i>
-                        <i class="glyphicon glyphicon-{{barter.get('offerCategory').get('icon')}} fa-2x deepocean offer-icon"
-                           title="{{barter.get('offerCategory').get('name')}}"></i>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

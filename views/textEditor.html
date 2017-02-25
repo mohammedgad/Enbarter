@@ -54,11 +54,13 @@
                     var $video;
                     if (ytMatch && ytMatch[1].length === 11) {
                         var youtubeId = ytMatch[1];
-                        $video = $('<a>').attr('href', url).attr('src', 'https://www.youtube.com/embed/' + youtubeId).html($('<img>')
-                            .attr('src', 'http://i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg'));
+                        $video = $('<a>').attr('href', url).attr('src', 'https://www.youtube.com/embed/' + youtubeId + '?autoplay=1').html($('<img>')
+                            .attr('src', 'http://i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg')).addClass('aWrapper');
+                        $video.append($('<span>').addClass('glyphicon glyphicon-play-circle playBtn'));
                     } else if (dmMatch && dmMatch[2].length) {
                         $video = $('<a>').attr('href', url).attr('src', 'https://www.dailymotion.com/embed/video/' + dmMatch[2]).html($('<img>')
-                            .attr('src', 'https://www.dailymotion.com/thumbnail/video/' + dmMatch[2]));
+                            .attr('src', 'https://www.dailymotion.com/thumbnail/video/' + dmMatch[2] + '?autoplay=1')).addClass('aWrapper');
+                        $video.append($('<span>').addClass('glyphicon glyphicon-play-circle playBtn'));
                     } else {
                         // this is not a known video link. Now what, Cat? Now what?
                         return false;
