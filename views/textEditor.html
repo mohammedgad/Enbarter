@@ -6,11 +6,152 @@
         type: "GET",
         url: "https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js",
         success: function () {
+            var VideoXDialog = function (context) {
+                var self = this;
+                var ui = $.summernote.ui;
+
+                var $editor = context.layoutInfo.editor;
+                var options = context.options;
+                var lang = options.langInfo;
+
+                this.initialize = function () {
+                    var $container = options.dialogsInBody ? $(document.body) : $editor;
+
+                    var body = '<div class="form-group row-fluid">' +
+                        '<label>' + lang.video.url + ' <small class="text-muted">(YouTube, DailyMotion)</small></label>' +
+                        '<input class="note-video-url form-control span12" type="text" />' +
+                        '</div>';
+                    var footer = '<button href="#" class="btn btn-primary note-video-btn disabled" disabled>' + lang.video.insert + '</button>';
+
+                    this.$dialog = ui.dialog({
+                        title: lang.video.insert,
+                        fade: options.dialogsFade,
+                        body: body,
+                        footer: footer
+                    }).render().appendTo($container);
+                };
+
+                this.destroy = function () {
+                    ui.hideDialog(this.$dialog);
+                    this.$dialog.remove();
+                };
+
+                this.bindEnterKey = function ($input, $btn) {
+                    $input.on('keypress', function (event) {
+                        if (event.keyCode === 13) {
+                            $btn.trigger('click');
+                        }
+                    });
+                };
+
+                this.createVideoXNode = function (url) {
+                    // video url patterns(youtube, instagram, vimeo, dailymotion, youku, mp4, ogg, webm)
+                    var ytRegExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+                    var ytMatch = url.match(ytRegExp);
+                    var dmRegExp = /.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/;
+                    var dmMatch = url.match(dmRegExp);
+
+                    var $video;
+                    if (ytMatch && ytMatch[1].length === 11) {
+                        var youtubeId = ytMatch[1];
+                        $video = $('<a>').attr('href', url).attr('src', 'https://www.youtube.com/embed/' + youtubeId).html($('<img>')
+                            .attr('src', 'http://i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg'));
+                    } else if (dmMatch && dmMatch[2].length) {
+                        $video = $('<a>').attr('href', url).attr('src', 'https://www.dailymotion.com/embed/video/' + dmMatch[2]).html($('<img>')
+                            .attr('src', 'https://www.dailymotion.com/thumbnail/video/' + dmMatch[2]));
+                    } else {
+                        // this is not a known video link. Now what, Cat? Now what?
+                        return false;
+                    }
+
+                    return $video[0];
+                };
+
+                this.show = function () {
+                    var text = context.invoke('editor.getSelectedText');
+                    context.invoke('editor.saveRange');
+                    this.showVideoXDialog(text).then(function (url) {
+                        // [workaround] hide dialog before restore range for IE range focus
+                        ui.hideDialog(self.$dialog);
+                        context.invoke('editor.restoreRange');
+
+                        // build node
+                        var $node = self.createVideoXNode(url);
+
+                        if ($node) {
+                            // insert video node
+                            context.invoke('editor.insertNode', $node);
+                        }
+                    }).fail(function () {
+                        context.invoke('editor.restoreRange');
+                    });
+                };
+
+                /**
+                 * show image dialog
+                 *
+                 * @param {jQuery} $dialog
+                 * @return {Promise}
+                 */
+                this.showVideoXDialog = function (text) {
+                    return $.Deferred(function (deferred) {
+                        var $videoUrl = self.$dialog.find('.note-video-url'),
+                            $videoBtn = self.$dialog.find('.note-video-btn');
+
+                        ui.onDialogShown(self.$dialog, function () {
+                            context.triggerEvent('dialog.shown');
+
+                            $videoUrl.val(text).on('input', function () {
+                                ui.toggleBtn($videoBtn, $videoUrl.val());
+                            }).trigger('focus');
+
+                            $videoBtn.click(function (event) {
+                                event.preventDefault();
+
+                                deferred.resolve($videoUrl.val());
+                            });
+
+                            self.bindEnterKey($videoUrl, $videoBtn);
+                        });
+
+                        ui.onDialogHidden(self.$dialog, function () {
+                            $videoUrl.off('input');
+                            $videoBtn.off('click');
+
+                            if (deferred.state() === 'pending') {
+                                deferred.reject();
+                            }
+                        });
+
+                        ui.showDialog(self.$dialog);
+                    });
+                };
+            };
+
             var charCount = function (context) {
                 var ui = $.summernote.ui;
                 var button = ui.button({
                     contents: '<i id="charCount">#0</i>',
-                    tooltip: 'Character Count'
+                    tooltip: 'Character Count',
+                    click: function () {
+                        var videoXDialog = new VideoXDialog(context);
+                        videoXDialog.initialize();
+                        videoXDialog.show();
+                    }
+                });
+                return button.render();
+            }
+
+            var videoBtn = function (context) {
+                var ui = $.summernote.ui;
+                var button = ui.button({
+                    contents: ui.icon(context.options.icons.video),
+                    tooltip: 'Video',
+                    click: function () {
+                        var videoXDialog = new VideoXDialog(context);
+                        videoXDialog.initialize();
+                        videoXDialog.show();
+                    }
                 });
                 return button.render();
             }
@@ -20,11 +161,11 @@
                     toolbar: [
                         ['style', ['bold', 'italic', 'underline', 'clear']],
                         ['font', ['strikethrough', 'superscript', 'subscript']],
-                        ['insert', $('.summernote')[0].attributes.insertTagsDisabled || ['link', 'picture', 'hr']],
+                        ['insert', $('.summernote')[0].attributes.insertTagsDisabled || ['link', 'picture', 'videoBtn', 'hr']],
                         ['undo', ['undo', 'redo']], ['fullscreen', ['fullscreen']], ['CharacterCount', ['charCount']]
 
                     ], shortcuts: false, disableDragAndDrop: true, buttons: {
-                        charCount: charCount
+                        charCount: charCount, videoBtn: videoBtn
                     },
                     height: 200, placeholder: 'write here...',
                     callbacks: {
