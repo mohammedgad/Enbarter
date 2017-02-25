@@ -70,16 +70,63 @@
                     <li ng-repeat="skill in result.get('skills')">{{skill}}</li>
                 </ul>
                 <h3>Reviews</h3>
-                <ul>
-                    <li ng-repeat="barter in barters"
-                        ng-show="barter.get('barterUpReview')&&barter.get('user').id==result.id">
-                        {{barter.get('barterUpReview')}}
-                    </li>
-                    <li ng-repeat="barter in result.get('barterSeeks')"
-                        ng-show="barter.get('offerReview')&&barter.get('barterUpUser').id==result.id">
-                        {{barter.get('offerReview')}}
-                    </li>
-                </ul>
+                <div class="list-group">
+                    <div ng-repeat="barter in barters"
+                         ng-show="(barter.get('barterUpReview')&&barter.get('user').id==result.id)">
+
+                        <div class="row margin-top5 margin-bottom15 text-right offer-profile">
+                            <div class="margin-top20 margin-bottom20">
+                                <div class="media col-md-3">
+                                    <a href="/profile/{{barter.get('barterUpUser').id}}">
+                                        <figure class="pull-left">
+                                            <img class="media-object img-rounded img-responsive margin-bottom20"
+                                                 ng-src="{{barter.get('barterUpUser').get('pic')?barter.get('barterUpUser').get('pic').url():'./images/avatar.png'}}"
+                                                 alt="">
+                                        </figure>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 margin-bottom20 text-left">
+                                    <a href="/profile/{{barter.get('barterUpUser').id}}"><h4
+                                            class="list-group-item-heading">
+                                        {{barter.get('barterUpUser').get('username')}} </h4></a>
+                                    <p class="list-group-item-text"> {{barter.get('barterUpReview')}} </p>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <h2> {{barter.get('barterUpRate')||'0'}}<br>
+                                        <small class="badge"> Rate</small>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-repeat="barter in barters"
+                         ng-show="barter.get('offerReview')&&barter.get('barterUpUser').id==result.id">
+                        <div class="row margin-top5 margin-bottom15 text-right offer-profile">
+                            <div class="margin-top20 margin-bottom20">
+                                <div class="media col-md-3">
+                                    <a href="/profile/{{barter.get('user').id}}">
+                                        <figure class="pull-left">
+                                            <img class="media-object img-rounded img-responsive margin-bottom20"
+                                                 ng-src="{{barter.get('user').get('pic')?barter.get('user').get('pic').url():'./images/avatar.png'}}"
+                                                 alt="">
+                                        </figure>
+                                    </a>
+                                </div>
+                                <div class="col-md-6 margin-bottom20 text-left">
+                                    <a href="/profile/{{barter.get('user').id}}"><h4
+                                            class="list-group-item-heading">
+                                        {{barter.get('user').get('username')}} </h4></a>
+                                    <p class="list-group-item-text"> {{barter.get('offerReview')}} </p>
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <h2> {{barter.get('offerRate')||'0'}}<br>
+                                        <small class="badge"> Rate</small>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
