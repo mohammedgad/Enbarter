@@ -46,9 +46,9 @@
 
                 this.createVideoXNode = function (url) {
                     // video url patterns(youtube, instagram, vimeo, dailymotion, youku, mp4, ogg, webm)
-                    var ytRegExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+                    var ytRegExp = /^(?:https?:\/\/)(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
                     var ytMatch = url.match(ytRegExp);
-                    var dmRegExp = /.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/;
+                    var dmRegExp = /^(?:https?:\/\/)(?:www\.)?dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/;
                     var dmMatch = url.match(dmRegExp);
 
                     var $video;
