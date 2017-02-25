@@ -31,6 +31,8 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: "views/viewProfile.html"
     }).when("/notifications", {
         templateUrl: "views/notifications.html"
+    }).when("/prices", {
+        templateUrl: "views/prices.html"
     }).otherwise({
         templateUrl: "views/404.html"
     });
@@ -134,6 +136,28 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
     $scope.createBarterLink = "/create_barter";
     $scope.dashboardLink = "/dashboard";
     $rootScope.currentUrl = window.location.href || document.URL;
+    $scope.initFBLogin = function () {
+        if (!$('#facebook-jssdk')[0]) {
+            showSpinner();
+            $.ajax({
+                type: "GET",
+                url: "https://connect.facebook.net/en_US/all.js",
+                success: function () {
+                    $(this).attr('id', 'facebook-jssdk');
+                    Parse.FacebookUtils.init({
+                        appId: '1394780183887567',
+                        status: false,
+                        cookie: true,
+                        xfbml: true
+                    });
+                    hideSpinner();
+                },
+                dataType: "script",
+                cache: true
+            });
+        }
+    }
+
     $scope.fbLogin = function () {
         showSpinner();
         Parse.FacebookUtils.logIn(null, {
@@ -1106,6 +1130,12 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
     });
 });
 
+app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    hideSpinner();
+    $rootScope.title = 'Enbarter | Prices';
+});
+
+
 app.controller('notFoundCtrl', function ($scope, $location, $rootScope, $routeParams) {
     hideSpinner();
     $rootScope.title = 'Enbarter | Not Found';
@@ -1281,28 +1311,6 @@ function angularCopy(source) {
 
 
 function downloadJSAtOnload() {
-    if (!Parse.User.current()) {
-        window.fbAsyncInit = function () {
-            Parse.FacebookUtils.init({
-                appId: '1394780183887567',
-                status: false,
-                cookie: true,
-                xfbml: true
-            });
-        };
-        (function (d, debug) {
-            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-            if (d.getElementById(id)) {
-                return;
-            }
-            js = d.createElement('script');
-            js.id = id;
-            js.async = true;
-            js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
-            ref.parentNode.insertBefore(js, ref);
-        }(document, /*debug*/ false));
-    }
-
     if (navigator.userAgent.match(/(Prerender)/) == null) {
         element = document.createElement("script");
         element.src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-584fd4d3f9f8431f";
