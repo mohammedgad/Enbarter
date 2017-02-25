@@ -36,6 +36,7 @@
                         <br>
                     </label>
                     <select id="formInput226" class="form-control" ng-model="offerCategory" required>
+                        <option value="" selected disabled>Please select Offer Category</option>
                         <option ng-repeat="cat in categories" value="{{$index}}">{{cat.get('name')}}
                     </select>
                 </div>
@@ -75,6 +76,7 @@
                         <br>
                     </label>
                     <select id="formInput206" class="form-control" ng-model="seekCategory" required>
+                        <option value="" selected disabled>Please select Seek Category</option>
                         <option ng-repeat="cat in categories" value="{{$index}}">{{cat.get('name')}}
                     </select>
                 </div>
