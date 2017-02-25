@@ -53,7 +53,8 @@
                     <label class="control-label" for="formInput256">What are the milestones you will follow to create
                         what you offer?
                     </label>
-                    <input type="text" class="form-control" id="formInput256" ng-model="offerMilestoneItem">
+                    <input type="text" class="form-control" id="formInput256" ng-model="offerMilestoneItem"
+                           ng-keypress="($event.charCode==13)? offerMilestoneItem=addItemTo(milestones,offerMilestoneItem) : return">
                     <a class="btn btn-default"
                        ng-click="offerMilestoneItem=addItemTo(milestones,offerMilestoneItem)">Add Milestone
                     </a>

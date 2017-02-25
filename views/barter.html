@@ -192,7 +192,8 @@
                             create what you offer?
                         </label>
 
-                        <input type="text" class="form-control" id="formInput256" ng-model="milestoneItem">
+                        <input type="text" class="form-control" id="formInput256" ng-model="milestoneItem"
+                               ng-keypress="($event.charCode==13)? milestoneItem=addItemTo(milestones,milestoneItem) : return">
                         <button class="btn btn-default" ng-click="milestoneItem=addItemTo(milestones,milestoneItem)">Add
                             Milestone
                         </button>

@@ -43,7 +43,8 @@
                                 </li>
                             </ul>
                             <label class="control-label" for="formInput48">Skills</label>
-                            <input type="text" class="form-control" id="formInput48" ng-model="skillItem">
+                            <input type="text" class="form-control" id="formInput48" ng-model="skillItem"
+                                   ng-keypress="($event.charCode==13)? skillItem=addItemTo(skills,skillItem) : return">
                             <button class="btn btn-default" ng-click="skillItem=addItemTo(skills,skillItem)">Add Skill
                             </button>
                         </div>
@@ -60,7 +61,8 @@
                             </ul>
                             <label class="control-label" for="formInput295">Links to my Work</label>
                             <input type="url" class="form-control" id="formInput295" placeholder="http://example.com"
-                                   ng-model="itemLink" name="itemLink">
+                                   ng-model="itemLink" name="itemLink"
+                                   ng-keypress="($event.charCode==13)? (itemLink=aForm.itemLink.$valid?addItemTo(workLinks,itemLink):itemLink) : return">
                             <button class="btn btn-default"
                                     ng-click="itemLink=aForm.itemLink.$valid?addItemTo(workLinks,itemLink):itemLink">
                                 Add Link
