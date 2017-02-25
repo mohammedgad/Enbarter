@@ -129,13 +129,6 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
         $('#alertModal').modal();
     }
 
-    $rootScope.youtubeModal = function (link) {
-        $scope.youtubeLink = $sce.trustAsResourceUrl(link);
-        $scope.$apply();
-
-        $('#youtubeModal').modal();
-    }
-
     $scope.homeLink = "/";
     $scope.browseLink = "/browse";
     $scope.createBarterLink = "/create_barter";
@@ -1125,11 +1118,6 @@ function hideSpinner() {
         $('#divLoading').removeClass('show');
     });
     window.prerenderReady = true;
-
-    $('a[href*="embed"]').on('click', function (e) {
-        e.preventDefault();
-        rootS.youtubeModal($(this).attr('href'));
-    });
 }
 
 function showSpinner() {
@@ -1352,6 +1340,11 @@ function downloadJSAtOnload() {
         hideSpinner();
         alert("You are now using enbarter in legacy mode, Kindly use enbarter mobile app to enjoy the full experience!");
     }
+
+    $(document).on("click", '[targetSrc^="http"]', function (e) {
+        e.preventDefault();
+        document.body.innerHTML += '<div class="modal fade in" id="youtubeModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: block"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" onclick="$(\'#youtubeModal\').remove()">&times;</button> </div> <div class="modal-body"> <iframe frameborder="0" src="' + $(this).attr('targetSrc') + '" width="100%" height="315" allowfullscreen></iframe> </div> </div> </div> </div>';
+    });
 }
 
 if (window.addEventListener)
