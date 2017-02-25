@@ -12,7 +12,7 @@
                     toolbar: [
                         ['style', ['bold', 'italic', 'underline', 'clear']],
                         ['font', ['strikethrough', 'superscript', 'subscript']],
-                        ['insert', $('.summernote')[0].attributes.insertTags || ['link', 'picture', 'hr']],
+                        ['insert', $('.summernote')[0].attributes.insertTagsDisabled || ['link', 'picture', 'hr']],
                         ['undo', ['undo', 'redo']], ['fullscreen', ['fullscreen']]
                     ], shortcuts: false, disableDragAndDrop: true,
                     height: 200, placeholder: 'write here...',
