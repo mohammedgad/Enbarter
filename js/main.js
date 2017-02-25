@@ -927,6 +927,8 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
             var mainQuery = Parse.Query.or(barterQuery, barterQuery1);
             mainQuery.include('seekCategory');
             mainQuery.include('offerCategory');
+            mainQuery.include('barterUpUser');
+            mainQuery.include('user');
             mainQuery.find({
                 success: function (results) {
                     $scope.barters = results;
@@ -1031,8 +1033,6 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
             var mainQuery = Parse.Query.or(barterQuery, barterQuery1);
             mainQuery.include('seekCategory');
             mainQuery.include('offerCategory');
-            mainQuery.include('barterUpUser');
-            mainQuery.include('user');
             mainQuery.find({
                 success: function (results) {
                     $scope.barters = results;
