@@ -6,39 +6,58 @@
         type: "GET",
         url: "https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js",
         success: function () {
-            $('.summernote').summernote({
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['insert', ['link', 'picture', 'hr']],
-                    ['undo', ['undo', 'redo']]
-                ],
-                height: 200,
-                callbacks: {
-                    onKeydown: function (e) {
-                        var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
-                        var key = e.keyCode;
-                        allowed_keys = [8, 37, 38, 39, 40, 46]
-                        if (num > 400 && $.inArray(key, allowed_keys) == -1) {
+            var $summernote = $('.summernote');
+            for (var i = 0; i < $summernote.length; i++) {
+                $($summernote[i]).summernote({
+                    toolbar: [
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['insert', $('.summernote')[0].attributes.insertTags || ['link', 'picture', 'hr']],
+                        ['undo', ['undo', 'redo']], ['fullscreen', ['fullscreen']]
+                    ], shortcuts: false, disableDragAndDrop: true,
+                    height: 200, placeholder: 'write here...',
+                    callbacks: {
+                        onKeydown: function (e) {
+                            var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
+                            var key = e.keyCode;
+                            allowed_keys = [8, 37, 38, 39, 40, 46]
+                            if (num > 1000 && $.inArray(key, allowed_keys) == -1) {
+                                e.preventDefault();
+                                e.stopPropagation()
+                            }
+                        }, onPaste: function (e) {
+                            var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
+                            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                            num += bufferText.replace(/(<([^>]+)>)/ig, "").length;
                             e.preventDefault();
-                            e.stopPropagation()
+                            if (num > 1000) {
+                                e.stopPropagation()
+                            } else {
+                                document.execCommand('insertText', false, bufferText);
+                            }
+                        },
+                        onInit: function () {
+                            setTimeout(function () {
+                                for (var j = 0; j < $('.summernote').length; j++) {
+                                    var initCode = $($('.summernote')[j]).attr("initCode");
+                                    if (initCode)
+                                        $($('.summernote')[j]).summernote('code', angular.element($('.summernote')).scope()[initCode]);
+                                }
+                                hideSpinner();
+                            }, 1000);
                         }
-                    }, onPaste: function (e) {
-                        var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
-                        num += ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text').replace(/(<([^>]+)>)/ig, "").length;
-                        if (num > 400) {
-                            e.preventDefault();
-                            e.stopPropagation()
-                        }
-                    },
-                    onInit: function () {
-                        hideSpinner();
                     }
-                }
-            });
+                });
+            }
         },
         dataType: "script",
         cache: true
     });
 
 </script>
+
+<style>
+    .note-btn.btn {
+        margin: 5px 0px;
+    }
+</style>

@@ -957,13 +957,6 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
         success: function (result) {
             $scope.result = result;
             $scope.bio = result.get('bio');
-            if ($('.summernote'))
-                $('.summernote').summernote('code', result.get('bio'));
-            else {
-                setTimeout(function () {
-                    $('.summernote').summernote('code', result.get('bio'));
-                }, 3000);
-            }
             if (result.get('birthday')) {
                 $scope.birthday = result.get('birthday').getFullYear().toString().paddingLeft("0000") + '-' + result.get('birthday').getMonth().toString().paddingLeft("00") + '-' + result.get('birthday').getDate().toString().paddingLeft("00");
             }
