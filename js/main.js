@@ -1343,7 +1343,7 @@ function downloadJSAtOnload() {
 
     $(document).on("click", '[targetSrc^="http"]', function (e) {
         e.preventDefault();
-        document.body.innerHTML += '<div class="modal fade in" id="youtubeModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: block"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" onclick="$(\'#youtubeModal\').remove()">&times;</button> </div> <div class="modal-body"> <iframe frameborder="0" src="' + $(this).attr('targetSrc') + '" width="100%" height="315" allowfullscreen></iframe> </div> </div> </div> </div>';
+        $("body").append('<div class="modal fade in" id="youtubeModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: block"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" onclick="$(\'#youtubeModal\').remove()">&times;</button> </div> <div class="modal-body"> <iframe frameborder="0" src="' + $(this).attr('targetSrc') + '" width="100%" height="315" allowfullscreen></iframe> </div> </div> </div> </div>');
     });
 }
 
