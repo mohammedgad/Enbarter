@@ -1348,53 +1348,42 @@ function angularCopy(source) {
 }
 
 
-function downloadJSAtOnload() {
+$(document).ready(function () {
     if (navigator.userAgent.match(/(Prerender)/) == null) {
-        element = document.createElement("script");
-        element.src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-584fd4d3f9f8431f";
-        document.body.appendChild(element);
+        setTimeout(function () {
+            $.ajax({
+                type: "GET",
+                url: "https://s7.addthis.com/js/300/addthis_widget.js",
+                dataType: "script",
+                success: function () {
+                    addthis_config = {pubid: 'ra-584fd4d3f9f8431f'};
+                    addthis.init();
+                },
+                cache: true
+            });
+            $.ajax({
+                type: "GET",
+                url: "https://www.google-analytics.com/analytics.js",
+                dataType: "script",
+                success: function () {
+                    ga('create', 'UA-88019035-1', 'auto');
+                    ga('send', 'pageview');
+                },
+                cache: true
+            });
+        }, 5000);
 
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-88019035-1', 'auto');
-        ga('send', 'pageview');
-        (function (h, o, t, j, a, r) {
-            h.hj = h.hj || function () {
-                    (h.hj.q = h.hj.q || []).push(arguments)
-                };
-            h._hjSettings = {hjid: 350598, hjsv: 5};
-            a = o.getElementsByTagName('head')[0];
-            r = o.createElement('script');
-            r.async = 1;
-            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window, document, '//static.hotjar.com/c/hotjar-', '.js?sv=');
+        if (navigator.userAgent.match(/(MSIE)/) != null) {
+            hideSpinner();
+            alert("You are now using enbarter in legacy mode, Kindly use enbarter a modern browser to enjoy the full experience!");
+        } else if (navigator.userAgent.match(/(iPhone|Android)/) != null) {
+            hideSpinner();
+            alert("You are now using enbarter in legacy mode, Kindly use enbarter mobile app to enjoy the full experience!");
+        }
+
+        $(document).on("click", 'a[src^="http"]', function (e) {
+            e.preventDefault();
+            $("body").append('<div class="modal fade in" id="youtubeModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: block"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" onclick="$(\'#youtubeModal\').remove()">&times;</button> </div> <div class="modal-body"> <iframe frameborder="0" src="' + $(this).attr('src') + '" width="100%" height="315" allowfullscreen autoplay></iframe> </div> </div> </div> </div>');
+        });
     }
-    if (navigator.userAgent.match(/(MSIE)/) != null) {
-        hideSpinner();
-        alert("You are now using enbarter in legacy mode, Kindly use enbarter a modern browser to enjoy the full experience!");
-    } else if (navigator.userAgent.match(/(iPhone|Android)/) != null) {
-        hideSpinner();
-        alert("You are now using enbarter in legacy mode, Kindly use enbarter mobile app to enjoy the full experience!");
-    }
-
-    $(document).on("click", 'a[src^="http"]', function (e) {
-        e.preventDefault();
-        $("body").append('<div class="modal fade in" id="youtubeModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: block"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" onclick="$(\'#youtubeModal\').remove()">&times;</button> </div> <div class="modal-body"> <iframe frameborder="0" src="' + $(this).attr('src') + '" width="100%" height="315" allowfullscreen autoplay></iframe> </div> </div> </div> </div>');
-    });
-}
-
-if (window.addEventListener)
-    window.addEventListener("load", downloadJSAtOnload, false);
-else if (window.attachEvent)
-    window.attachEvent("onload", downloadJSAtOnload);
-else window.onload = downloadJSAtOnload;
+});
