@@ -80,7 +80,8 @@
                         <div class="col-sm-5 col-xs-12">
                             <button ng-hide="isLoggedIn()" data-target="#sign"
                                     data-toggle="modal" class="btn btn-block btn-primary"
-                                    data-loading-text="asd"><span class="glyphicon glyphicon-check"></span>&nbsp;
+                                    data-loading-text="asd" ng-click="initFBLogin()"><span
+                                    class="glyphicon glyphicon-check"></span>&nbsp;
                                 Register now
                             </button>
                             <a ng-show="isLoggedIn()" href="/create_barter" class="btn btn-block btn-primary"
@@ -142,7 +143,7 @@
                            class="btn btn-block btn-outline btn-outline-lg outline-light">Start a Barter</a>
                         <a data-target="#sign"
                            data-toggle="modal" ng-hide="isLoggedIn()"
-                           class="btn btn-block btn-outline btn-outline-lg outline-light">Register
+                           class="btn btn-block btn-outline btn-outline-lg outline-light" ng-click="initFBLogin()">Register
                             now!</a>
                     </div>
                 </div>

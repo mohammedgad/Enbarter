@@ -111,6 +111,28 @@ app.run(function ($rootScope, $location) {
         $rootScope.statusCode = 200;
         $rootScope.currentUrl = window.location.href || document.URL;
     });
+
+    $rootScope.initFBLogin = function () {
+        if (typeof FB === 'undefined') {
+            showSpinner();
+            $.ajax({
+                type: "GET",
+                url: "https://connect.facebook.net/en_US/all.js",
+                success: function () {
+                    $(this).attr('id', 'facebook-jssdk');
+                    Parse.FacebookUtils.init({
+                        appId: '1394780183887567',
+                        status: false,
+                        cookie: true,
+                        xfbml: true
+                    });
+                    hideSpinner();
+                },
+                dataType: "script",
+                cache: true
+            });
+        }
+    }
 });
 app.directive('onFinishRender', function ($timeout) {
     return {
@@ -136,27 +158,6 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
     $scope.createBarterLink = "/create_barter";
     $scope.dashboardLink = "/dashboard";
     $rootScope.currentUrl = window.location.href || document.URL;
-    $scope.initFBLogin = function () {
-        if (!$('#facebook-jssdk')[0]) {
-            showSpinner();
-            $.ajax({
-                type: "GET",
-                url: "https://connect.facebook.net/en_US/all.js",
-                success: function () {
-                    $(this).attr('id', 'facebook-jssdk');
-                    Parse.FacebookUtils.init({
-                        appId: '1394780183887567',
-                        status: false,
-                        cookie: true,
-                        xfbml: true
-                    });
-                    hideSpinner();
-                },
-                dataType: "script",
-                cache: true
-            });
-        }
-    }
 
     $scope.fbLogin = function () {
         showSpinner();
@@ -1133,6 +1134,39 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
 app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routeParams) {
     hideSpinner();
     $rootScope.title = 'Enbarter | Prices';
+
+    function initPaddle(callback) {
+        if (typeof Paddle === 'undefined') {
+            showSpinner();
+            $.ajax({
+                type: "GET",
+                url: "https://cdn.paddle.com/paddle/paddle.js",
+                success: function () {
+                    Paddle.Setup({
+                        vendor: 17807
+                    });
+                    hideSpinner();
+                    callback();
+                },
+                dataType: "script",
+                cache: true
+            });
+        } else {
+            callback();
+        }
+    };
+    $scope.buyNow = function () {
+        initPaddle(function () {
+            Paddle.Checkout.open({
+                product: 511568,
+                email: Parse.User.current().get('email'),
+                passthrough: Parse.User.current().id,
+                successCallback: function () {
+                    $rootScope.alertModal("Thank you for your payment, The payment can take up to 72 hours to be processed and appear in your account.");
+                }
+            });
+        });
+    }
 });
 
 

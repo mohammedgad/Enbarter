@@ -1,4 +1,96 @@
 <div ng-controller="pricesCtrl">
-    <div class="container">
-    </div>
+    <section class="content-block pricing-table-2 bg-clouds" data-pg-collapsed>
+        <div class="container">
+            <div class="underlined-title">
+                <h1>Membership Prices</h1>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="tables-row">
+                    <div class="col-md-4 price-block">
+                        <div class=""></div>
+                        <header>
+                            <h2>Basic</h2>
+                            <div class="price">
+                                <span class="currency">$</span>
+                                <span class="amount">0</span>
+                                <span class="period">/ Mo</span>
+                            </div>
+                            <!-- /.price -->
+                            <a href="/create_barter" ng-show="isLoggedIn()"
+                               class="btn btn-success">Start a Barter</a>
+                            <a data-target="#sign"
+                               data-toggle="modal" ng-hide="isLoggedIn()"
+                               class="btn btn-success" ng-click="initFBLogin()">Register now!</a>
+                        </header>
+                        <ul class="features">
+                            <li>
+                                <i class="fa fa-file-o"></i> 6 Units a month
+                            </li>
+                            <li>
+                                <i class="fa fa-cloud-upload"></i> 6 Active barters limit
+                            </li>
+                        </ul>
+                        <!-- /.features -->
+                    </div>
+                    <!-- /.price-block -->
+                    <div class="col-md-4 price-block">
+                        <div class="ribbon premium"></div>
+                        <header>
+                            <h2>Premium</h2>
+                            <div class="price">
+                                <span class="currency">$</span>
+                                <span class="amount">10</span>
+                                <span class="period">/ Mo</span>
+                            </div>
+                            <!-- /.price -->
+                            <a ng-click="buyNow()" ng-show="isLoggedIn()"
+                               class="btn btn-success">Buy Now!</a>
+                            <a data-target="#sign"
+                               data-toggle="modal" ng-hide="isLoggedIn()"
+                               class="btn btn-success" ng-click="initFBLogin()">Register Now!</a>
+                        </header>
+                        <ul class="features">
+                            <li>
+                                <i class="fa fa-file-o"></i> 365 Days Free Trial
+                            </li>
+                            <li>
+                                <i class="fa fa-file-o"></i> 60 Units a month
+                            </li>
+                            <li>
+                                <i class="fa fa-cloud-upload"></i> 60 Active barters limit
+                            </li>
+                        </ul>
+                        <!-- /.features -->
+                    </div>
+                    <!-- /.price-block -->
+                    <div class="col-md-4 price-block">
+                        <div class=""></div>
+                        <header>
+                            <h2>Business</h2>
+                            <div class="price">
+                                <span class="currency">$</span>
+                                <span class="amount">??</span>
+                                <span class="period">/ Mo</span>
+                            </div>
+                            <!-- /.price -->
+                            <button type="button" class="btn btn-primary" disabled>Coming Soon!</button>
+                        </header>
+                        <ul class="features">
+                            <li>
+                                <i class="fa fa-file-o"></i> Unlimited Units a month
+                            </li>
+                            <li>
+                                <i class="fa fa-cloud-upload"></i> Unlimited Active barters limit
+                            </li>
+                        </ul>
+                        <!-- /.features -->
+                    </div>
+                    <!-- /.price-block -->
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
 </div>
