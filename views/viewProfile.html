@@ -7,7 +7,9 @@
             </a>
             <p>@{{result.get('username')}}</p>
             <ul class="list-group">
-                <a class="list-group-item">Premium <span class="glyphicon glyphicon-star"></span></a>
+                <a class="list-group-item" ng-show="result.get('membership')">{{result.get('membership').get('name')}}
+                    <span class="badge"><span
+                            class="glyphicon glyphicon-{{result.get('membership').get('icon')}}"></span></span></a>
                 <a class="list-group-item">Ratings <span class="badge">{{(result.get('rateCount'))?(result.get('rate')/result.get('rateCount')| number:1):'5'}}</span></a>
                 <a ng-show="userId==result.id" class="list-group-item" href="/notifications">Notifications<span
                         class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>

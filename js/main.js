@@ -930,6 +930,7 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
     query.include("barterSeeks");
     query.include('barterSeeks.seekCategory');
     query.include('barterSeeks.offerCategory');
+    query.include('membership');
     query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
         success: function (result) {
             $scope.result = result;
@@ -1028,6 +1029,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
     query.include("barterSeeks");
     query.include('barterSeeks.seekCategory');
     query.include('barterSeeks.offerCategory');
+    query.include('membership');
 
     query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
         success: function (result) {
@@ -1089,6 +1091,8 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
             query1.include("barterSeeks");
             query1.include('barterSeeks.seekCategory');
             query1.include('barterSeeks.offerCategory');
+            query1.include('membership');
+
             query1.get((Parse.User.current().id), {
                     success: function (result) {
                         $scope.result = result;
