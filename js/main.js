@@ -93,7 +93,7 @@ app.run(function ($rootScope, $location) {
                 $rootScope.$apply();
             },
             error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
+                errorHandler($rootScope, error);
             }
         });
     }
@@ -208,8 +208,7 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
                 hideSpinner();
             },
             error: function (user, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                hideSpinner();
+                errorHandler($rootScope, error);
             }
         });
     }
@@ -230,8 +229,7 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
                 hideSpinner();
             },
             error: function (user, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                hideSpinner();
+                errorHandler($rootScope, error);
             }
         });
     }
@@ -239,7 +237,7 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
     $scope.logout = function () {
         showSpinner();
         Parse.User.logOut().then(function () {
-            location.href = "/#!";
+            location.href = "/";
             location.reload();
             hideSpinner();
         });
@@ -255,8 +253,7 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
                     hideSpinner();
                 },
                 error: function (object, error) {
-                    $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                    hideSpinner();
+                    errorHandler($rootScope, error);
                 }
             });
         } else $rootScope.alertModal('Email is required');
@@ -279,7 +276,7 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
                 $scope.$apply();
             },
             error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
+                errorHandler($rootScope, error);
             }
         });
 
@@ -355,19 +352,14 @@ app.controller('createBarter', function ($scope, $rootScope) {
         showSpinner();
         barter.save(null, {
             success: function (barter) {
-                // $rootScope.alertModal('New object created with objectId: ' + barter.id);
                 window.location.href = "/barter/" + barter.id;
                 hideSpinner();
             },
             error: function (barter, error) {
-                $rootScope.alertModal('Failed to create new object, with error code: ' + error.message);
+                errorHandler($rootScope, error);
                 $scope.canStartDisabled = false;
                 $scope.$apply();
-                hideSpinner();
             }
-        }).then(function () {
-            $scope.canStartDisabled = false;
-            $scope.$apply();
         });
 
     }
@@ -382,7 +374,7 @@ function getCategories(successCallback) {
             successCallback(results);
         },
         error: function (object, error) {
-            $rootScope.alertModal("Error: " + error.code + " " + error.message);
+            errorHandler($rootScope, error);
         }
     });
 
@@ -435,8 +427,7 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
                 hideSpinner();
             },
             error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                hideSpinner();
+                errorHandler($rootScope, error);
             }
         });
     }
@@ -456,13 +447,11 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
                 hideSpinner();
             },
             error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                hideSpinner();
+                errorHandler($rootScope, error);
             }
         });
     }
 });
-
 
 app.controller('barterCtrl', function ($scope, $location, $rootScope, $routeParams, $sce) {
     $scope.result = null;
@@ -513,8 +502,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                     hideSpinner();
                 },
                 error: function (object, error) {
-                    $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                    hideSpinner();
+                    errorHandler($rootScope, error);
                 }
             });
         }
@@ -550,16 +538,14 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                         hideSpinner();
                     },
                     error: function (object, error) {
-                        $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                        hideSpinner();
+                        errorHandler($rootScope, error);
                     }
                 });
             },
             error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
+                errorHandler($rootScope, error);
                 result.set('barterRequests', angularCopy(barterRequests));
                 $scope.$apply();
-                hideSpinner();
             }
         });
     }
@@ -615,13 +601,11 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                         hideSpinner();
                     },
                     error: function (object, error) {
-                        $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                        hideSpinner();
+                        errorHandler($rootScope, error);
                     }
                 });
             }, error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                hideSpinner();
+                errorHandler($rootScope, error);
             }
         });
 
@@ -641,8 +625,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                 hideSpinner();
             },
             error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                hideSpinner();
+                errorHandler($rootScope, error);
             }
         });
     }
@@ -675,8 +658,7 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
             hideSpinner();
         },
         error: function (object, error) {
-            $rootScope.alertModal("Error: " + error.code + " " + error.message);
-            hideSpinner();
+            errorHandler($rootScope, error);
         }
     });
 });
@@ -703,7 +685,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 $scope.$apply();
             },
             error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
+                errorHandler($rootScope, error);
             }
         });
 
@@ -738,8 +720,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                     return;
                 }
                 if (!Parse.User.current() || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
-                    // alert("Error: Not allowed");
-                    $location.path('/#!');
+                    $location.path('/');
                     $scope.$apply();
                     return;
                 }
@@ -804,7 +785,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 error: function (object, error) {
                     $scope.cantSend = false;
                     $scope.$apply();
-                    $rootScope.alertModal("Error: " + error.code + " " + error.message);
+                    errorHandler($rootScope, error);
                 }
             });
         }
@@ -842,8 +823,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 hideSpinner();
             },
             error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                hideSpinner();
+                errorHandler($rootScope, error);
             }
         });
     };
@@ -865,8 +845,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 hideSpinner();
             },
             error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                hideSpinner();
+                errorHandler($rootScope, error);
             }
         });
     };
@@ -914,8 +893,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             success: function () {
                 hideSpinner();
             }, error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
-                hideSpinner();
+                errorHandler($rootScope, error);
             }
         });
     }
@@ -1028,10 +1006,9 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
                 location.reload();
                 hideSpinner();
             }, error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
+                errorHandler($rootScope, error);
                 $scope.cantSubmit = false;
                 $scope.$apply();
-                hideSpinner();
             }
         });
     }
@@ -1087,7 +1064,7 @@ app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $ro
 
 app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $routeParams) {
     if (!Parse.User.current()) {
-        $location.path('/#!');
+        $location.path('/');
         $scope.$apply();
     }
     var Notification = Parse.Object.extend('Notification');
@@ -1136,7 +1113,7 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
             );
         },
         error: function (object, error) {
-            $location.path('/#!');
+            $location.path('/');
             $scope.$apply();
             hideSpinner();
         }
@@ -1194,6 +1171,27 @@ function hideSpinner() {
         $('#divLoading').removeClass('show');
     });
     window.prerenderReady = true;
+}
+
+var errorsMap = {
+    100: 'It seems like you\'re offline, Please check your internet connection.'
+};
+
+function errorHandler($rootScope, error) {
+    if (typeof error === 'undefined') error = {code: 100};
+    if (error.code == 141 || errorsMap[error.code])
+        message = errorsMap[error.code] || error.message;
+    else
+        message = "Error: " + error.code + " " + error.message;
+    hideSpinner();
+    $rootScope.alertModal(message);
+    if (error.code == 209) {
+        alert("Logging out ...");
+        Parse.User.logOut().then(function () {
+            location.href = "/";
+            location.reload();
+        });
+    }
 }
 
 function showSpinner() {
