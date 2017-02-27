@@ -56,7 +56,6 @@ app.run(function ($rootScope, $location) {
     }
     if (Parse.User.current())
         $rootScope.userId = Parse.User.current().id;
-
     $rootScope.addItemTo = function (list, item) {
         if (item && list.indexOf(item) == -1)
             list.push(item);
@@ -344,9 +343,11 @@ app.controller('createBarter', function ($scope, $rootScope) {
         barter.set("seekDescription", $('#seekDescription').summernote('code'));
         barter.set("seekDeadline", $scope.seekDeadline);
         barter.set("user", Parse.User.current());
-        var text = $scope.barterTitle + " " + $('#offerDescription').summernote('code').replace(/(<([^>]+)>)/ig, "") + " " + $('#seekDescription').summernote('code').replace(/(<([^>]+)>)/ig, "");
+        var text = $('#offerDescription').summernote('code').replace(/(<([^>]+)>)/ig, "") + " " + $('#seekDescription').summernote('code').replace(/(<([^>]+)>)/ig, "");
+        barter.set('barterDescription', text);
+        text += ' ' + barter.get('barterTitle');
         var words = text.split(" ");
-        barter.set("words", words);
+        barter.set("words", new Set(words));
         barter.set("state", "new");
 
         showSpinner();
@@ -469,7 +470,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         success: function (result) {
             $scope.result = result;
             $rootScope.title = "Enbarter | " + result.get("barterTitle");
-            $rootScope.description = result.get("barterTitle") + " " + result.get("words");
+            $rootScope.description = result.get("barterDescription");
             $rootScope.keywords = $rootScope.description.replace(" ", ",");
             $scope.barterRequests = angularCopy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
@@ -1159,8 +1160,27 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
 });
 
 app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routeParams) {
-    hideSpinner();
     $rootScope.title = 'Enbarter | Prices';
+    function getUser() {
+        showSpinner();
+        var query = new Parse.Query(Parse.User);
+        query.include('paymentInfo');
+        query.get(Parse.User.current().id, {
+            success: function (result) {
+                $scope.user = result;
+                $scope.$apply();
+                hideSpinner();
+            }, error: function () {
+                hideSpinner();
+            }
+        });
+    }
+
+    if (Parse.User.current()) {
+        getUser();
+    } else {
+        hideSpinner();
+    }
 
     function initPaddle(callback) {
         if (typeof Paddle === 'undefined') {
@@ -1170,7 +1190,8 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
                 url: "https://cdn.paddle.com/paddle/paddle.js",
                 success: function () {
                     Paddle.Setup({
-                        vendor: 17807
+                        vendor: 17807,
+                        completeDetails: true
                     });
                     hideSpinner();
                     callback();
@@ -1189,7 +1210,19 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
                 email: Parse.User.current().get('email'),
                 passthrough: Parse.User.current().id,
                 successCallback: function () {
+                    getUser();
                     $rootScope.alertModal("Thank you for your payment, The payment may take up to 72 hours to be processed and appear in your account.");
+                }
+            });
+        });
+    }
+
+    $scope.openOverride = function (override) {
+        initPaddle(function () {
+            Paddle.Checkout.open({
+                override: override,
+                successCallback: function () {
+                    getUser();
                 }
             });
         });
