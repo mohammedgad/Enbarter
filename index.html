@@ -25,16 +25,8 @@
 
     <base href="/">
 
-    <link rel="icon" href="images/icon-blue-32x32.png" sizes="32x32"/>
-    <link rel="icon" href="images/icon-blue-192x192.png" sizes="192x192"/>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style-library-1.css" rel="stylesheet">
-
-    <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
         #divLoading.show {
             display: block;
@@ -48,74 +40,17 @@
             right: 0;
             top: 0;
         }
-
-        #signButton, #logoutButton {
-            margin-top: 5px;
-        }
-
-        #barter-browse-info {
-            padding-left: 30px;
-        }
-
-        .offer-profile {
-            background-color: #eee;
-            padding-left: 20px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #e8e8e8;
-        }
-
-        #carousel1 .carousel-inner > .item > a > img, .carousel-inner > .item > img, .img-responsive, .thumbnail a > img, .thumbnail > img {
-            width: 100%;
-        }
-
-        .fa-3x {
-            font-size: 3em;
-        }
-
-        .fa-2x {
-            font-size: 2em;
-        }
-
-        .seek-offer-page-content p {
-            color: white;
-        }
-
-        .playBtn {
-            font-size: 60px;
-            opacity: 0.6;
-            position: absolute;
-            right: 45%;
-            top: 51%;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
-            transition: all 500ms ease-in-out;
-        }
-
-        .aWrapper {
-            position: relative;
-        }
     </style>
+    <link href="css/bundle.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/g/html5shiv@3.7.3,respond@1.4.2"></script>
+    <![endif]-->
 </head>
 <body>
 <div id="divLoading" class="show"></div>
 <div ng-include="'views/header.html'"></div>
-
 <div ng-view></div>
-
 <div ng-include="'views/footer.html'"></div>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.32/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.32/angular-route.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.32/angular-sanitize.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raven.js/3.8.1/raven.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/parse/1.9.2/parse.min.js"></script>
-<script src="js/main.js"></script>
-
-<a href="https://www.youtube.com/watch?v=qj80AQaSi4A" target="_blank"><img
-        style="position: absolute; top: 0; left: 0; border: 0; z-index: 9999999; " src="images/ribbon_tutorial.png"
-        alt="Enbarter Tutorial" data-canonical-src="/images/ribbon_tutorial.png"></a>
+<script defer src="js/bundle.js"></script>
 </body>
 </html>

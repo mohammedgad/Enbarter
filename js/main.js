@@ -1166,7 +1166,7 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
                 email: Parse.User.current().get('email'),
                 passthrough: Parse.User.current().id,
                 successCallback: function () {
-                    $rootScope.alertModal("Thank you for your payment, The payment can take up to 72 hours to be processed and appear in your account.");
+                    $rootScope.alertModal("Thank you for your payment, The payment may take up to 72 hours to be processed and appear in your account.");
                 }
             });
         });
@@ -1371,6 +1371,8 @@ $(document).ready(function () {
                 },
                 cache: true
             });
+
+            $('body').append('<a href="https://www.youtube.com/watch?v=qj80AQaSi4A" target="_blank"><img style="position: absolute; top: 0; left: 0; border: 0; z-index: 9999999; " src="images/ribbon_tutorial.png" alt="Enbarter Tutorial" data-canonical-src="/images/ribbon_tutorial.png"></a>');
         }, 5000);
 
         if (navigator.userAgent.match(/(MSIE)/) != null) {
