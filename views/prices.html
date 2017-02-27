@@ -49,10 +49,10 @@
                                class="btn btn-success">Buy Now!</a>
                             <a data-target="#sign"
                                data-toggle="modal" ng-hide="isLoggedIn()"
-                               class="btn btn-default" ng-click="initFBLogin()">Register Now!</a>
+                               class="btn btn-success" ng-click="initFBLogin()">Register Now!</a>
                             <a ng-href="{{user.get('paymentInfo').get('receipt_url')}}"
                                ng-show="isLoggedIn()&&user.get('membership').id=='42FyZkMdNq'&&user.get('paymentInfo').get('receipt_url')"
-                               class="btn btn-success" target="_blank">Receipt</a>
+                               class="btn btn-default" target="_blank">Receipt</a>
                             <a ng-click="openOverride(user.get('paymentInfo').get('update_url'))"
                                ng-show="isLoggedIn()&&user.get('membership').id=='42FyZkMdNq'&&user.get('paymentInfo').get('update_url')"
                                class="btn btn-success">Update</a>
