@@ -1,7 +1,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
 
 <script>
-    showSpinner();
     $.ajax({
         type: "GET",
         url: "https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js",
@@ -203,7 +202,6 @@
                                     if (initCode)
                                         $($('.summernote')[j]).summernote('code', angular.element($('.summernote')).scope()[initCode]);
                                 }
-                                hideSpinner();
                             }, 1000);
                         }
                     }

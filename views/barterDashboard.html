@@ -18,8 +18,8 @@
                         <li ng-repeat="o in offerMilestones"
                             title="{{o.comment}}">
                             <input type="checkbox" ng-disabled="o.checked||!canCheck('user')"
-                                   ng-click="checkParse(o,'offerMilestones')"
-                                   data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
+                                   ng-click="$event.preventDefault();$event.stopPropagation();checkParse(o,'offerMilestones');"
+                                   ng-checked="o.checked">
                             {{o.task}}
                             <a ng-show="o.file" href="{{o.file.url()}}">File</a>
                         </li>
@@ -48,8 +48,8 @@
                     <ul>
                         <li ng-repeat="o in barterUpMilestones" title="{{o.comment}}">
                             <input type="checkbox" ng-disabled="o.checked||!canCheck('barterUpUser')"
-                                   ng-click="checkParse(o,'barterUpMilestones')"
-                                   data-toggle="modal" data-target="#milestoneCheck" ng-checked="o.checked">
+                                   ng-click="$event.preventDefault();$event.stopPropagation();checkParse(o,'barterUpMilestones');"
+                                   ng-checked="o.checked">
                             {{o.task}}
                             <a ng-show="o.file" href="{{o.file.url()}}">File</a>
                         </li>

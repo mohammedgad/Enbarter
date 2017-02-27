@@ -347,7 +347,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
         barter.set('barterDescription', text);
         text += ' ' + barter.get('barterTitle');
         var words = text.split(" ");
-        barter.set("words", new Set(words));
+        barter.set("words", jQuery.unique(words));
         barter.set("state", "new");
 
         showSpinner();
@@ -668,6 +668,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     $scope.result = null;
     $scope.messages = [];
     $scope.offerMilestones = [];
+    $scope.barterUpMilestones = [];
     var Barter = Parse.Object.extend("Barter");
     var Chat = Parse.Object.extend("Chat");
     var BarterDashboard = Parse.Object.extend("BarterDashboard");
@@ -705,8 +706,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
 
     var query = new Parse.Query(BarterDashboard);
     query.include('barter');
-    query.include('barter.seekCategory');
-    query.include('barter.offerCategory');
     query.include('user');
     query.include('barterUpUser');
     query.equalTo("barter", {__type: "Pointer", className: "Barter", objectId: $routeParams.id});
@@ -738,7 +737,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
 
                 $scope.$apply();
                 $scope.reloadChat();
-                if ($scope.result.get('barter').get('state') != 'completed') {
+                if ($scope.result.get('barter').get('state') != 'completed' && $scope.result.get('state') != 'completed') {
                     var subscription = query.subscribe();
                     subscription.on('update', function (object) {
                         $scope.result = object;
@@ -767,7 +766,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     });
 
     $scope.sendMessage = function () {
-        if ($scope.result.get('barter').get('state') != 'completed') {
+        if ($scope.result.get('barter').get('state') != 'completed' && $scope.result.get('state') != 'completed') {
             $scope.cantSend = true;
             var chat = new Chat();
             chat.set("message", $scope.message);
@@ -794,6 +793,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     $scope.checkParse = function (o, column) {
         $scope.checkParseColumn = column;
         $scope.checkParseObject = o;
+        $('#milestoneCheck').modal();
     };
 
     $scope.check = function (o, column) {
@@ -835,8 +835,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         var oppisite = (who == 'offer') ? 'barterUp' : 'offer';
         result.set(who + "Rate", $scope.rate);
         result.set(who + "Review", $scope.review);
-        if (result.get(oppisite + "Rate"))
-            result.set("state", 'completed');
 
         showSpinner();
         result.save({
