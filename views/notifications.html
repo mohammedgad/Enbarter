@@ -5,7 +5,7 @@
                 <img ng-src="{{result.get('pic')?result.get('pic').url():'./images/avatar.png'}}"
                      alt="">
             </a>
-            <p>@{{result.get('username')}}</p>
+            <p class="thumbnail break-word">@{{result.get('username')}}</p>
             <ul class="list-group">
                 <a class="list-group-item" ng-show="result.get('membership')">{{result.get('membership').get('name')}}
                     <span class="badge"><span
@@ -13,11 +13,11 @@
                 <a class="list-group-item">Ratings <span class="badge">{{(result.get('rateCount'))?(result.get('rate')/result.get('rateCount')| number:1):'5'}}</span></a>
                 <a ng-show="userId==result.id" class="list-group-item" href="/notifications">Notifications<span
                         class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
-                <a class="list-group-item">Barters<span class="badge">{{barters.length}}</span></a>
+                <a class="list-group-item">Completed<br>Barters<span
+                        class="badge">{{(completedBarters>=25)?"25+":completedBarters}}</span></a>
                 <a ng-show="userId==result.id" class="list-group-item" href="/profile/edit">Edit Profile</a>
             </ul>
         </div>
-
         <div class="col-md-10">
             <h1 class="page-title text-center">Notification</h1>
 

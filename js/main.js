@@ -471,7 +471,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $scope.result = result;
             $rootScope.title = "Enbarter | " + result.get("barterTitle");
             $rootScope.description = result.get("barterDescription");
-            $rootScope.keywords = $rootScope.description.replace(" ", ",");
+            $rootScope.keywords = result.get("words").join(",");
             $scope.barterRequests = angularCopy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             $scope.$apply();
             hideSpinner();
@@ -905,20 +905,18 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     }
 });
 
-
-app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $routeParams) {
+function profileWidget(id, $scope, path, callback, lite) {
     $scope.result = null;
     var query = new Parse.Query(Parse.User);
-    query.include("barterSeeks");
-    query.include('barterSeeks.seekCategory');
-    query.include('barterSeeks.offerCategory');
+    if (!lite) {
+        query.include("barterSeeks");
+        query.include('barterSeeks.seekCategory');
+        query.include('barterSeeks.offerCategory');
+    }
     query.include('membership');
-    query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
+    query.get(id, {
         success: function (result) {
             $scope.result = result;
-            $rootScope.title = "Enbarter | Profile: " + result.get('username');
-            $scope.$apply();
-
             var Barter = Parse.Object.extend("Barter");
             var barterQuery = new Parse.Query(Barter);
             barterQuery.equalTo("user", result);
@@ -933,58 +931,63 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
             mainQuery.find({
                 success: function (results) {
                     $scope.barters = results;
+                    var count = 0;
+                    for (var i = 0; i < results.length; i++) {
+                        if (results[i].get('state') == 'completed') count++;
+                    }
+                    $scope.completedBarters = count;
                     $scope.$apply();
-                    var relationQuery = result.relation('barterRequests').query();
-                    relationQuery.include('seekCategory');
-                    relationQuery.include('offerCategory');
-                    relationQuery.find({
-                        success: function (results) {
-                            $scope.barterRequests = results;
-                            $scope.$apply();
-                            hideSpinner();
-                        }, error: function () {
-                            hideSpinner();
-                        }
-                    });
+                    callback(result);
                 }, error: function () {
                     hideSpinner();
                 }
             });
-
         },
         error: function (object, error) {
-            if ($location.path().includes("/profile"))
+            if ($location.path().includes(path))
                 $location.path('/NotFound');
             $scope.$apply();
             hideSpinner();
         }
+    });
+}
+
+app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    profileWidget(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), $scope, "/profile", function (result) {
+        $rootScope.title = "Enbarter | " + result.get('username');
+        var relationQuery = result.relation('barterRequests').query();
+        relationQuery.include('seekCategory');
+        relationQuery.include('offerCategory');
+        relationQuery.find({
+            success: function (results) {
+                $scope.barterRequests = results;
+                $scope.$apply();
+                hideSpinner();
+            }, error: function () {
+                hideSpinner();
+            }
+        });
     });
 });
 
 app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $routeParams) {
-    $scope.result = null;
-    var query = new Parse.Query(Parse.User);
-
-    query.get(Parse.User.current() ? Parse.User.current().id : null, {
-        success: function (result) {
-            $scope.result = result;
-            $scope.bio = result.get('bio');
-            if (result.get('birthday')) {
-                $scope.birthday = result.get('birthday').getFullYear().toString().paddingLeft("0000") + '-' + result.get('birthday').getMonth().toString().paddingLeft("00") + '-' + result.get('birthday').getDate().toString().paddingLeft("00");
-            }
-            $scope.skills = result.get('skills') ? result.get('skills') : [];
-            $scope.workLinks = result.get('workLinks') ? result.get('workLinks') : [];
-            $rootScope.title = "Enbarter | Edit: " + result.get('username');
-            $scope.$apply();
-            hideSpinner();
-        },
-        error: function (object, error) {
-            if ($location.path().includes("/profile/edit"))
-                $location.path('/NotFound');
-            $scope.$apply();
-            hideSpinner();
+    var id = Parse.User.current() ? Parse.User.current().id : null;
+    if (!id) {
+        $location.path('/');
+        $scope.$apply();
+    }
+    profileWidget(id, $scope, "/profile/edit", function (result) {
+        console.log(result);
+        $scope.bio = result.get('bio');
+        if (result.get('birthday')) {
+            $scope.birthday = result.get('birthday').getFullYear().toString().paddingLeft("0000") + '-' + result.get('birthday').getMonth().toString().paddingLeft("00") + '-' + result.get('birthday').getDate().toString().paddingLeft("00");
         }
-    });
+        $scope.skills = result.get('skills') ? result.get('skills') : [];
+        $scope.workLinks = result.get('workLinks') ? result.get('workLinks') : [];
+        $rootScope.title = "Enbarter | Edit: " + result.get('username');
+        $scope.$apply();
+        hideSpinner();
+    }, true);
 
     $scope.submit = function () {
         $scope.cantSubmit = true;
@@ -1054,44 +1057,16 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
 });
 
 app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $routeParams) {
-    $scope.result = null;
-    var query = new Parse.Query(Parse.User);
-    query.include('membership');
-
-    query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
-        success: function (result) {
-            $scope.result = result;
-            $rootScope.title = "Enbarter | Dashboard";
-            $scope.$apply();
-
-            var Barter = Parse.Object.extend("Barter");
-            var barterQuery = new Parse.Query(Barter);
-            barterQuery.equalTo("user", Parse.User.current());
-            var barterQuery1 = new Parse.Query(Barter);
-            barterQuery1.equalTo("barterUpUser", Parse.User.current());
-
-            var mainQuery = Parse.Query.or(barterQuery, barterQuery1);
-            mainQuery.include('seekCategory');
-            mainQuery.include('offerCategory');
-            mainQuery.find({
-                success: function (results) {
-                    $scope.barters = results;
-                    $scope.$apply();
-                    hideSpinner();
-                }, error: function () {
-                    hideSpinner();
-                }
-            });
-
-        },
-        error: function (object, error) {
-            if ($location.path().includes("/dashboard"))
-                $location.path('/NotFound');
-            $scope.$apply();
-            hideSpinner();
-        }
-    });
-
+    var id = ($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null);
+    if (!id) {
+        $location.path('/');
+        $scope.$apply();
+    }
+    profileWidget(id, $scope, "/dashboard", function (results) {
+        $rootScope.title = "Enbarter | Dashboard";
+        $scope.$apply();
+        hideSpinner();
+    }, true);
 
     $scope.dashboardActive = function (barter) {
         if ((barter && barter.get('barterUpUser')) && (Parse.User.current().id == barter.get('user').id || Parse.User.current().id == barter.get('barterUpUser').id))
@@ -1106,57 +1081,25 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
         $location.path('/');
         $scope.$apply();
     }
-    var Notification = Parse.Object.extend('Notification');
-    var query = new Parse.Query(Notification);
-    query.descending("createdAt");
-    query.equalTo("user", Parse.User.current());
-    query.find({
-        success: function (results) {
-            $scope.results = results;
-            $scope.$apply();
-            var query1 = new Parse.Query(Parse.User);
-            query1.include('membership');
-
-            query1.get((Parse.User.current().id), {
-                    success: function (result) {
-                        $scope.result = result;
-                        $rootScope.title = "Enbarter | Notifications";
-                        $scope.$apply();
-
-
-                        var Barter = Parse.Object.extend("Barter");
-                        var barterQuery = new Parse.Query(Barter);
-                        barterQuery.equalTo("user", Parse.User.current());
-                        var barterQuery1 = new Parse.Query(Barter);
-                        barterQuery1.equalTo("barterUpUser", Parse.User.current());
-
-                        var mainQuery = Parse.Query.or(barterQuery, barterQuery1);
-                        mainQuery.include('seekCategory');
-                        mainQuery.include('offerCategory');
-                        mainQuery.find({
-                            success: function (results) {
-                                $scope.barters = results;
-                                $scope.$apply();
-                                hideSpinner();
-                            }, error: function () {
-                                hideSpinner();
-                            }
-                        });
-
-                    },
-                    error: function (object, error) {
-                        $scope.$apply();
-                        hideSpinner();
-                    }
-                }
-            );
-        },
-        error: function (object, error) {
-            $location.path('/');
-            $scope.$apply();
-            hideSpinner();
-        }
-    });
+    $rootScope.title = "Enbarter | Notifications";
+    profileWidget(Parse.User.current().id, $scope, '/notifications', function (result) {
+        var Notification = Parse.Object.extend('Notification');
+        var query = new Parse.Query(Notification);
+        query.descending("createdAt");
+        query.equalTo("user", Parse.User.current());
+        query.find({
+            success: function (results) {
+                $scope.results = results;
+                $scope.$apply();
+                hideSpinner();
+            },
+            error: function (object, error) {
+                $location.path('/');
+                $scope.$apply();
+                hideSpinner();
+            }
+        });
+    }, true);
 });
 
 app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routeParams) {
