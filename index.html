@@ -2,12 +2,12 @@
 <html lang="en" style="height:100%;" ng-app="BarterApp">
 <head>
     <meta charset="utf-8">
-    <title ng-bind="title">Enbarter</title>
+    <title ng-bind="title | limitTo : 60">Enbarter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="{{keywords}}"/>
+    <meta name="keywords" content="{{keywords | limitTo : 200}}"/>
     <meta name="description" content="{{description | limitTo : 160}}"/>
     <meta name="prerender-status-code" content="{{statusCode}}">
-    <meta property="og:title" content="{{title}}"/>
+    <meta property="og:title" content="{{title | limitTo : 70}}"/>
     <meta property="og:type" content="website"/>
     <meta property="og:description" content="{{description | limitTo : 300}}"/>
     <meta property="og:image" content="http://enbarter.com/logo-blue.png"/>
@@ -17,8 +17,11 @@
     <meta property="fb:app_id" content="1394780183887567"/>
     <meta name="twitter:image" content="http://enbarter.com/logo-blue.png">
     <meta name="twitter:creator" content="@enbarter">
-    <meta name="twitter:title" content="{{title}}">
+    <meta name="twitter:title" content="{{title | limitTo : 70}}">
     <meta name="twitter:description" content="{{description | limitTo : 200}}">
+	<meta itemprop="name" content="{{title | limitTo : 70}}">
+	<meta itemprop="description" content="{{description | limitTo : 300}}">
+	<meta itemprop="image" content="http://enbarter.com/logo-blue.png">
     <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
     <meta name="fragment" content="!">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

@@ -26,13 +26,18 @@
                             <input type="date" class="form-control" id="formInput397"
                                    ng-model="birthday">
                         </div>
-                        <div class="form-group">
-                            <a href="#" class="thumbnail">
-                                <img ng-src="{{result.get('pic')?result.get('pic').url():'./images/avatar.png'}}"
-                                     alt="">
-                            </a>
-                            <label class="control-label" for="exampleInputFile1">Upload your Avatar</label>
-                            <input type="file" class="form-control" id="exampleInputFile1" ng-model="avatar">
+                        <div class="form-group row">
+                            <div class="col-md-2">
+                                <div class="thumbnail">
+                                    <img width="128" id="avatarImg"
+                                         ng-src="{{result.get('pic')?result.get('pic').url():'./images/avatar.png'}}"
+                                         alt="" onclick="$('#exampleInputFile1').click()">
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label class="control-label" for="exampleInputFile1">Upload your
+                                    Avatar</label>
+                                <input type="file" class="form-control" id="exampleInputFile1"></div>
                         </div>
                         <div class="form-group">
                             <ul>
@@ -76,7 +81,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <div ng-include="'views/textEditor.html'"></div>

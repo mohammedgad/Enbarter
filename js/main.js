@@ -993,11 +993,8 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             result.set("birthday", new Date($scope.birthday));
         result.set("skills", $scope.skills);
         result.set("workLinks", $scope.workLinks);
-        fileUploadControl = $("#exampleInputFile1")[0];
-        if (fileUploadControl.files.length > 0) {
-            var file = fileUploadControl.files[0];
-            var name = "photo1.jpg";
-            var parseFile = new Parse.File(name, file);
+        if ($("#exampleInputFile1")[0].files.length > 0) {
+            var parseFile = new Parse.File("photo1.jpg", {base64: document.getElementById('avatarImg').src});
             result.set("pic", parseFile);
         }
         showSpinner();
@@ -1012,6 +1009,47 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             }
         });
     }
+
+    $(document).ready(function () {
+        $("#exampleInputFile1").change(function () {
+            var filesToUpload = document.getElementById('exampleInputFile1').files;
+            var file = filesToUpload[0];
+
+            var img = document.createElement("img");
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                img.src = e.target.result;
+
+                var canvas = document.createElement("canvas");
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+
+                var MAX_WIDTH = 256;
+                var MAX_HEIGHT = 256;
+                var width = img.width;
+                var height = img.height;
+
+                if (width > height) {
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+                } else {
+                    if (height > MAX_HEIGHT) {
+                        width *= MAX_HEIGHT / height;
+                        height = MAX_HEIGHT;
+                    }
+                }
+                canvas.width = width;
+                canvas.height = height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, width, height);
+
+                document.getElementById('avatarImg').src = canvas.toDataURL("image/png", 0.7);
+            }
+            reader.readAsDataURL(file);
+        });
+    });
 });
 
 app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $routeParams) {
