@@ -739,13 +739,18 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 $scope.reloadChat();
                 if ($scope.result.get('barter').get('state') != 'completed' && $scope.result.get('state') != 'completed') {
                     var subscription = query.subscribe();
-                    subscription.on('update', function (object) {
-                        $scope.result = object;
-                        $scope.offerMilestones = angularCopy(object.get('offerMilestones'));
-                        $scope.barterUpMilestones = angularCopy(object.get('barterUpMilestones'));
-                        $scope.$apply();
-                    });
-
+                    if ($scope.result.get('user').id == Parse.User.current().id)
+                        subscription.on('update', function (object) {
+                            $scope.result = object;
+                            $scope.barterUpMilestones = angularCopy(object.get('barterUpMilestones'));
+                            $scope.$apply();
+                        });
+                    if ($scope.result.get('barterUpUser').id == Parse.User.current().id)
+                        subscription.on('update', function (object) {
+                            $scope.result = object;
+                            $scope.offerMilestones = angularCopy(object.get('offerMilestones'));
+                            $scope.$apply();
+                        });
                     $rootScope.$on('$locationChangeStart', function (event, next, current) {
                         subscription.unsubscribe();
                     });
@@ -832,15 +837,12 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     $scope.closeAndRate = function () {
         var result = angularCopy($scope.result.get('barter'));
         var who = (Parse.User.current().id == result.get('user').id) ? "offer" : "barterUp";
-        var oppisite = (who == 'offer') ? 'barterUp' : 'offer';
         result.set(who + "Rate", $scope.rate);
         result.set(who + "Review", $scope.review);
 
         showSpinner();
         result.save({
             success: function (results) {
-                $scope.result.set('barter', results);
-                $scope.$apply();
                 hideSpinner();
             },
             error: function (object, error) {
