@@ -39,7 +39,8 @@
                         Deadline</h4>
                     <button type="button" class="btn btn-success btn-lg btn-block"
                             ng-hide="sameAccount()||bartered()||result.get('barterUpUser')||result.get('state')!='new'"
-                            data-target="{{isLoggedIn()?'#barterup':'#sign'}}" data-toggle="modal"  ng-click="!isLoggedIn()&&initFBLogin()">BARTER UP
+                            data-target="{{isLoggedIn()?'#barterup':'#sign'}}" data-toggle="modal"
+                            ng-click="!isLoggedIn()&&initFBLogin()">BARTER UP
                     </button>
                     <button type="button" class="btn btn-info btn-lg btn-block disabled"
                             ng-show="!sameAccount()&&(result.get('barterUpUser')||bartered())&&!result.get('state')=='completed'"
@@ -55,7 +56,8 @@
                     >DISABLED
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()" data-toggle="modal"
-                            data-target="{{isLoggedIn()?'#reportBarter':'#sign'}}"  ng-click="!isLoggedIn()&&initFBLogin()">Report barter
+                            data-target="{{isLoggedIn()?'#reportBarter':'#sign'}}"
+                            ng-click="!isLoggedIn()&&initFBLogin()">Report barter
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" ng-click="disable()"
                             ng-hide="!sameAccount()||result.get('state')=='disabled'||result.get('state')=='bartered'">

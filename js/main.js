@@ -535,27 +535,30 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             user: Parse.User.current()
         };
         var result = angularCopy($scope.result);
+        var barterRequests = result.get('barterRequests');
         result.add("barterRequests", request);
-
-        var user = Parse.User.current();
-        user.addUnique("barterSeeks", result);
         showSpinner();
-        user.save({
-            success: function (results) {
-            },
-            error: function (object, error) {
-                $rootScope.alertModal("Error: " + error.code + " " + error.message);
-            }
-        });
         result.save({
             success: function (results) {
-                $scope.result = results;
-                $scope.barterRequests.push(angularCopy(request));
-                $scope.$apply();
-                hideSpinner();
+                var relation = Parse.User.current().relation("barterRequests");
+                relation.add(results);
+                Parse.User.current().save({
+                    success: function () {
+                        $scope.result = results;
+                        $scope.barterRequests.push(angularCopy(request));
+                        $scope.$apply();
+                        hideSpinner();
+                    },
+                    error: function (object, error) {
+                        $rootScope.alertModal("Error: " + error.code + " " + error.message);
+                        hideSpinner();
+                    }
+                });
             },
             error: function (object, error) {
                 $rootScope.alertModal("Error: " + error.code + " " + error.message);
+                result.set('barterRequests', angularCopy(barterRequests));
+                $scope.$apply();
                 hideSpinner();
             }
         });
@@ -604,10 +607,10 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                 result.set("barterUpDeadline", request.deadline);
                 result.set("state", "bartered");
                 result.set('barterDashboard', results);
-                $scope.barterRequests.splice(index, 1);
                 result.save({
                     success: function (results) {
-                        $scope.result = result;
+                        $scope.result = angularCopy(results);
+                        $scope.barterRequests.splice(index, 1);
                         $scope.$apply();
                         hideSpinner();
                     },
@@ -952,7 +955,18 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
                 success: function (results) {
                     $scope.barters = results;
                     $scope.$apply();
-                    hideSpinner();
+                    var relationQuery = result.relation('barterRequests').query();
+                    relationQuery.include('seekCategory');
+                    relationQuery.include('offerCategory');
+                    relationQuery.find({
+                        success: function (results) {
+                            $scope.barterRequests = results;
+                            $scope.$apply();
+                            hideSpinner();
+                        }, error: function () {
+                            hideSpinner();
+                        }
+                    });
                 }, error: function () {
                     hideSpinner();
                 }
@@ -1026,9 +1040,6 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
 app.controller('viewDashboardCtrl', function ($scope, $location, $rootScope, $routeParams) {
     $scope.result = null;
     var query = new Parse.Query(Parse.User);
-    query.include("barterSeeks");
-    query.include('barterSeeks.seekCategory');
-    query.include('barterSeeks.offerCategory');
     query.include('membership');
 
     query.get(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), {
@@ -1088,9 +1099,6 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
             $scope.results = results;
             $scope.$apply();
             var query1 = new Parse.Query(Parse.User);
-            query1.include("barterSeeks");
-            query1.include('barterSeeks.seekCategory');
-            query1.include('barterSeeks.offerCategory');
             query1.include('membership');
 
             query1.get((Parse.User.current().id), {

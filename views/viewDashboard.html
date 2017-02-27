@@ -20,7 +20,7 @@
         <div style="padding-left: 30px;" class="col-md-8 ">
             <div class="row">
                 <h3>Dashboard</h3>
-                <h3 ng-show="!barters.length&&!result.get('barterSeeks').length">Nothing to show!</h3>
+                <h3 ng-show="!barters.length">Nothing to show!</h3>
                 <div ng-repeat="barter in barters"
                      class="row margin-top5 margin-bottom15 text-right offer-profile offer:hover"
                      ng-show="dashboardActive(barter)">
