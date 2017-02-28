@@ -36,10 +36,11 @@
                                 <span
                                         class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
                             <ul class="dropdown-menu">
-                                <li ng-repeat="result in notifications" class="{{!result.get('read')?'bg-black':''}}"><a
+                                <li ng-repeat="result in notifications"
+                                    class="noMargin {{!result.get('read')?'bg-black':''}}"><a
                                         ng-click="notificationCheck(result)">{{result.get('description')}}</a>
                                 </li>
-                                <li class="divider"></li>
+                                <li class="divider" style="margin-top: 0px"></li>
                                 <li class=""><a
                                         href="/notifications">More Notifications</a>
                                 </li>
@@ -52,7 +53,7 @@
                             </button>
                         </li>
                         <li class="nav-item dropdown " ng-if="isLoggedIn()">
-                            <a href="#" class="deepocean dropdown-toggle" data-toggle="dropdown">
+                            <a class="deepocean dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-cog"></span> 
                                 <span class="glyphicon glyphicon-chevron-down"></span>
                             </a>
@@ -67,10 +68,12 @@
                                                 </span>
                                             </div>
                                             <div class="col-lg-7 text-center">
-                                                <p class="text-left text-center"><strong>{{currentUser.get('username') | limitTo :
+                                                <p class="text-left text-center"><strong>{{currentUser.get('username') |
+                                                    limitTo :
                                                     30}}</strong>
                                                 </p>
-                                                <a class="deepocean bg-white-hover clouds-hover" href="/profile/{{currentUser.id}}"
+                                                <a class="deepocean bg-white-hover clouds-hover"
+                                                   href="/profile/{{currentUser.id}}"
                                                    style="padding: 0px 5px">Profile</a>
                                                 <small>|</small>
                                                 <a
@@ -98,7 +101,7 @@
                                 <li>
                                     <div class="row">
                                         <div class="col-lg-12 text-center">
-                                                <a ng-click="logout()" class="btn-block btn-danger">LOGOUT</a>
+                                            <a ng-click="logout()" class="btn-block btn-danger">LOGOUT</a>
                                         </div>
                                     </div>
                                 </li>
