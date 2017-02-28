@@ -129,20 +129,6 @@
                 };
             };
 
-            var charCount = function (context) {
-                var ui = $.summernote.ui;
-                var button = ui.button({
-                    contents: '<i id="charCount">#0</i>',
-                    tooltip: 'Character Count',
-                    click: function () {
-                        var videoXDialog = new VideoXDialog(context);
-                        videoXDialog.initialize();
-                        videoXDialog.show();
-                    }
-                });
-                return button.render();
-            }
-
             var videoBtn = function (context) {
                 var ui = $.summernote.ui;
                 var button = ui.button({
@@ -166,33 +152,57 @@
                         ['undo', ['undo', 'redo']], ['fullscreen', ['fullscreen']], ['CharacterCount', ['charCount']]
 
                     ], shortcuts: false, disableDragAndDrop: true, buttons: {
-                        charCount: charCount, videoBtn: videoBtn
+                        charCount: function (context) {
+                            var ui = $.summernote.ui;
+                            var button = ui.button({
+                                contents: '<i id="charCount' + i + '">#Character Count</i>',
+                                tooltip: 'Character Count',
+                                click: function () {
+                                    var videoXDialog = new VideoXDialog(context);
+                                    videoXDialog.initialize();
+                                    videoXDialog.show();
+                                }
+                            });
+                            return button.render();
+                        }, videoBtn: videoBtn
                     },
                     height: 200, placeholder: 'write here...',
                     callbacks: {
                         onKeydown: function (e) {
+                            var count = '#charCount';
+                            for (var i = 0; i < $('.summernote').length; i++) {
+                                if ($('.summernote').eq(i).summernote('code') == e.currentTarget.innerHTML) {
+                                    count += i;
+                                    break;
+                                }
+                            }
                             var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
-                            $('#charCount').text('#' + num);
+                            $(count).text('#' + num);
                             var key = e.keyCode;
                             allowed_keys = [8, 37, 38, 39, 40, 46]
                             if (num > 1000 && $.inArray(key, allowed_keys) == -1) {
                                 e.preventDefault();
                                 e.stopPropagation()
-                                $('#charCount').text("Exceeding the allowed character limit");
+                                $(count).text("Exceeding the allowed character limit");
                             }
                         }, onPaste: function (e) {
                             e.preventDefault();
                             e.stopPropagation()
-
+                            var count = '#charCount';
+                            for (var i = 0; i < $('.summernote').length; i++) {
+                                if ($('.summernote').eq(i).summernote('code') == e.currentTarget.innerHTML) {
+                                    count += i;
+                                    break;
+                                }
+                            }
                             var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
                             var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
                             num += bufferText.replace(/(<([^>]+)>)/ig, "").length;
-                            console.log(num);
                             if (num < 1000) {
                                 document.execCommand('insertText', false, bufferText);
-                                $('#charCount').text('#' + num);
+                                $(count).text('#' + num);
                             } else {
-                                $('#charCount').text("Paste content exceeding the allowed character limit");
+                                $(count).text("Paste content exceeding the allowed character limit");
                             }
                         },
                         onInit: function () {
