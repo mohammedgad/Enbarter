@@ -156,8 +156,8 @@ app.directive('starRating', function starRating() {
         '  </li>' +
         '</ul>',
         scope: {
-            ratingValue: '=ngModel',
-            ratingStatic: '=ngRate',
+            ratingValue: '=?ngModel',
+            ratingStatic: '=?ngRate',
             max: '=?',
             readonly: '=?'
         },
@@ -172,17 +172,17 @@ app.directive('starRating', function starRating() {
                         filled: i < rate
                     });
                 }
-            };
+            }
+
             scope.toggle = function (index) {
                 if (scope.readonly == undefined || scope.readonly === false) {
                     scope.ratingValue = index + 1;
                     updateStars(scope.ratingValue);
                 }
             };
-            if (scope.ratingValue == undefined) {
+            if (scope.ratingValue == undefined)
                 scope.ratingValue = 0;
-                updateStars(scope.ratingValue);
-            }
+            updateStars(scope.ratingValue);
             if (scope.ratingStatic != undefined)
                 updateStars(scope.ratingStatic);
 
