@@ -5,7 +5,7 @@
                 <img ng-src="{{result.get('pic')?result.get('pic').url():'./images/avatar.png'}}"
                      alt="">
             </a>
-            <p class="thumbnail break-word">@{{result.get('username')}}</p>
+            <p class="thumbnail break-word">{{result.get('username')}}</p>
             <ul class="list-group">
                 <a class="list-group-item" ng-show="result.get('membership')">{{result.get('membership').get('name')}}
                     <span class="badge"><span
@@ -91,7 +91,7 @@
                 <ul>
                     <li ng-repeat="skill in result.get('skills')">{{skill}}</li>
                 </ul>
-                <h3>Reviews</h3>
+                <h3 ng-show="barters.length">Reviews</h3>
                 <div class="list-group">
                     <div ng-repeat="barter in barters"
                          ng-show="(barter.get('barterUpReview')&&barter.get('user').id==result.id)">
@@ -114,8 +114,9 @@
                                     <p class="list-group-item-text"> {{barter.get('barterUpReview')}} </p>
                                 </div>
                                 <div class="col-md-3 text-center">
-                                    <h2> {{barter.get('barterUpRate')||'0'}}<br>
-                                        <small class="badge"> Rate</small>
+                                    <h2>
+                                        <div star-rating ng-rate="barter.get('barterUpRate')" max="5"
+                                             readonly="true"></div>
                                     </h2>
                                 </div>
                             </div>
@@ -141,8 +142,9 @@
                                     <p class="list-group-item-text"> {{barter.get('offerReview')}} </p>
                                 </div>
                                 <div class="col-md-3 text-center">
-                                    <h2> {{barter.get('offerRate')||'0'}}<br>
-                                        <small class="badge"> Rate</small>
+                                    <h2>
+                                        <div star-rating ng-rate="barter.get('offerRate')" max="5"
+                                             readonly="true"></div>
                                     </h2>
                                 </div>
                             </div>

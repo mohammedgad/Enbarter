@@ -80,7 +80,7 @@
                       ng-show="result.get('barter').get('state')!='completed'&&result.get('state') != 'completed'"
                       ng-submit="sendMessage()">
                     <input type="text" id="messageInput" class="form-control" ng-model="message" ng-disabled="cantSend"
-                           required>
+                           required autocomplete="off">
                     <button class="btn btn-block btn-info" ng-disabled="cantSend">Send</button>
                 </form>
             </div>
@@ -95,10 +95,9 @@
                     <h4 class="modal-title">Close & Rate</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label" for="formInput1954">Rate</label>
-                        <input type="number" class="form-control" id="formInput1954"
-                               ng-model="rate" min="0" max="5" required>
+                    <div class="form-group font-large">
+                        <div class="text-center" star-rating ng-model="rate" max="5"
+                             id="formInput1954"></div>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="formInput256">Review</label>
