@@ -5656,3 +5656,9 @@ Version: 1.0
     padding: 10px;
     padding-bottom: 0px;
 }
+
+@media screen and (max-width: 800px) {
+    .navbar-login {
+        width: inherit;
+    }
+}

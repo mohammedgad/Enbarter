@@ -67,15 +67,15 @@
                                                 </span>
                                             </div>
                                             <div class="col-lg-7 text-center">
-                                                <p class="text-left"><strong>{{currentUser.get('username') | limitTo :
+                                                <p class="text-left text-center"><strong>{{currentUser.get('username') | limitTo :
                                                     30}}</strong>
                                                 </p>
-                                                <a class="deepocean bg-white-hover" href="/profile/{{currentUser.id}}"
+                                                <a class="deepocean bg-white-hover clouds-hover" href="/profile/{{currentUser.id}}"
                                                    style="padding: 0px 5px">Profile</a>
                                                 <small>|</small>
                                                 <a
-                                                        class="deepocean bg-white-hover"
-                                                        href="/profile/{{currentUser.id}}"
+                                                        class="deepocean bg-white-hover clouds-hover"
+                                                        href="/profile/edit"
                                                         style="padding: 0px 5px">Edit</a>
                                             </div>
                                         </div>
@@ -85,11 +85,11 @@
                                 <li>
                                     <div class="row">
                                         <div class="col-lg-11 text-center">
-                                            <a href="/create_barter" class="deepocean bg-white-hover"
+                                            <a href="/create_barter" class="deepocean bg-white-hover clouds-hover"
                                                style="padding: 0px 5px">Create
                                                 Barter</a>
                                             <small>|</small>
-                                            <a href="/dashboard" class="deepocean bg-white-hover"
+                                            <a href="/dashboard" class="deepocean bg-white-hover clouds-hover"
                                                style="padding: 0px 5px">dashboard</a>
                                         </div>
                                     </div>
@@ -97,10 +97,8 @@
                                 <li class="divider"></li>
                                 <li>
                                     <div class="row">
-                                        <div class="col-lg-11">
-                                            <p>
-                                                <a ng-click="logout()" class="btn btn-danger btn-block">LOGOUT</a>
-                                            </p>
+                                        <div class="col-lg-12 text-center">
+                                                <a ng-click="logout()" class="btn-block btn-danger">LOGOUT</a>
                                         </div>
                                     </div>
                                 </li>
