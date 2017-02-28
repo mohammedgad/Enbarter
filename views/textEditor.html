@@ -156,12 +156,7 @@
                             var ui = $.summernote.ui;
                             var button = ui.button({
                                 contents: '<i id="charCount' + i + '">#Character Count</i>',
-                                tooltip: 'Character Count',
-                                click: function () {
-                                    var videoXDialog = new VideoXDialog(context);
-                                    videoXDialog.initialize();
-                                    videoXDialog.show();
-                                }
+                                tooltip: 'Character Count'
                             });
                             return button.render();
                         }, videoBtn: videoBtn
