@@ -177,12 +177,12 @@
                             allowed_keys = [8, 37, 38, 39, 40, 46]
                             if (num > 1000 && $.inArray(key, allowed_keys) == -1) {
                                 e.preventDefault();
-                                e.stopPropagation()
+                                e.stopPropagation();
                                 $(count).text("Exceeding the allowed character limit");
                             }
                         }, onPaste: function (e) {
                             e.preventDefault();
-                            e.stopPropagation()
+                            e.stopPropagation();
                             var count = '#charCount';
                             for (var i = 0; i < $('.summernote').length; i++) {
                                 if ($('.summernote').eq(i).summernote('code') == e.currentTarget.innerHTML) {

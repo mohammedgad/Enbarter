@@ -5644,9 +5644,15 @@ Version: 1.0
 }
 
 .aWrapper {
-    position: relative;
+    position: relative
 }
 
 .break-word {
     word-wrap: break-word;
+}
+
+.navbar-login {
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
 }

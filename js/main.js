@@ -54,8 +54,10 @@ app.run(function ($rootScope, $location) {
             return true;
         return false;
     }
-    if (Parse.User.current())
+    if (Parse.User.current()) {
         $rootScope.userId = Parse.User.current().id;
+        $rootScope.currentUser = Parse.User.current();
+    }
     $rootScope.addItemTo = function (list, item) {
         if (item && list.indexOf(item) == -1)
             list.push(item);

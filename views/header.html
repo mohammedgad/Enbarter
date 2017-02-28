@@ -19,7 +19,7 @@
                 <!-- Navigation -->
                 <div class="collapse navbar-collapse" id="nav1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active nav-item">
+                        <li class="nav-item">
                             <a href="{{homeLink}}" class="deepocean">Home</a>
                         </li>
                         <li class="nav-item">
@@ -27,15 +27,6 @@
                         </li>
                         <li class="nav-item">
                             <a href="/prices" class="deepocean">Prices</a>
-                        </li>
-                        <li class="nav-item" ng-show="isLoggedIn()">
-                            <a href="{{createBarterLink}}" class="deepocean">Create Barter</a>
-                        </li>
-                        <li class="nav-item" ng-show="isLoggedIn()">
-                            <a href="/profile/{{userId}}" class="deepocean">Profile</a>
-                        </li>
-                        <li class="nav-item" ng-show="isLoggedIn()">
-                            <a href="{{dashboardLink}}" class="deepocean">Dashboard</a>
                         </li>
                         <li class="nav-item dropdown" ng-show="isLoggedIn()">
                             <a id="dontClose" class="deepocean dropdown-toggle" data-toggle="dropdown"
@@ -54,14 +45,66 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" ng-if="!isLoggedIn()">
                             <button id="signButton" class="btn btn-info pull-right" type="button" data-target="#sign"
-                                    data-toggle="modal" ng-hide="isLoggedIn()" ng-click="initFBLogin()">Login /
+                                    data-toggle="modal" ng-click="initFBLogin()">Login /
                                 Sign up
                             </button>
-                            <button id="logoutButton" class="btn btn-danger pull-right" type="button"
-                                    ng-click="logout()" ng-show="isLoggedIn()">Logout
-                            </button>
+                        </li>
+                        <li class="nav-item dropdown " ng-if="isLoggedIn()">
+                            <a href="#" class="deepocean dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-cog"></span> 
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                            </a>
+                            <ul class="dropdown-menu bg-white">
+                                <li>
+                                    <div class="navbar-login">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <span class="thumbnail" style="margin-bottom: 0px;">
+                                                    <img ng-src="{{currentUser.get('pic')?currentUser.get('pic').url():'./images/avatar.png'}}"
+                                                         alt="">
+                                                </span>
+                                            </div>
+                                            <div class="col-lg-7 text-center">
+                                                <p class="text-left"><strong>{{currentUser.get('username') | limitTo :
+                                                    30}}</strong>
+                                                </p>
+                                                <a class="deepocean bg-white-hover" href="/profile/{{currentUser.id}}"
+                                                   style="padding: 0px 5px">Profile</a>
+                                                <small>|</small>
+                                                <a
+                                                        class="deepocean bg-white-hover"
+                                                        href="/profile/{{currentUser.id}}"
+                                                        style="padding: 0px 5px">Edit</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-lg-11 text-center">
+                                            <a href="/create_barter" class="deepocean bg-white-hover"
+                                               style="padding: 0px 5px">Create
+                                                Barter</a>
+                                            <small>|</small>
+                                            <a href="/dashboard" class="deepocean bg-white-hover"
+                                               style="padding: 0px 5px">dashboard</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="row">
+                                        <div class="col-lg-11">
+                                            <p>
+                                                <a ng-click="logout()" class="btn btn-danger btn-block">LOGOUT</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                     <!--//nav-->
