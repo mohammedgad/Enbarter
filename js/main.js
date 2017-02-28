@@ -964,6 +964,7 @@ function profileWidget(id, $scope, path, callback, lite) {
             var Barter = Parse.Object.extend("Barter");
             var barterQuery = new Parse.Query(Barter);
             barterQuery.equalTo("user", result);
+
             var barterQuery1 = new Parse.Query(Barter);
             barterQuery1.equalTo("barterUpUser", result);
 
@@ -972,6 +973,7 @@ function profileWidget(id, $scope, path, callback, lite) {
             mainQuery.include('offerCategory');
             mainQuery.include('barterUpUser');
             mainQuery.include('user');
+            mainQuery.descending('createdAt');
             mainQuery.find({
                 success: function (results) {
                     $scope.barters = results;
