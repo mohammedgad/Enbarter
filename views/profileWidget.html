@@ -14,5 +14,6 @@
         <a class="list-group-item">Completed<br>Barters<span
                 class="badge">{{(completedBarters>=25)?"25+":completedBarters}}</span></a>
         <a ng-show="userId==result.id" class="list-group-item" href="/profile/edit">Edit Profile</a>
+        <a ng-show="userId!=result.id" class="list-group-item" href="/messages/{{result.id}}">Send Message</a>
     </ul>
 </div>

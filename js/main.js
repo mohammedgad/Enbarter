@@ -33,6 +33,10 @@ app.config(function ($routeProvider, $locationProvider) {
         templateUrl: "views/notifications.html"
     }).when("/prices", {
         templateUrl: "views/prices.html"
+    }).when("/messages", {
+        templateUrl: "views/messages.html"
+    }).when("/messages/:id", {
+        templateUrl: "views/messages.html"
     }).otherwise({
         templateUrl: "views/404.html"
     });
@@ -307,7 +311,7 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
         var query = new Parse.Query(Notification);
         query.equalTo("user", Parse.User.current());
         query.descending("createdAt");
-        query.limit(10);
+        query.limit(11);
         query.find({
             success: function (results) {
                 $scope.notifications = results || [];
@@ -674,21 +678,25 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             }
         });
     }
-    $scope.sendComment = function () {
-        if (!$('#comment').summernote('code') || $('#comment').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0)
+    $scope.sendComment = function (parent) {
+        console.log(parent);
+        if (!$(parent ? '#commentReply' : '#comment').summernote('code') || $(parent ? '#commentReply' : '#comment').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0)
             return;
         $scope.cantSend = true;
         var BarterComment = Parse.Object.extend("BarterComment");
         var barterComment = new BarterComment();
         barterComment.set('barter', angularCopy($scope.result));
         barterComment.set('user', Parse.User.current());
-        barterComment.set('comment', $('#comment').summernote('code'));
+        barterComment.set('comment', $(parent ? '#commentReply' : '#comment').summernote('code'));
+        if (parent)
+            barterComment.set('parent', parent);
+
         showSpinner();
         barterComment.save({
             success: function (results) {
                 $scope.cantSend = false;
                 $scope.message = "";
-                $($('#comment')).summernote('code', '');
+                $($(parent ? '#commentReply' : '#comment')).summernote('code', '');
                 $scope.comments.push(angularCopy(results));
                 $scope.$apply();
                 hideSpinner();
@@ -704,7 +712,9 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
     $scope.initComments = function () {
         if ($scope.comments)
             return;
-        $scope.commentsFlag = true;
+        if ($scope.result.get('state') == 'new')
+            $scope.commentsFlag = true;
+
         var BarterComment = Parse.Object.extend("BarterComment");
         var query = new Parse.Query(BarterComment);
         query.equalTo("barter", angularCopy($scope.result));
@@ -722,6 +732,10 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             }
         });
     }
+    $scope.setParentComment = function (comment) {
+        $scope.parentComment = comment;
+    }
+
     if (navigator.userAgent.match(/(Prerender)/) != null)
         $scope.initComments();
 });
@@ -1266,6 +1280,11 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
             });
         });
     }
+});
+
+app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    hideSpinner();
+    $rootScope.title = 'Enbarter | Messages';
 });
 
 
