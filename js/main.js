@@ -674,6 +674,53 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             }
         });
     }
+    $scope.sendComment = function () {
+        if (!$('#comment').summernote('code') || $('#comment').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0)
+            return;
+        $scope.cantSend = true;
+        var BarterComment = Parse.Object.extend("BarterComment");
+        var barterComment = new BarterComment();
+        barterComment.set('barter', angularCopy($scope.result));
+        barterComment.set('user', Parse.User.current());
+        barterComment.set('comment', $('#comment').summernote('code'));
+        showSpinner();
+        barterComment.save({
+            success: function (results) {
+                $scope.cantSend = false;
+                $scope.message = "";
+                $($('#comment')).summernote('code', '');
+                $scope.comments.push(angularCopy(results));
+                $scope.$apply();
+                hideSpinner();
+            },
+            error: function (object, error) {
+                $scope.cantSend = false;
+                $scope.$apply();
+                errorHandler($rootScope, error);
+            }
+        });
+    }
+
+    $scope.initComments = function () {
+        if ($scope.comments)
+            return;
+        var BarterComment = Parse.Object.extend("BarterComment");
+        var query = new Parse.Query(BarterComment);
+        query.equalTo("barter", angularCopy($scope.result));
+        query.include('user');
+        showSpinner();
+        query.find({
+            success: function (results) {
+                $scope.comments = results;
+                $scope.$apply();
+                hideSpinner();
+            },
+            error: function (error) {
+                $scope.$apply();
+                errorHandler($rootScope, error);
+            }
+        });
+    }
 });
 
 
