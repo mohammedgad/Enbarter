@@ -178,15 +178,14 @@
                 <div id="qna" class="tab-pane fade">
                     <form role="form" ng-submit="sendMessage()">
                         <textarea class="form-control summernote" rows="3" id="comment"></textarea>
-                        <button class="btn btn-block btn-info" ng-click="sendComment()" ng-disabled="cantSend">
+                        <button class="btn btn-block btn-info" ng-click="sendComment()" ng-disabled="cantSend"
+                                ng-show="isLoggedIn()">
                             Comment!
                         </button>
-                        <button ng-if="!isLoggedIn" type="button" class="btn btn-block btn-info" data-toggle="modal"
-                                data-target="#sign"
-                                ng-click="initFBLogin()">Comment!
-                        </button>
                     </form>
-
+                    <a data-target="#sign"
+                       data-toggle="modal" ng-hide="isLoggedIn()"
+                       class="btn btn-block btn-info" ng-click="initFBLogin()">Comment!</a>
                     <div ng-repeat="comment in comments">
                         <div class="row margin-top5 margin-bottom15 text-right offer-profile bg-danger">
                             <div class="margin-top20 margin-bottom20">
