@@ -105,67 +105,88 @@
                 </div>
             </div>
         </div>
-        <div class="row table-barter" ng-show="result.get('barterUpUser')||barterRequests.length">
-            <table class="table table-hover table-condensed table-bg">
-                <thead class="table-head">
-                <tr class="table-head">
-                    <th><p class="table-head-p">
-                        Created By</p></th>
-                    <th><p class="table-head-p">Barters</p></th>
-                    <th><p class="table-head-p">Deadline</p></th>
-                    <th ng-show="result.get('barterUpUser')||sameAccount()"><p class="table-head-p">Action</p></th>
-                    <p class="table-head-p">Deadline</p>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-show="result.get('barterUpUser')">
-                    <td class="text-center table-user-img">
-                        <img ng-src="{{result.get('barterUpUser').get('pic')?result.get('barterUpUser').get('pic').url():'./images/avatar.png'}}"
-                             class="img-responsive center-block barter-creator-img"/>
-                    </td>
-                    <td>
-                        <a href="/profile/{{result.get('barterUpUser').id}}" class="username-link">{{result.get('barterUpUser').get('username')}}</a>
-                        <br>
-                        <a class="label label-default">Ratings <span class="badge">{{(result.get('barterUpUser').get('rateCount'))?(result.get('barterUpUser').get('rate')/result.get('barterUpUser').get('rateCount')| number:1):'5'}}</span></a>
+        <div class="container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" data-target="#requests">Requests</a></li>
+                <li><a data-toggle="tab" data-target="#qna">Q&A</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="requests" class="tab-pane fade in active">
+                    <div class="row table-barter" ng-show="result.get('barterUpUser')||barterRequests.length">
+                        <table class="table table-hover table-condensed table-bg">
+                            <thead class="table-head">
+                            <tr class="table-head">
+                                <th><p class="table-head-p">
+                                    Created By</p></th>
+                                <th><p class="table-head-p">Barters</p></th>
+                                <th><p class="table-head-p">Deadline</p></th>
+                                <th ng-show="result.get('barterUpUser')||sameAccount()"><p class="table-head-p">
+                                    Action</p></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-show="result.get('barterUpUser')">
+                                <td class="text-center table-user-img">
+                                    <img ng-src="{{result.get('barterUpUser').get('pic')?result.get('barterUpUser').get('pic').url():'./images/avatar.png'}}"
+                                         class="img-responsive center-block barter-creator-img"/>
+                                </td>
+                                <td>
+                                    <a href="/profile/{{result.get('barterUpUser').id}}" class="username-link">{{result.get('barterUpUser').get('username')}}</a>
+                                    <br>
+                                    <a class="label label-default">Ratings <span class="badge">{{(result.get('barterUpUser').get('rateCount'))?(result.get('barterUpUser').get('rate')/result.get('barterUpUser').get('rateCount')| number:1):'5'}}</span></a>
 
-                    </td>
-                    <td>{{result.get('barterUpDeadline')}}</td>
-                    <td class="table-action">
-                        <button type="button" class="btn btn-info"
-                                ng-click="showMilestones(result.get('barterUpMilestones'))"
-                                ng-show="sameAccount()" data-target="#barterMilestones" data-toggle="modal"
-                        >
-                            MileStones
-                        </button>
-                        <button type="button" class="btn btn-info disabled">BARTERED
-                        </button>
-                    </td>
-                </tr>
+                                </td>
+                                <td>{{result.get('barterUpDeadline')}}</td>
+                                <td class="table-action">
+                                    <button type="button" class="btn btn-info"
+                                            ng-click="showMilestones(result.get('barterUpMilestones'))"
+                                            ng-show="sameAccount()" data-target="#barterMilestones" data-toggle="modal"
+                                    >
+                                        MileStones
+                                    </button>
+                                    <button type="button" class="btn btn-info disabled">BARTERED
+                                    </button>
+                                </td>
+                            </tr>
 
-                <tr ng-repeat="request in barterRequests"
-                    ng-show="!result.get('barterUpUser')||request.user.id!=result.get('barterUpUser').id">
-                    <td class="text-center table-user-img">
-                        <img ng-src="{{request.user.get('pic')?request.user.get('pic').url():'./images/avatar.png'}}"
-                             class="img-responsive center-block barter-creator-img"/>
-                    </td>
-                    <td>
-                        <a href="/profile/{{request.user.id}}"
-                           class="username-link">{{request.user.get('username')}}</a>
-                        <br>
-                        <a class="label label-default">Ratings <span class="badge">{{(rrequest.user.get('rateCount'))?(request.user.get('rate')/request.user.get('rateCount')| number:1):'5'}}</span></a>
+                            <tr ng-repeat="request in barterRequests"
+                                ng-show="!result.get('barterUpUser')||request.user.id!=result.get('barterUpUser').id">
+                                <td class="text-center table-user-img">
+                                    <img ng-src="{{request.user.get('pic')?request.user.get('pic').url():'./images/avatar.png'}}"
+                                         class="img-responsive center-block barter-creator-img"/>
+                                </td>
+                                <td>
+                                    <a href="/profile/{{request.user.id}}"
+                                       class="username-link">{{request.user.get('username')}}</a>
+                                    <br>
+                                    <a class="label label-default">Ratings <span class="badge">{{(rrequest.user.get('rateCount'))?(request.user.get('rate')/request.user.get('rateCount')| number:1):'5'}}</span></a>
 
-                    </td>
-                    <td>{{request.deadline}}</td>
-                    <td class="table-action" ng-show="sameAccount()&&!result.get('barterUpUser')">
-                        <button type="button" class="btn btn-info"
-                                ng-click="showMilestones(request.milestone,request,$index)"
-                                data-target="#barterMilestones" data-toggle="modal">
-                            Barter up
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                                </td>
+                                <td>{{request.deadline}}</td>
+                                <td class="table-action" ng-show="sameAccount()&&!result.get('barterUpUser')">
+                                    <button type="button" class="btn btn-info"
+                                            ng-click="showMilestones(request.milestone,request,$index)"
+                                            data-target="#barterMilestones" data-toggle="modal">
+                                        Barter up
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="qna" class="tab-pane fade">
+                    <div id="disqus_thread"></div>
+                    <script>
+                        (function () {
+                            var d = document, s = d.createElement('script');
+                            s.src = '//enbarter.disqus.com/embed.js';
+                            s.setAttribute('data-timestamp', +new Date());
+                            (d.head || d.body).appendChild(s);
+                        })();
+                    </script>
+                </div>
+            </div>
         </div>
     </div>
 
