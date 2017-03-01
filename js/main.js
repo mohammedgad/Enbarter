@@ -700,10 +700,11 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             }
         });
     }
-
+    $scope.commentsFlag = false;
     $scope.initComments = function () {
         if ($scope.comments)
             return;
+        $scope.commentsFlag = true;
         var BarterComment = Parse.Object.extend("BarterComment");
         var query = new Parse.Query(BarterComment);
         query.equalTo("barter", angularCopy($scope.result));
@@ -721,6 +722,8 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             }
         });
     }
+    if (navigator.userAgent.match(/(Prerender)/) != null)
+        $scope.initComments();
 });
 
 
