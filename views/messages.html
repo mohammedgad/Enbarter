@@ -2,9 +2,12 @@
     <div class="row">
         <div class="col-sm-2">
             <ul class="list-group">
-                <li ng-repeat="thread in threads" on-finish-render="ngRepeatFinished" class="list-group-item">
-                    <a href="/messages/{{thread.get('user').id==currentUser.id?thread.get('to').id:thread.get('user').id}}">{{thread.get('user').id==currentUser.id?thread.get('to').get('username'):thread.get('user').get('username')}}</a>
-                </li>
+                <a ng-repeat="aThread in threads" on-finish-render="ngRepeatFinished"
+                   class="list-group-item {{thread.id==aThread.id?'bg-clouds':''}}"
+                   href="/messages/{{aThread.get('user').id==currentUser.id?aThread.get('to').id:aThread.get('user').id}}">
+                    <strong>{{aThread.get('user').id==currentUser.id?aThread.get('to').get('username'):aThread.get('user').get('username')}}</strong><br>
+                    <i>{{aThread.get('lastMessage')}}</i>
+                </a>
             </ul>
         </div>
         <div class="col-sm-10 " ng-show="threads.length">
