@@ -187,7 +187,7 @@
                         <a data-target="#sign"
                            data-toggle="modal" ng-hide="isLoggedIn()"
                            class="btn btn-block btn-info" ng-click="initFBLogin()">Comment!</a></div>
-                    <div ng-repeat="comment in comments">
+                    <div ng-repeat="comment in comments" ng-if="!comment.get('parent')">
                         <div class="row margin-top5 margin-bottom15 text-right offer-profile bg-danger">
                             <div class="margin-top20 margin-bottom20">
                                 <div class="media col-md-3">
@@ -210,6 +210,42 @@
                                             data-toggle="modal" ng-click="setParentComment(comment)"
                                             ng-if="result.get('state')=='new'">Reply
                                     </button>
+
+                                    <div ng-if="comment.get('children')" ng-include="'reply_renderer.html'"></div>
+
+                                    <script type="text/ng-template" id="reply_renderer.html">
+                                        <div ng-repeat="comment in comment.get('children')">
+                                            <div class="row margin-top5 margin-bottom15 text-right offer-profile bg-danger">
+                                                <div class="margin-top20 margin-bottom20">
+                                                    <div class="media col-md-3">
+                                                        <a href="/profile/{{comment.get('user').id}}">
+                                                            <figure class="pull-left thumbnail">
+                                                                <img class="media-object img-rounded img-responsive margin-bottom20"
+                                                                     ng-src="{{comment.get('user').get('pic')?comment.get('user').get('pic').url():'./images/avatar.png'}}"
+                                                                     alt="">
+                                                                <h4 class="list-group-item-heading">
+                                                                    {{comment.get('user').get('username')}} </h4>
+                                                            </figure>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-9 margin-bottom20 text-left">
+                                                        <p class="list-group-item-text">
+                                                        <div ng-bind-html="comment.get('comment')"></div>
+                                                        </p>
+                                                        <button class="btn btn-info pull-right" type="button"
+                                                                data-target="#commentModal"
+                                                                data-toggle="modal" ng-click="setParentComment(comment)"
+                                                                ng-if="result.get('state')=='new'">Reply
+                                                        </button>
+
+                                                        <div ng-if="comment.get('children')"
+                                                             ng-include="'reply_renderer.html'"></div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </script>
                                 </div>
                             </div>
                         </div>

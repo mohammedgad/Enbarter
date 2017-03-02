@@ -678,6 +678,34 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             }
         });
     }
+    function reloadComments() {
+        var BarterComment = Parse.Object.extend("BarterComment");
+        var query = new Parse.Query(BarterComment);
+        query.equalTo("barter", angularCopy($scope.result));
+        query.include('user');
+        query.include('children');
+
+        showSpinner();
+        query.find({
+            success: function (results) {
+                $scope.comments = results;
+                $scope.$apply();
+                hideSpinner();
+            },
+            error: function (error) {
+                $scope.$apply();
+                errorHandler($rootScope, error);
+            }
+        });
+    }
+
+    $scope.initComments = function () {
+        if ($scope.comments)
+            return;
+        if ($scope.result.get('state') == 'new')
+            $scope.commentsFlag = true;
+        reloadComments();
+    }
     $scope.sendComment = function (parent) {
         if (!$(parent ? '#commentReply' : '#comment').summernote('code') || $(parent ? '#commentReply' : '#comment').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0)
             return;
@@ -693,11 +721,17 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         showSpinner();
         barterComment.save({
             success: function (results) {
-                $scope.cantSend = false;
-                $($(parent ? '#commentReply' : '#comment')).summernote('code', '');
-                $scope.comments.push(angularCopy(results));
-                $scope.$apply();
-                hideSpinner();
+                if (!parent) {
+                    $scope.cantSend = false;
+                    $($(parent ? '#commentReply' : '#comment')).summernote('code', '');
+                    $scope.comments.push(angularCopy(results));
+                    $scope.$apply();
+                    hideSpinner();
+                } else {
+                    $($(parent ? '#commentReply' : '#comment')).summernote('code', '');
+                    $scope.cantSend = false;
+                    reloadComments();
+                }
             },
             error: function (object, error) {
                 $scope.cantSend = false;
@@ -707,29 +741,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         });
     }
     $scope.commentsFlag = false;
-    $scope.initComments = function () {
-        if ($scope.comments)
-            return;
-        if ($scope.result.get('state') == 'new')
-            $scope.commentsFlag = true;
 
-        var BarterComment = Parse.Object.extend("BarterComment");
-        var query = new Parse.Query(BarterComment);
-        query.equalTo("barter", angularCopy($scope.result));
-        query.include('user');
-        showSpinner();
-        query.find({
-            success: function (results) {
-                $scope.comments = results;
-                $scope.$apply();
-                hideSpinner();
-            },
-            error: function (error) {
-                $scope.$apply();
-                errorHandler($rootScope, error);
-            }
-        });
-    }
     $scope.setParentComment = function (comment) {
         $scope.parentComment = comment;
     }
