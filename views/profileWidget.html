@@ -14,6 +14,8 @@
         <a class="list-group-item">Completed<br>Barters<span
                 class="badge">{{(completedBarters>=25)?"25+":completedBarters}}</span></a>
         <a ng-show="userId==result.id" class="list-group-item" href="/profile/edit">Edit Profile</a>
-        <a ng-show="userId!=result.id" class="list-group-item" href="/messages/{{result.id}}">Send Message</a>
+        <a ng-show="userId&&userId!=result.id" class="list-group-item" href="/messages/{{result.id}}">Send Message</a>
+        <a data-target="#sign" data-toggle="modal" ng-hide="isLoggedIn()" ng-click="initFBLogin()"
+           class="list-group-item">Send Message</a>
     </ul>
 </div>

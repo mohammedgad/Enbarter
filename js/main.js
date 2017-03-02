@@ -1308,6 +1308,7 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
         query.equalTo("messageThread", result);
         query.include('to');
         query.include('user');
+        query.include('messageThread');
 
         query.find({
             success: function (results) {
@@ -1348,7 +1349,8 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
                 var query2 = new Parse.Query(MessageThread);
                 query2.equalTo("to", toUser);
                 var mainQuery = Parse.Query.or(query1, query2);
-
+                mainQuery.include('to');
+                mainQuery.include('user');
                 mainQuery.find({
                     success: function (mainQueryResults) {
                         if (mainQueryResults[0]) {
