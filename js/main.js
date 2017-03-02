@@ -502,6 +502,9 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
     }
 });
 
+function getPointer(object) {
+    return {"__type": "Pointer", "className": object.className, "objectId": object.id};
+}
 app.controller('barterCtrl', function ($scope, $location, $rootScope, $routeParams, $sce) {
     $scope.result = null;
     $scope.milestones = [];
@@ -621,10 +624,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
         var BarterDashboard = Parse.Object.extend("BarterDashboard");
         var barterDashboard = new BarterDashboard();
-        barterDashboard.set("barterUpUser", {
-            "__type": "Pointer", "className": "_User",
-            "objectId": request.user.id || request.user.objectId
-        });
+        barterDashboard.set("barterUpUser", getPointer(request.user.id || request.user.objectId));
         barterDashboard.set("barterUpMilestones", request.milestone);
         barterDashboard.set("barterUpDeadline", request.deadline);
         barterDashboard.set('user', result.get('user'));
@@ -634,10 +634,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         showSpinner();
         barterDashboard.save({
             success: function (results) {
-                result.set("barterUpUser", {
-                    "__type": "Pointer", "className": "_User",
-                    "objectId": request.user.id || request.user.objectId
-                });
+                result.set("barterUpUser", getPointer(request.user.id || request.user.objectId));
                 result.set("barterUpMilestones", request.milestone);
                 result.set("barterUpDeadline", request.deadline);
                 result.set("state", "bartered");
@@ -683,12 +680,16 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         var query = new Parse.Query(BarterComment);
         query.equalTo("barter", angularCopy($scope.result));
         query.include('user');
-        query.include('children');
 
         showSpinner();
         query.find({
             success: function (results) {
-                $scope.comments = results;
+                var aCopy = angularCopy(results);
+                for (var i = 0; i < aCopy.length; i++) {
+                    if (aCopy[i].get('parent'))
+                        aCopy[i].get('parent').add('children', aCopy[i]);
+                }
+                $scope.comments = aCopy;
                 $scope.$apply();
                 hideSpinner();
             },
@@ -712,26 +713,24 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         $scope.cantSend = true;
         var BarterComment = Parse.Object.extend("BarterComment");
         var barterComment = new BarterComment();
-        barterComment.set('barter', angularCopy($scope.result));
+        barterComment.set('barter', getPointer($scope.result));
         barterComment.set('user', Parse.User.current());
         barterComment.set('comment', $(parent ? '#commentReply' : '#comment').summernote('code'));
         if (parent)
-            barterComment.set('parent', parent);
+            barterComment.set('parent', getPointer(parent));
 
         showSpinner();
         barterComment.save({
             success: function (results) {
-                if (!parent) {
-                    $scope.cantSend = false;
-                    $($(parent ? '#commentReply' : '#comment')).summernote('code', '');
-                    $scope.comments.push(angularCopy(results));
-                    $scope.$apply();
-                    hideSpinner();
+                $scope.cantSend = false;
+                $($(parent ? '#commentReply' : '#comment')).summernote('code', '');
+                if (parent) {
+                    parent.add('children', results);
                 } else {
-                    $($(parent ? '#commentReply' : '#comment')).summernote('code', '');
-                    $scope.cantSend = false;
-                    reloadComments();
+                    $scope.comments.push(angularCopy(results));
                 }
+                $scope.$apply();
+                hideSpinner();
             },
             error: function (object, error) {
                 $scope.cantSend = false;
@@ -826,7 +825,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     query.include('barter');
     query.include('user');
     query.include('barterUpUser');
-    query.equalTo("barter", {__type: "Pointer", className: "Barter", objectId: $routeParams.id});
+    query.equalTo("barter", getPointer($routeParams.id));
 
     query.find({
         success: function (results) {
@@ -893,10 +892,10 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             $scope.cantSend = true;
             var chat = new Chat();
             chat.set("message", $scope.message);
-            chat.set("user", Parse.User.current());
-            chat.set("barterDashboard", $scope.result);
-            chat.set("offerUser", $scope.result.get("user"));
-            chat.set("barterUpUser", $scope.result.get("barterUpUser"));
+            chat.set("user", getPointer(Parse.User.current()));
+            chat.set("barterDashboard", getPointer($scope.result));
+            chat.set("offerUser", getPointer($scope.result.get("user")));
+            chat.set("barterUpUser", getPointer($scope.result.get("barterUpUser")));
             chat.save({
                 success: function (results) {
                     $scope.message = "";
