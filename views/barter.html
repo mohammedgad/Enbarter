@@ -174,7 +174,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <h3 ng-show="barterRequests.length==0">No Requests to show!</h3>
+                    <h3 ng-hide="result.get('barterUpUser')||barterRequests.length">No Requests to show!</h3>
                 </div>
                 <div id="qna" class="tab-pane fade">
                     <div ng-if="result.get('state')=='new'">

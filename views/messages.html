@@ -7,7 +7,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-sm-10 " ng-if="threads.length">
+        <div class="col-sm-10 " ng-show="threads.length">
             <div class="chatbox well" style="height: 300px;overflow-y: scroll;" id="messageBox">
                 <div ng-repeat="m in messages" on-finish-render="ngRepeatFinished">
                     <a href="/profile/{{m.get('user').id}}"
@@ -22,7 +22,7 @@
                 </button>
             </form>
         </div>
-        <div class="col-sm-10 " ng-if="!threads.length">
+        <div class="col-sm-10 " ng-hide="threads.length">
             <div class="min-height-400px promo-2 text-center content-block">
                 <br><br>
                 <h1 class="black">Nothing to show!</h1>

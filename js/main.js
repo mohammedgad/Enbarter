@@ -727,15 +727,8 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         barterComment.save({
             success: function (results) {
                 $scope.cantSend = false;
-                if (parent) {
-                    parent.add('children', results);
-                    $($('#commentReply')).summernote('code', '');
-                } else {
-                    $scope.comments.push(angularCopy(results));
-                    $($('#comment')).summernote('code', '');
-                }
-                $scope.$apply();
-                hideSpinner();
+                $($(parent ? '#commentReply' : '#comment')).summernote('code', '');
+                reloadComments();
             },
             error: function (object, error) {
                 $scope.cantSend = false;
@@ -1313,6 +1306,9 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
     function loadMessages(result, callback) {
         var query = new Parse.Query(Message);
         query.equalTo("messageThread", result);
+        query.include('to');
+        query.include('user');
+
         query.find({
             success: function (results) {
                 $scope.messages = results;
@@ -1400,20 +1396,20 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
             return;
         $scope.cantSend = true;
         var message = new Message();
-        message.set('to', $scope.thread.get('user').id == Parse.User.current().id ? $scope.thread.get('to') : Parse.User.current());
+        message.set('to', $scope.thread.get('user').id == Parse.User.current().id ? $scope.thread.get('to') : $scope.thread.get('user'));
         message.set('user', Parse.User.current());
         message.set('message', $('#message').summernote('code'));
         message.set('messageThread', $scope.thread);
 
-
         showSpinner();
         message.save({
             success: function (results) {
-                $scope.cantSend = false;
-                $($('#message')).summernote('code', '');
-                $scope.messages.push(angularCopy(results));
-                $scope.$apply();
-                hideSpinner();
+                loadMessages(results.get('messageThread'), function () {
+                    $scope.cantSend = false;
+                    $($('#message')).summernote('code', '');
+                    $scope.$apply();
+                    hideSpinner();
+                });
             },
             error: function (object, error) {
                 $scope.cantSend = false;
