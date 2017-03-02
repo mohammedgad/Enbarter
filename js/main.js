@@ -502,8 +502,12 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
     }
 });
 
-function getPointer(object) {
-    return {"__type": "Pointer", "className": object.className, "objectId": object.id};
+function getPointer(object, className) {
+    return {
+        "__type": "Pointer",
+        "className": object.className || className || '_User',
+        "objectId": object.id || object.objectId
+    };
 }
 app.controller('barterCtrl', function ($scope, $location, $rootScope, $routeParams, $sce) {
     $scope.result = null;
@@ -624,7 +628,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
         var BarterDashboard = Parse.Object.extend("BarterDashboard");
         var barterDashboard = new BarterDashboard();
-        barterDashboard.set("barterUpUser", getPointer(request.user.id || request.user.objectId));
+        barterDashboard.set("barterUpUser", getPointer(request.user));
         barterDashboard.set("barterUpMilestones", request.milestone);
         barterDashboard.set("barterUpDeadline", request.deadline);
         barterDashboard.set('user', result.get('user'));
@@ -634,7 +638,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         showSpinner();
         barterDashboard.save({
             success: function (results) {
-                result.set("barterUpUser", getPointer(request.user.id || request.user.objectId));
+                result.set("barterUpUser", getPointer(request.user));
                 result.set("barterUpMilestones", request.milestone);
                 result.set("barterUpDeadline", request.deadline);
                 result.set("state", "bartered");
@@ -826,7 +830,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     query.include('barter');
     query.include('user');
     query.include('barterUpUser');
-    query.equalTo("barter", getPointer($routeParams.id));
+    query.equalTo("barter", getPointer($routeParams, 'Barter'));
 
     query.find({
         success: function (results) {
@@ -1104,6 +1108,8 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
         $scope.skills = result.get('skills') ? result.get('skills') : [];
         $scope.workLinks = result.get('workLinks') ? result.get('workLinks') : [];
         $rootScope.title = "Enbarter | Edit: " + result.get('username');
+        $scope.sendEmails = result.get('options') && result.get('options').sendEmails == false ? false : true;
+
         $scope.$apply();
         hideSpinner();
     }, true);
@@ -1116,6 +1122,11 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             result.set("birthday", new Date($scope.birthday));
         result.set("skills", $scope.skills);
         result.set("workLinks", $scope.workLinks);
+        if ($scope.sendEmails == false || result.get('options') || result.get('options').sendEmails) {
+            var options = result.get('options') || {};
+            options.sendEmails = $scope.sendEmails;
+            result.set("options", options);
+        }
         if ($("#exampleInputFile1")[0].files.length > 0) {
             var parseFile = new Parse.File("photo1.jpg", {base64: document.getElementById('avatarImg').src});
             result.set("pic", parseFile);
