@@ -723,11 +723,12 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         barterComment.save({
             success: function (results) {
                 $scope.cantSend = false;
-                $($(parent ? '#commentReply' : '#comment')).summernote('code', '');
                 if (parent) {
                     parent.add('children', results);
+                    $($('#commentReply')).summernote('code', '');
                 } else {
                     $scope.comments.push(angularCopy(results));
+                    $($('#comment')).summernote('code', '');
                 }
                 $scope.$apply();
                 hideSpinner();
@@ -1291,6 +1292,9 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
 });
 
 app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routeParams) {
+    if (!Parse.User.current()) {
+        $location.path('/');
+    }
     $rootScope.title = 'Enbarter | Messages';
     var MessageThread = Parse.Object.extend('MessageThread');
     var Message = Parse.Object.extend('Message');
