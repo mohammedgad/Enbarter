@@ -679,7 +679,6 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         });
     }
     $scope.sendComment = function (parent) {
-        console.log(parent);
         if (!$(parent ? '#commentReply' : '#comment').summernote('code') || $(parent ? '#commentReply' : '#comment').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0)
             return;
         $scope.cantSend = true;
@@ -695,7 +694,6 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         barterComment.save({
             success: function (results) {
                 $scope.cantSend = false;
-                $scope.message = "";
                 $($(parent ? '#commentReply' : '#comment')).summernote('code', '');
                 $scope.comments.push(angularCopy(results));
                 $scope.$apply();
@@ -778,7 +776,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     $scope.offerMilestones = [];
     $scope.barterUpMilestones = [];
     var Barter = Parse.Object.extend("Barter");
-    var Chat = Parse.Object.extend("Chat");
+    var Chat = Parse.Object.extend("BarterChat");
     var BarterDashboard = Parse.Object.extend("BarterDashboard");
     $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
         if (!$('#messageBox').is(":hover"))
@@ -787,7 +785,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     $scope.reloadChat = function () {
         var query = new Parse.Query(Chat);
         query.include("user");
-        query.equalTo("BarterDashboard", $scope.result);
+        query.equalTo("barterDashboard", $scope.result);
 
         query.find({
             success: function (results) {
@@ -884,10 +882,9 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             var chat = new Chat();
             chat.set("message", $scope.message);
             chat.set("user", Parse.User.current());
-            chat.set("BarterDashboard", $scope.result);
+            chat.set("barterDashboard", $scope.result);
             chat.set("offerUser", $scope.result.get("user"));
             chat.set("barterUpUser", $scope.result.get("barterUpUser"));
-
             chat.save({
                 success: function (results) {
                     $scope.message = "";
@@ -1283,8 +1280,128 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
 });
 
 app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routeParams) {
-    hideSpinner();
     $rootScope.title = 'Enbarter | Messages';
+    var MessageThread = Parse.Object.extend('MessageThread');
+    var Message = Parse.Object.extend('Message');
+
+    function loadMessages(result, callback) {
+        var query = new Parse.Query(Message);
+        query.equalTo("messageThread", result);
+        query.find({
+            success: function (results) {
+                $scope.messages = results;
+                $scope.thread = result;
+                $scope.$apply();
+                callback();
+            },
+            error: function (object, error) {
+                errorHandler($rootScope, error);
+            }
+        });
+    }
+
+    function loadThreads(callback) {
+        var query = new Parse.Query(MessageThread);
+        query.include('to');
+        query.include('user');
+        query.find({
+            success: function (results) {
+                $scope.threads = results;
+                $scope.$apply();
+                hideSpinner();
+                if (results[0])
+                    callback(results[0]);
+            },
+            error: function (object, error) {
+                errorHandler($rootScope, error);
+            }
+        });
+    };
+    if ($routeParams.id) {
+        var queryUser = new Parse.Query(Parse.User);
+        queryUser.get($routeParams.id, {
+            success: function (toUser) {
+                var query1 = new Parse.Query(MessageThread);
+                query1.equalTo("user", toUser);
+                var query2 = new Parse.Query(MessageThread);
+                query2.equalTo("to", toUser);
+                var mainQuery = Parse.Query.or(query1, query2);
+
+                mainQuery.find({
+                    success: function (mainQueryResults) {
+                        if (mainQueryResults[0]) {
+                            loadMessages(mainQueryResults[0], loadThreads);
+                        } else {
+                            var messageThread = new MessageThread();
+
+                            messageThread.set('to', toUser);
+                            messageThread.set('user', Parse.User.current());
+                            messageThread.save({
+                                success: function (result) {
+                                    loadMessages(result, loadThreads);
+                                },
+                                error: function (object, error) {
+                                    errorHandler($rootScope, error);
+                                }
+                            });
+                        }
+                    },
+                    error: function (object, error) {
+                        $location.path('/messages');
+                        $scope.$apply();
+                        hideSpinner();
+                    }
+                });
+            },
+            error: function (object, error) {
+                if ($location.path().includes('/messages'))
+                    $location.path('/NotFound');
+                $scope.$apply();
+                hideSpinner();
+            }
+        });
+    } else {
+        loadThreads(function (result) {
+            showSpinner();
+            loadMessages(result, function () {
+                hideSpinner();
+            });
+        });
+    }
+
+    $scope.sendMessage = function (parent) {
+        if (!$('#message').summernote('code') || $('#message').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0)
+            return;
+        $scope.cantSend = true;
+        var message = new Message();
+        message.set('to', $scope.thread.get('user').id == Parse.User.current().id ? $scope.thread.get('to') : Parse.User.current());
+        message.set('user', Parse.User.current());
+        message.set('message', $('#message').summernote('code'));
+        message.set('messageThread', $scope.thread);
+
+
+        showSpinner();
+        message.save({
+            success: function (results) {
+                $scope.cantSend = false;
+                $($('#message')).summernote('code', '');
+                $scope.messages.push(angularCopy(results));
+                $scope.$apply();
+                hideSpinner();
+            },
+            error: function (object, error) {
+                $scope.cantSend = false;
+                $scope.$apply();
+                errorHandler($rootScope, error);
+            }
+        });
+    }
+    $scope.commentsFlag = false;
+
+    $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {
+        if (!$('#messageBox').is(":hover"))
+            $("#messageBox").animate({scrollTop: document.getElementById('messageBox').scrollHeight}, 600);
+    });
 });
 
 

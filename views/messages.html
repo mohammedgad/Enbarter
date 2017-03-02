@@ -1,15 +1,19 @@
 <div class="container margin-top30" ng-controller="messagesCtrl">
     <div class="row">
         <div class="col-sm-2">
-
+            <ul class="list-group">
+                <li ng-repeat="thread in threads" on-finish-render="ngRepeatFinished" class="list-group-item">
+                    <a href="/messages/{{thread.get('user').id==currentUser.id?thread.get('to').id:thread.get('user').id}}">{{thread.get('user').id==currentUser.id?thread.get('to').get('username'):thread.get('user').get('username')}}</a>
+                </li>
+            </ul>
         </div>
         <div class="col-sm-10 ">
             <div class="chatbox well" style="height: 300px;overflow-y: scroll;" id="messageBox">
-                <p ng-repeat="m in messages" on-finish-render="ngRepeatFinished"><a
-                        href="/profile/{{m.get('user').id}}"
-                        class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
-                <div ng-bind-html="m.get('message')"></div>
-                </p>
+                <div ng-repeat="m in messages" on-finish-render="ngRepeatFinished">
+                    <a href="/profile/{{m.get('user').id}}"
+                       class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
+                    <div ng-bind-html="m.get('message')"></div>
+                </div>
             </div>
             <form role="form" ng-submit="sendMessage()">
                 <textarea class="form-control summernote" rows="3" id="message"></textarea>
