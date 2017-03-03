@@ -188,68 +188,48 @@
                            data-toggle="modal" ng-hide="isLoggedIn()"
                            class="btn btn-block btn-info" ng-click="initFBLogin()">Comment!</a></div>
                     <div ng-repeat="comment in comments" ng-if="!comment.get('parent')">
-                        <div class="row margin-top5 margin-bottom15 text-right offer-profile bg-danger">
-                            <div class="margin-top20 margin-bottom20">
-                                <div class="media col-md-3">
-                                    <a href="/profile/{{comment.get('user').id}}">
-                                        <figure class="pull-left thumbnail">
-                                            <img class="media-object img-rounded img-responsive margin-bottom20"
-                                                 ng-src="{{comment.get('user').get('pic')?comment.get('user').get('pic').url():'./images/avatar.png'}}"
-                                                 alt="">
-                                            <h4 class="list-group-item-heading">
-                                                {{comment.get('user').get('username')}} </h4>
-                                        </figure>
-                                    </a>
-                                </div>
-                                <div class="col-md-9 margin-bottom20 text-left">
-                                    <p class="list-group-item-text">
-                                    <div ng-bind-html="comment.get('comment')"></div>
-                                    </p>
 
-                                    <button class="btn btn-info pull-right" type="button" data-target="#commentModal"
-                                            data-toggle="modal" ng-click="setParentComment(comment)"
-                                            ng-if="result.get('state')=='new'">Reply
-                                    </button>
+                        <div class="media">
+                            <div class="media-left">
+                                <img ng-src="{{comment.get('user').get('pic')?comment.get('user').get('pic').url():'./images/avatar.png'}}"
+                                     class="media-object" style="width:45px">
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{comment.get('user').get('username')}}
+                                    <small><i>{{comment.get('createdAt').toLocaleString()}}</i></small>
+                                </h4>
+                                <button class="btn btn-info pull-right marg-right5" type="button"
+                                        data-target="#commentModal"
+                                        data-toggle="modal" ng-click="setParentComment(comment)"
+                                        ng-if="result.get('state')=='new'">Reply
+                                </button>
+                                <div class="well" ng-bind-html="comment.get('comment')"></div>
 
-                                    <div ng-if="comment.get('children')" ng-include="'reply_renderer.html'"></div>
+                                <div ng-if="comment.get('children')" ng-include="'reply_renderer.html'"></div>
 
-                                    <script type="text/ng-template" id="reply_renderer.html">
-                                        <div ng-repeat="comment in comment.get('children')">
-                                            <div class="row margin-top5 margin-bottom15 text-right offer-profile bg-danger">
-                                                <div class="margin-top20 margin-bottom20">
-                                                    <div class="media col-md-3">
-                                                        <a href="/profile/{{comment.get('user').id}}">
-                                                            <figure class="pull-left thumbnail">
-                                                                <img class="media-object img-rounded img-responsive margin-bottom20"
-                                                                     ng-src="{{comment.get('user').get('pic')?comment.get('user').get('pic').url():'./images/avatar.png'}}"
-                                                                     alt="">
-                                                                <h4 class="list-group-item-heading">
-                                                                    {{comment.get('user').get('username')}} </h4>
-                                                            </figure>
-                                                        </a>
-                                                    </div>
-                                                    <div class="col-md-9 margin-bottom20 text-left">
-                                                        <p class="list-group-item-text">
-                                                        <div ng-bind-html="comment.get('comment')"></div>
-                                                        </p>
-                                                        <button class="btn btn-info pull-right" type="button"
-                                                                data-target="#commentModal"
-                                                                data-toggle="modal" ng-click="setParentComment(comment)"
-                                                                ng-if="result.get('state')=='new'">Reply
-                                                        </button>
-
-                                                        <div ng-if="comment.get('children')"
-                                                             ng-include="'reply_renderer.html'"></div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </script>
-                                </div>
                             </div>
                         </div>
                     </div>
+                    <script type="text/ng-template" id="reply_renderer.html">
+                        <div ng-repeat="comment in comment.get('children')">
+                            <div class="media">
+                                <div class="media-left">
+                                    <img ng-src="{{comment.get('user').get('pic')?comment.get('user').get('pic').url():'./images/avatar.png'}}"
+                                         class="media-object" style="width:45px">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">{{comment.get('user').get('username')}}
+                                        <small><i>{{comment.get('createdAt').toLocaleString()}}</i></small>
+                                    </h4>
+                                    <div class="well" ng-bind-html="comment.get('comment')"></div>
+                                    <div ng-if="comment.get('children')"
+                                         ng-include="'reply_renderer.html'"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </script>
+
                     <h3 ng-show="result.get('state')!='new'&&comments.length==0">No Comments to show!</h3>
                 </div>
             </div>
