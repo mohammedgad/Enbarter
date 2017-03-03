@@ -201,13 +201,28 @@
                             }
                         },
                         onInit: function () {
-                            setTimeout(function () {
+                            var delay = 500;
+
+                            function initCodeFn() {
+                                var scope = angular.element($('.summernote')).scope();
                                 for (var j = 0; j < $('.summernote').length; j++) {
                                     var initCode = $($('.summernote')[j]).attr("initCode");
-                                    if (initCode)
-                                        $($('.summernote')[j]).summernote('code', angular.element($('.summernote')).scope()[initCode]);
+                                    if (initCode) {
+                                        if (scope[initCode])
+                                            $($('.summernote')[j]).summernote('code', scope[initCode]);
+                                        else if (delay < 10000) {
+                                            delay += 500;
+                                            setTimeout(function () {
+                                                initCodeFn()
+                                            }, delay);
+                                        }
+                                    }
                                 }
-                            }, 1000);
+                            }
+
+                            setTimeout(function () {
+                                initCodeFn()
+                            }, delay);
                         }
                     }
                 });

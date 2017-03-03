@@ -528,8 +528,13 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $rootScope.description = result.get("barterDescription");
             $rootScope.keywords = result.get("words").join(",");
             $scope.barterRequests = angularCopy((result.get('barterRequests')) ? result.get('barterRequests') : []);
-            $scope.$apply();
-            hideSpinner();
+            if ($location.hash() == 'qna') {
+                $scope.initComments();
+                $('#aQna').tab('show');
+            } else {
+                $scope.$apply();
+                hideSpinner();
+            }
 
         },
         error: function (object, error) {
@@ -1098,7 +1103,6 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
         $scope.$apply();
     }
     profileWidget(id, $scope, "/profile/edit", function (result) {
-        console.log(result);
         $scope.bio = result.get('bio');
         if (result.get('birthday')) {
             $scope.birthday = result.get('birthday').getFullYear().toString().paddingLeft("0000") + '-' + result.get('birthday').getMonth().toString().paddingLeft("00") + '-' + result.get('birthday').getDate().toString().paddingLeft("00");
@@ -1121,12 +1125,12 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
             result.set("birthday", new Date($scope.birthday));
         result.set("skills", $scope.skills);
         result.set("workLinks", $scope.workLinks);
-        if ($scope.sendEmails == false || result.get('options') || result.get('options').sendEmails) {
+        if ($scope.sendEmails == false || result.get('options') && result.get('options').sendEmails == false) {
             var options = result.get('options') || {};
             options.sendEmails = $scope.sendEmails;
             result.set("options", options);
         }
-        if ($scope.requestsPublic == false || result.get('options') || result.get('options').requestsPublic) {
+        if ($scope.requestsPublic == false || result.get('options') && result.get('options').requestsPublic == false) {
             var options = result.get('options') || {};
             options.requestsPublic = $scope.requestsPublic;
             result.set("options", options);
