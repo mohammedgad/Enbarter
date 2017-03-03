@@ -81,14 +81,20 @@ app.run(function ($rootScope, $location) {
 
     $rootScope.notificationCheck = function (notification) {
         if (notification.get('read')) {
-            if (notification.get('redirect') == $location.path())
+            var redirect = notification.get('redirect').split('#');
+            if (redirect[0] == $location.path())
                 location.reload();
             else
-                $location.path(notification.get('redirect'));
+                $location.path(redirect[0]);
+            if (redirect[1])
+                $location.hash(redirect[1]);
+            else
+                $location.hash(null);
             return;
         }
         notification.set("read", true);
-        $rootScope.nCount--;
+        if ($rootScope.nCount > 0)
+            $rootScope.nCount--;
         notification.save({
             success: function (results) {
                 if (results.get('redirect') == $location.path())
@@ -529,8 +535,11 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             $rootScope.keywords = result.get("words").join(",");
             $scope.barterRequests = angularCopy((result.get('barterRequests')) ? result.get('barterRequests') : []);
             if ($location.hash() == 'qna') {
-                $scope.initComments();
-                $('#aQna').tab('show');
+                $scope.initComments(function () {
+                    $('#aQna').tab('show');
+                    $("html, body").animate({scrollTop: $('#aQna').offset().top - 60}, 2000);
+                });
+
             } else {
                 $scope.$apply();
                 hideSpinner();
@@ -684,7 +693,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             }
         });
     }
-    function reloadComments() {
+    function reloadComments(callback) {
         var BarterComment = Parse.Object.extend("BarterComment");
         var query = new Parse.Query(BarterComment);
         query.equalTo("barter", angularCopy($scope.result));
@@ -701,6 +710,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                 $scope.comments = aCopy;
                 $scope.$apply();
                 hideSpinner();
+                callback();
             },
             error: function (error) {
                 $scope.$apply();
@@ -709,12 +719,12 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         });
     }
 
-    $scope.initComments = function () {
+    $scope.initComments = function (callback) {
         if ($scope.comments)
             return;
         if ($scope.result.get('state') == 'new')
             $scope.commentsFlag = true;
-        reloadComments();
+        reloadComments(callback);
     }
     $scope.sendComment = function (parent) {
         if (!$(parent ? '#commentReply' : '#comment').summernote('code') || $(parent ? '#commentReply' : '#comment').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0)
