@@ -1071,7 +1071,7 @@ function profileWidget(id, $scope, path, callback, lite) {
 app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $routeParams) {
     profileWidget(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), $scope, "/profile", function (result) {
         $rootScope.title = "Enbarter | " + result.get('username');
-        if (result.id == Parse.User.current().id || !result.get('options') || result.get('options').requestsPublic) {
+        if ((Parse.User.current() && result.id == Parse.User.current().id) || !result.get('options') || result.get('options').requestsPublic) {
             var relationQuery = result.relation('barterRequests').query();
             relationQuery.include('seekCategory');
             relationQuery.include('offerCategory');
