@@ -1,71 +1,4 @@
 <div ng-controller="indexCtrl">
-    <div id="carousel1" class="slide carousel" data-ride="carousel" data-interval="3000">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#carousel1" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel1" data-slide-to="1"></li>
-            <li data-target="#carousel1" data-slide-to="2"></li>
-        </ol>
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <img src="images/slider/apartments-924786.jpg" alt=""/>
-                <div class="carousel-caption">
-                    <h3 class="slider-h3">Save Time</h3>
-                    <p class="slider-p">Instantly Barter Up!</p>
-                </div>
-            </div>
-            <div class="item">
-                <img src="images/slider/books-1163695.jpg" alt=""/>
-                <div class="carousel-caption">
-                    <h3 class="slider-h3">Save Money</h3>
-                    <p class="slider-p">All barters for the low, low price of absolutely free.</p>
-                </div>
-            </div>
-            <div class="item">
-                <img src="images/slider/backpack-1149462.jpg" alt=""/>
-                <div class="carousel-caption">
-                    <h3 class="slider-h3">Reach your Goal</h3>
-                    <p class="slider-p">Your work gets done, and so does others'!
-                    </p>
-                </div>
-            </div>
-        </div>
-        <!-- Controls -->
-        <a class="left carousel-control" data-target="#carousel1" data-slide="prev"> <span
-                class="glyphicon glyphicon-chevron-left"></span> </a>
-        <a class="right carousel-control" data-target="#carousel1" data-slide="next"> <span
-                class="glyphicon glyphicon-chevron-right"></span> </a>
-    </div>
-    <section id="content-2-2" class="content-block content-2-2 bg-deepocean">
-        <div class="container">
-            <!-- Start Row -->
-            <div class="row">
-                <div class="col-sm-4 col-xs-12 text-center">
-                    <div class="icon-outline">
-                        <span class="glyphicon glyphicon-hourglass"></span>
-                    </div>
-                    <h3>Save Time</h3>
-                    <p>Instantly Barter Up!</p>
-                </div>
-                <div class="col-sm-4 col-xs-12 text-center">
-                    <div class="icon-outline">
-                        <span class="glyphicon glyphicon-usd"></span>
-                    </div>
-                    <h3>Save Money</h3>
-                    <p>All barters for the low, low price of absolutely free.</p>
-                </div>
-                <div class="col-sm-4 col-xs-12 text-center">
-                    <div class="icon-outline">
-                        <span class="glyphicon glyphicon-send"></span>
-                    </div>
-                    <h3>Reach your Goal</h3>
-                    <p>Your work gets done, and so does others'!</p>
-                </div>
-            </div>
-            <!--// END Row -->
-        </div>
-    </section>
     <section id="content-1-2" class="content-block content-1-2">
         <div class="container">
             <!-- Start Row -->
@@ -110,7 +43,26 @@
                 <div class="underlined-title">
                     <h1>Most Recent Offers<br></h1>
                     <hr>
-                    <h2>AVAILABLE BARTER OFFERS</h2>
+                    <ul class="filter">
+                        <li>
+                            <a href="{{catSoft}}">Software</a>
+                        </li>
+                        <li>
+                            <a href="{{catWrite}}">Writing</a>
+                        </li>
+                        <li>
+                            <a href="{{catMedia}}">Media</a>
+                        </li>
+                        <li>
+                            <a href="{{catData}}">DataEntry</a>
+                        </li>
+                        <li>
+                            <a href="{{catMarket}}">Marketing</a>
+                        </li>
+                        <li>
+                            <a href="{{catOther}}">Other</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -130,98 +82,5 @@
                 </div>
             </div>
         </div>
-    </section>
-    <section id="content-3-3" class="content-block-nopad content-3-3"
-             style="background-image:url('/images/slider/books-1163695.jpg');">
-        <div class="overlay overlay-blue">
-            <div class="container text-center">
-                <h2>Old is Gold START BARTERING</h2>
-                <h1>start&nbsp;Bartering</h1>
-                <div class="col-md-7 col-md-offset-4 text-center">
-                    <div class="col-md-6">
-                        <a href="/create_barter" ng-show="isLoggedIn()"
-                           class="btn btn-block btn-outline btn-outline-lg outline-light">Start a Barter</a>
-                        <a data-target="#sign"
-                           data-toggle="modal" ng-hide="isLoggedIn()"
-                           class="btn btn-block btn-outline btn-outline-lg outline-light" ng-click="initFBLogin()">Register
-                            now!</a>
-                    </div>
-                </div>
-            </div>
-            <!-- /.container -->
-        </div>
-    </section>
-    <section class="content-block gallery-2">
-        <div class="container">
-            <div class="underlined-title">
-                <h1>Hot Categories</h1>
-                <hr>
-                <h2>OUR MOST HOT CATEGORIES</h2>
-            </div>
-            <div class="row">
-                <div class="grid col-md-4 col-sm-6 col-xs-12">
-                    <figure class="effect-lily">
-                        <img src="images/slider/computer-893258_960_720.jpg" alt="img01"/>
-                        <figcaption>
-                            <h2>Software</h2>
-                            <p>Software</p>
-                            <a href="{{catSoft}}">View more</a>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="grid col-md-4 col-sm-6 col-xs-12">
-                    <figure class="effect-lily">
-                        <img src="images/slider/write-593333.jpg" alt="img01"/>
-                        <figcaption>
-                            <h2>Writing</h2>
-                            <p>Writing</p>
-                            <a href="{{catWrite}}">View more</a>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="grid col-md-4 col-sm-6 col-xs-12">
-                    <figure class="effect-lily">
-                        <img src="images/slider/hipster-865295.jpg" alt="img01"/>
-                        <figcaption>
-                            <h2>Media</h2>
-                            <p>Media</p>
-                            <a href="{{catMedia}}">View more</a>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="grid col-md-4 col-sm-6 col-xs-12">
-                    <figure class="effect-lily">
-                        <img src="images/slider/startup-photos.jpg" alt="img01"/>
-                        <figcaption>
-                            <h2>DATAENTRY</h2>
-                            <p>DATAENTRY</p>
-                            <a href="{{catData}}">View more</a>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="grid col-md-4 col-sm-6 col-xs-12">
-                    <figure class="effect-lily">
-                        <img src="images/slider/city-marketing-lights-night.jpg" alt="img01"/>
-                        <figcaption>
-                            <h2>Marketing</h2>
-                            <p>Marketing</p>
-                            <a href="{{catMarket}}">View more</a>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="grid col-md-4 col-sm-6 col-xs-12">
-                    <figure class="effect-lily">
-                        <img src="images/slider/road-street-blur-blurred.jpg" alt="img01"/>
-                        <figcaption>
-                            <h2>Other</h2>
-                            <p>Other</p>
-                            <a href="{{catOther}}">View more</a>
-                        </figcaption>
-                    </figure>
-                </div>
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container -->
     </section>
 </div>
