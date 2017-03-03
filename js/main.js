@@ -345,6 +345,8 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
     $('.navbar-collapse a:not(#dontClose),.navbar-collapse button').click(function () {
         $(".navbar-collapse").collapse('hide');
     });
+    $('#theHeader').removeAttr('style');
+    $('#theFooter').removeAttr('style');
 });
 
 
