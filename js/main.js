@@ -138,6 +138,22 @@ app.run(function ($rootScope, $location) {
             });
         }
     }
+
+    $rootScope.passwordReset = function (email) {
+        email = email || prompt("Enter Email");
+        if (email) {
+            showSpinner();
+            Parse.User.requestPasswordReset(email.toLowerCase(), {
+                success: function () {
+                    $rootScope.alertModal("Request sent");
+                    hideSpinner();
+                },
+                error: function (object, error) {
+                    errorHandler($rootScope, error);
+                }
+            });
+        } else $rootScope.alertModal('Email is required');
+    }
 });
 app.directive('onFinishRender', function ($timeout) {
     return {
@@ -288,22 +304,6 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
             location.reload();
             hideSpinner();
         });
-    }
-
-    $scope.passwordReset = function () {
-        var email = prompt("Enter Email");
-        if (email) {
-            showSpinner();
-            Parse.User.requestPasswordReset(email.toLowerCase(), {
-                success: function () {
-                    $rootScope.alertModal("Request sent");
-                    hideSpinner();
-                },
-                error: function (object, error) {
-                    errorHandler($rootScope, error);
-                }
-            });
-        } else $rootScope.alertModal('Email is required');
     }
 
     if (Parse.User.current()) {
@@ -890,10 +890,10 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             $scope.cantSend = true;
             var chat = new Chat();
             chat.set("message", $scope.message);
-            chat.set("user", getPointer(Parse.User.current()));
+            chat.set("user", Parse.User.current());
             chat.set("barterDashboard", getPointer($scope.result));
-            chat.set("offerUser", getPointer($scope.result.get("user")));
-            chat.set("barterUpUser", getPointer($scope.result.get("barterUpUser")));
+            chat.set("offerUser", $scope.result.get("user"));
+            chat.set("barterUpUser", $scope.result.get("barterUpUser"));
             chat.save({
                 success: function (results) {
                     $scope.message = "";
@@ -1071,18 +1071,23 @@ function profileWidget(id, $scope, path, callback, lite) {
 app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $routeParams) {
     profileWidget(($routeParams.id) ? $routeParams.id : ((Parse.User.current()) ? Parse.User.current().id : null), $scope, "/profile", function (result) {
         $rootScope.title = "Enbarter | " + result.get('username');
-        var relationQuery = result.relation('barterRequests').query();
-        relationQuery.include('seekCategory');
-        relationQuery.include('offerCategory');
-        relationQuery.find({
-            success: function (results) {
-                $scope.barterRequests = results;
-                $scope.$apply();
-                hideSpinner();
-            }, error: function () {
-                hideSpinner();
-            }
-        });
+        if (result.id == Parse.User.current().id || !result.get('options') || result.get('options').requestsPublic) {
+            var relationQuery = result.relation('barterRequests').query();
+            relationQuery.include('seekCategory');
+            relationQuery.include('offerCategory');
+            relationQuery.find({
+                success: function (results) {
+                    $scope.barterRequests = results;
+                    $scope.$apply();
+                    hideSpinner();
+                }, error: function () {
+                    hideSpinner();
+                }
+            });
+        } else {
+            $scope.$apply();
+            hideSpinner();
+        }
     });
 });
 
@@ -1102,6 +1107,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
         $scope.workLinks = result.get('workLinks') ? result.get('workLinks') : [];
         $rootScope.title = "Enbarter | Edit: " + result.get('username');
         $scope.sendEmails = result.get('options') && result.get('options').sendEmails == false ? false : true;
+        $scope.requestsPublic = result.get('options') && result.get('options').requestsPublic == false ? false : true;
 
         $scope.$apply();
         hideSpinner();
@@ -1118,6 +1124,11 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
         if ($scope.sendEmails == false || result.get('options') || result.get('options').sendEmails) {
             var options = result.get('options') || {};
             options.sendEmails = $scope.sendEmails;
+            result.set("options", options);
+        }
+        if ($scope.requestsPublic == false || result.get('options') || result.get('options').requestsPublic) {
+            var options = result.get('options') || {};
+            options.requestsPublic = $scope.requestsPublic;
             result.set("options", options);
         }
         if ($("#exampleInputFile1")[0].files.length > 0) {
