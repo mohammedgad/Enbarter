@@ -19,31 +19,39 @@
                 <strong class="control-label col-sm-1 ">Barter Title</strong>
                 <div class="form-group text-center">
                     <div>
-                        <div class="col-xs-4"><input type="text" class="form-control" id="formInput121"
+                        <div class="col-xs-4"><input type="text" class="form-control hideFavor" id="formInput121"
                                                      placeholder="Offer"
-                                                     ng-model="barterTitle1" required></div>
+                                                     ng-model="barterTitle1"> <br>
+                            <div class="form-group" ng-show="result.get('favors')">
+                                <label class="control-label" for="formInput954"> <input type="checkbox"
+                                                                                        id="formInput954"
+                                                                                        ng-change="favorChange()"
+                                                                                        ng-model="favor">
+                                    Favor
+                                </label>
+                            </div>
+                        </div>
                         <div class="col-xs-1 h5">For</div>
                         <div class="col-xs-4"><input type="text" class="form-control" placeholder="Seek"
-                                                     ng-model="barterTitle2" required></div>
+                                                     ng-model="barterTitle2"></div>
                     </div>
 
                 </div>
             </div>
-            <div class="row">
+            <div class="row hideFavor">
                 <h1>What Would you Like to Offer?</h1>
                 <div class="form-group">
                     <label class="control-label" for="formInput226">Select Your Offer Category
                         <br>
                     </label>
-                    <select id="formInput226" class="form-control" ng-model="offerCategory" required>
+                    <select id="formInput226" class="form-control" ng-model="offerCategory">
                         <option value="" selected disabled>Please select Offer Category</option>
                         <option ng-repeat="cat in categories" value="{{$index}}">{{cat.get('name')}}
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="offerDescription">Your Offer Description</label>
-                    <textarea class="form-control summernote" rows="3" id="offerDescription"
-                              required></textarea>
+                    <textarea class="form-control summernote" rows="3" id="offerDescription"></textarea>
                 </div>
                 <div class="form-group">
                     <ul>
@@ -51,7 +59,8 @@
                             <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button>
                         </li>
                     </ul>
-                    <label class="control-label" for="formInput256">What are the milestones you will follow to create
+                    <label class="control-label" for="formInput256">What are the milestones you will follow to
+                        create
                         what you offer?
                     </label>
                     <input type="text" class="form-control" id="formInput256" ng-model="offerMilestoneItem"
@@ -66,7 +75,7 @@
                     </label>
                     <input type="number" min="0" class="form-control" id="formInput1954"
                            ng-model="offerDeadline"
-                           placeholder="The number of days you believe will need to finish what you offer" required>
+                           placeholder="The number of days you believe will need to finish what you offer">
                 </div>
             </div>
             <div class="row">
@@ -75,7 +84,7 @@
                     <label class="control-label" for="formInput226">Select Your Seek Category
                         <br>
                     </label>
-                    <select id="formInput206" class="form-control" ng-model="seekCategory" required>
+                    <select id="formInput206" class="form-control" ng-model="seekCategory">
                         <option value="" selected disabled>Please select Seek Category</option>
                         <option ng-repeat="cat in categories" value="{{$index}}">{{cat.get('name')}}
                     </select>
@@ -83,14 +92,14 @@
                 <div class="form-group">
                     <label class="control-label" for="seekDescription">Your Seek Description</label>
                     <textarea class="form-control summernote" rows="3" id="seekDescription"
-                              required></textarea>
+                    ></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="formInput195">Deadline
                     </label>
                     <input type="number" min="0" class="form-control" id="formInput195"
                            ng-model="seekDeadline"
-                           placeholder="The number of days you believe will need to finish what you seek" required>
+                           placeholder="The number of days you believe will need to finish what you seek">
                 </div>
             </div>
             <button type="submit" class="btn btn-success btn-lg btn-block"

@@ -31,8 +31,11 @@
                     <h3 class="text-info" ng-bind="result.get('barterTitle')"></h3>
                     <button type="button" class="btn btn-default btn-block"
                             ng-click="showMilestones(result.get('offerMilestones'))"
-                            data-target="#barterMilestones" data-toggle="modal">
+                            data-target="#barterMilestones" data-toggle="modal" ng-hide="result.get('offerFavor')">
                         MileStones
+                    </button>
+                    <button type="button" class="btn btn-info btn-block" ng-show="result.get('offerFavor')" disabled>
+                        Favor
                     </button>
                     <h4 class="text-danger"
                         ng-bind="'Deadline [ Offer: '+result.get('offerDeadline')+' | Seek: '+result.get('seekDeadline')+']'">
@@ -72,7 +75,7 @@
             </div>
         </div>
         <div class="row seek-offer-page-content">
-            <div class="col-md-6 white">
+            <div class="col-md-6 white" ng-hide="result.get('offerFavor')">
                 <div class="column-shadow div-inside bg-deepocean white">
                     <h3>I Offer</h3>
                     <p class="white" ng-bind-html="result.get('offerDescription')"></p>
@@ -88,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 text-primary">
+            <div class="{{result.get('offerFavor')?'':'col-md-6'}} text-primary">
                 <div class="column-shadow div-inside bg-white">
                     <h3>I Seek</h3>
                     <p class="deepocean" ng-bind-html="result.get('seekDescription')"></p>
@@ -244,14 +247,14 @@
                     <h4 class="modal-title">Barter Up</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group hideFavor">
                         <label class="control-label" for="formInput1954">Deadline
                         </label>
                         <input type="number" class="form-control" id="formInput1954"
                                ng-model="deadline"
                                placeholder="The number of days you believe will need to finish what you offer" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group hideFavor">
                         <ul>
                             <li ng-repeat="o in milestones">{{o}}
                                 <button class="btn-link" ng-click="removeItemFrom(milestones,o)">X</button>
@@ -267,6 +270,14 @@
                             Milestone
                         </button>
 
+                    </div>
+                    <div class="form-group" ng-hide="result.get('offerFavor')||!currentUser.get('favors')">
+                        <label class="control-label" for="formInput954"> <input type="checkbox"
+                                                                                id="formInput954"
+                                                                                ng-change="favorChange()"
+                                                                                ng-model="favor">
+                            Favor
+                        </label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -310,9 +321,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Milestones</h4>
+                    <h4 class="modal-title">{{milestonesOffer.favor?'Favor':'Milestones'}}</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" ng-hide="milestonesOffer.favor">
                     <div class="form-group">
                         <ul>
                             <li ng-repeat="o in barterMilestones">{{o.task}}
