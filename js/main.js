@@ -641,6 +641,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         if ($scope.favor) {
             request.favor = getPointer($scope.currentUser.get('favors')[0].favor, 'Favor');
             request.milestone = [{checked: false, task: "favor"}];
+            request.deadline = 0;
         }
         var result = angularCopy($scope.result);
         var barterRequests = result.get('barterRequests');
