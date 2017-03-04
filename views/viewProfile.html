@@ -80,58 +80,50 @@
                 <div class="list-group">
                     <div ng-repeat="barter in barters"
                          ng-show="(barter.get('barterUpReview')&&barter.get('user').id==result.id)">
-
-                        <div class="row margin-top5 margin-bottom15 text-right offer-profile">
-                            <div class="margin-top20 margin-bottom20">
-                                <div class="media col-md-3">
-                                    <a href="/profile/{{barter.get('barterUpUser').id}}">
-                                        <figure class="pull-left">
-                                            <img class="media-object img-rounded img-responsive margin-bottom20"
-                                                 ng-src="{{barter.get('barterUpUser').get('pic')?barter.get('barterUpUser').get('pic').url():'./images/avatar.png'}}"
-                                                 alt="">
-                                        </figure>
-                                    </a>
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="/profile/{{barter.get('barterUpUser').id}}"><img
+                                        ng-src="{{barter.get('barterUpUser').get('pic')?barter.get('barterUpUser').get('pic').url():'./images/avatar.png'}}"
+                                        class="media-object" style="width:45px"></a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="/profile/{{barter.get('barterUpUser').id}}">{{barter.get('barterUpUser').get('username')}}</a>
+                                    <small><i>{{barter.get('updatedAt').toLocaleString()}}</i></small>
+                                    <span star-rating
+                                          ng-rate="barter.get('barterUpRate')"
+                                          max="5"
+                                          readonly="true" class="pull-right"></span>
+                                </h4>
+                                <div class="well">
+                                    <a class="lead" href="/barter/{{barter.id}}">{{barter.get('barterTitle')}}</a>
+                                    <hr>
+                                    {{barter.get('barterUpReview')}}
                                 </div>
-                                <div class="col-md-6 margin-bottom20 text-left">
-                                    <a href="/profile/{{barter.get('barterUpUser').id}}"><h4
-                                            class="list-group-item-heading">
-                                        {{barter.get('barterUpUser').get('username')}} </h4></a>
-                                    <p class="list-group-item-text"> {{barter.get('barterUpReview')}} </p>
-                                </div>
-                                <div class="col-md-3 text-center">
-                                    <h2>
-                                        <div star-rating ng-rate="barter.get('barterUpRate')" max="5"
-                                             readonly="true"></div>
-                                    </h2>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div ng-repeat="barter in barters"
-                         ng-show="barter.get('offerReview')&&barter.get('barterUpUser').id==result.id">
-                        <div class="row margin-top5 margin-bottom15 text-right offer-profile">
-                            <div class="margin-top20 margin-bottom20">
-                                <div class="media col-md-3">
-                                    <a href="/profile/{{barter.get('user').id}}">
-                                        <figure class="pull-left">
-                                            <img class="media-object img-rounded img-responsive margin-bottom20"
-                                                 ng-src="{{barter.get('user').get('pic')?barter.get('user').get('pic').url():'./images/avatar.png'}}"
-                                                 alt="">
-                                        </figure>
-                                    </a>
-                                </div>
-                                <div class="col-md-6 margin-bottom20 text-left">
-                                    <a href="/profile/{{barter.get('user').id}}"><h4
-                                            class="list-group-item-heading">
-                                        {{barter.get('user').get('username')}} </h4></a>
-                                    <p class="list-group-item-text"> {{barter.get('offerReview')}} </p>
-                                </div>
-                                <div class="col-md-3 text-center">
-                                    <h2>
-                                        <div star-rating ng-rate="barter.get('offerRate')" max="5"
-                                             readonly="true"></div>
-                                    </h2>
-                                </div>
+                </div>
+                <div ng-repeat="barter in barters"
+                     ng-show="barter.get('offerReview')&&barter.get('barterUpUser').id==result.id">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="/profile/{{barter.get('user').id}}"><img
+                                    ng-src="{{barter.get('user').get('pic')?barter.get('user').get('pic').url():'./images/avatar.png'}}"
+                                    class="media-object" style="width:45px"></a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading"><a href="/profile/{{barter.get('user').id}}">{{barter.get('user').get('username')}}</a>
+                                <small><i>{{barter.get('updatedAt').toLocaleString()}}</i></small>
+                                <span star-rating
+                                      ng-rate="barter.get('offerRate')"
+                                      max="5"
+                                      readonly="true" class="pull-right"></span>
+                            </h4>
+                            <div class="well">
+                                <a class="lead" href="/barter/{{barter.id}}">{{barter.get('barterTitle')}}</a>
+                                <hr>
+                                {{barter.get('offerReview')}}
                             </div>
                         </div>
                     </div>

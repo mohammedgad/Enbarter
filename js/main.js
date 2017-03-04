@@ -504,7 +504,7 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
             query.containsAll("words", $scope.query.split(" "));
         query.limit(10);
         query.descending("createdAt");
-
+        $scope.showLoadMore = false;
         query.find({
             success: function (results) {
                 $scope.results = results;
@@ -1116,7 +1116,7 @@ function profileWidget(id, $scope, path, callback, lite) {
             mainQuery.include('offerCategory');
             mainQuery.include('barterUpUser');
             mainQuery.include('user');
-            mainQuery.descending('createdAt');
+            mainQuery.descending('updatedAt');
             mainQuery.find({
                 success: function (results) {
                     $scope.barters = results;

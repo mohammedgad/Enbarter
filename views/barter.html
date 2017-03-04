@@ -194,11 +194,12 @@
 
                         <div class="media">
                             <div class="media-left">
-                                <img ng-src="{{comment.get('user').get('pic')?comment.get('user').get('pic').url():'./images/avatar.png'}}"
-                                     class="media-object" style="width:45px">
+                                <a href="/profile/{{comment.get('user').id}}"><img
+                                        ng-src="{{comment.get('user').get('pic')?comment.get('user').get('pic').url():'./images/avatar.png'}}"
+                                        class="media-object" style="width:45px"></a>
                             </div>
                             <div class="media-body">
-                                <h4 class="media-heading">{{comment.get('user').get('username')}}
+                                <h4 class="media-heading"><a href="/profile/{{comment.get('user').id}}">{{comment.get('user').get('username')}}</a>
                                     <small><i>{{comment.get('createdAt').toLocaleString()}}</i></small>
                                 </h4>
                                 <button class="btn btn-info pull-right marg-right5" type="button"
@@ -217,11 +218,12 @@
                         <div ng-repeat="comment in comment.get('children')">
                             <div class="media">
                                 <div class="media-left">
-                                    <img ng-src="{{comment.get('user').get('pic')?comment.get('user').get('pic').url():'./images/avatar.png'}}"
-                                         class="media-object" style="width:45px">
+                                    <a href="/profile/{{comment.get('user').id}}"> <img
+                                            ng-src="{{comment.get('user').get('pic')?comment.get('user').get('pic').url():'./images/avatar.png'}}"
+                                            class="media-object" style="width:45px"></a>
                                 </div>
                                 <div class="media-body">
-                                    <h4 class="media-heading">{{comment.get('user').get('username')}}
+                                    <h4 class="media-heading"><a href="/profile/{{comment.get('user').id}}">{{comment.get('user').get('username')}}</a>
                                         <small><i>{{comment.get('createdAt').toLocaleString()}}</i></small>
                                     </h4>
                                     <div class="well" ng-bind-html="comment.get('comment')"></div>
