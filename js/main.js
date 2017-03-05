@@ -761,7 +761,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                 var aCopy = angularCopy(results);
                 for (var i = 0; i < aCopy.length; i++) {
                     if (aCopy[i].get('parent'))
-                        aCopy[i].get('parent').add('children', aCopy[i]);
+                        aCopy[i].get('parent').addUnique('children', aCopy[i]);
                 }
                 $scope.comments = aCopy;
                 $scope.$apply();
@@ -1730,8 +1730,6 @@ $(document).ready(function () {
                 },
                 cache: true
             });
-
-            $('body').append('<a href="https://www.youtube.com/watch?v=qj80AQaSi4A" target="_blank"><img style="position: absolute; top: 0; left: 0; border: 0; z-index: 9999999; " src="images/ribbon_tutorial.png" alt="Enbarter Tutorial" data-canonical-src="/images/ribbon_tutorial.png"></a>');
         }, 5000);
 
         if (navigator.userAgent.match(/(MSIE)/) != null) {

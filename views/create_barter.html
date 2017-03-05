@@ -46,7 +46,8 @@
                     </label>
                     <select id="formInput226" class="form-control" ng-model="offerCategory">
                         <option value="" selected disabled>Please select Offer Category</option>
-                        <option ng-repeat="cat in categories" value="{{$index}}">{{cat.get('name')}}
+                        <option ng-repeat="cat in categories" ng-if="cat.get('name')!='Favor'" value="{{$index}}">
+                            {{cat.get('name')}}
                     </select>
                 </div>
                 <div class="form-group">
@@ -86,7 +87,8 @@
                     </label>
                     <select id="formInput206" class="form-control" ng-model="seekCategory">
                         <option value="" selected disabled>Please select Seek Category</option>
-                        <option ng-repeat="cat in categories" value="{{$index}}">{{cat.get('name')}}
+                        <option ng-repeat="cat in categories" ng-if="cat.get('name')!='Favor'" value="{{$index}}">
+                            {{cat.get('name')}}
                     </select>
                 </div>
                 <div class="form-group">

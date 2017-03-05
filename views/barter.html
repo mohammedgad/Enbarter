@@ -5,11 +5,11 @@
             <div class="container text-center">
                 <h1 class="page-title" ng-bind="result.get('barterTitle')"></h1>
                 <div class="col-md-4 margin-top20 text-center margin-bottom20 col-xs-offset-4">
-                    <i class="glyphicon glyphicon-{{result.get('seekCategory').get('icon')}} fa-3x offer-icon white"
-                       title="{{result.get('seekCategory').get('name')}}"></i>
-                    <i class="glyphicon glyphicon-transfer fa-3x offer-icon white"></i>
                     <i class="glyphicon glyphicon-{{result.get('offerCategory').get('icon')}} fa-3x offer-icon white"
                        title="{{result.get('offerCategory').get('name')}}"></i>
+                    <i class="glyphicon glyphicon-transfer fa-3x offer-icon white"></i>
+                    <i class="glyphicon glyphicon-{{result.get('seekCategory').get('icon')}} fa-3x offer-icon white"
+                       title="{{result.get('seekCategory').get('name')}}"></i>
                 </div>
             </div>
             <!-- /.container -->

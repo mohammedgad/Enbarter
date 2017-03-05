@@ -9,6 +9,7 @@
                 <ul class="list-group">
                     <li ng-repeat="result in results" class="list-group-item {{!result.get('read')?'active':''}}"><a
                             ng-click="notificationCheck(result)" style="{{(!result.get('read'))?'color:white':''}}">{{result.get('description')}}</a>
+                        <span class="badge">{{result.get('count')?result.get('count'):''}}</span>
                 </ul>
             </div>
         </div>
