@@ -53,10 +53,10 @@
                             <a ng-href="{{user.get('paymentInfo').get('receipt_url')}}"
                                ng-show="isLoggedIn()&&user.get('membership').id=='42FyZkMdNq'&&user.get('paymentInfo').get('receipt_url')"
                                class="btn btn-default" target="_blank">Receipt</a>
-                            <a ng-click="openOverride(user.get('paymentInfo').get('update_url'))"
+                            <a ng-href="{{user.get('paymentInfo').get('update_url')}}"
                                ng-show="isLoggedIn()&&user.get('membership').id=='42FyZkMdNq'&&user.get('paymentInfo').get('update_url')"
                                class="btn btn-success">Update</a>
-                            <a ng-click="openOverride(user.get('paymentInfo').get('cancel_url'))"
+                            <a ng-href="{{user.get('paymentInfo').get('cancel_url')}}"
                                ng-show="isLoggedIn()&&user.get('membership').id=='42FyZkMdNq'&&user.get('paymentInfo').get('cancel_url')"
                                class="btn btn-danger">Cancel</a>
                         </header>
