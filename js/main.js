@@ -1364,7 +1364,7 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
                 }
             });
         });
-    }
+    };
 
     $scope.openOverride = function (override) {
         initPaddle(function () {
@@ -1375,7 +1375,19 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
                 }
             });
         });
-    }
+    };
+
+    $scope.changeSubscription = function (membership) {
+        showSpinner();
+        Parse.Cloud.run('changeSubscription', {'membership': membership.id || membership.objectId || membership}, {
+            success: function (result) {
+                $rootScope.alertModal(result.result);
+                hideSpinner();
+            }, error: function (error) {
+                errorHandler($rootScope, error);
+            }
+        });
+    };
 });
 
 app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routeParams) {
