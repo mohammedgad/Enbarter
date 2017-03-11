@@ -1380,6 +1380,7 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
             if (Parse.User.current().get('membership') && Parse.User.current().get('membership').id == 'fQcewB3856' && membership.get('noTrials')) {
                 options.trialDays = '0';
                 options.trialDaysAuth = membership.get('noTrials');
+                options.message = membership.get('name') + ", No Trials";
             }
 
             Paddle.Checkout.open(options);
