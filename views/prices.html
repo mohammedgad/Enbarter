@@ -55,10 +55,10 @@
                                class="btn btn-default" target="_blank">Receipt</a>
                             <a ng-href="{{user.get('paymentInfo').get('update_url')}}"
                                ng-show="isLoggedIn()&&user.get('membership').id=='42FyZkMdNq'&&user.get('paymentInfo').get('update_url')"
-                               class="btn btn-success">Update</a>
+                               class="btn btn-success" target="_blank">Update</a>
                             <a ng-href="{{user.get('paymentInfo').get('cancel_url')}}"
                                ng-show="isLoggedIn()&&user.get('membership').id=='42FyZkMdNq'&&user.get('paymentInfo').get('cancel_url')"
-                               class="btn btn-danger">Cancel</a>
+                               class="btn btn-danger" target="_blank">Cancel</a>
                         </header>
                         <ul class="features">
                             <li>

@@ -413,7 +413,6 @@ app.controller('createBarter', function ($scope, $rootScope) {
             milestones.push({checked: false, task: $scope.milestones[i]});
         }
         if ($scope.favor) {
-            barter.set("offerMilestones", [{checked: false, task: "Favor"}]);
             barter.set("barterTitle", "Favor For " + $scope.barterTitle2);
             barter.set("offerCategory", getPointer('JErAOy1k9B', 'Category'));
             barter.set("offerDeadline", 0);
@@ -633,15 +632,19 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         for (var i = 0; i < $scope.milestones.length; i++) {
             milestones.push({checked: false, task: $scope.milestones[i]});
         }
-        var request = {
-            deadline: $scope.deadline || 0,
-            milestone: milestones,
-            user: Parse.User.current(),
-        };
+        var request;
         if ($scope.favor) {
-            request.favor = getPointer($scope.currentUser.get('favors')[0].favor, 'Favor');
-            request.milestone = [{checked: false, task: "favor"}];
-            request.deadline = 0;
+            request = {
+                deadline: 0,
+                user: Parse.User.current(),
+                favor: getPointer($scope.currentUser.get('favors')[0].favor, 'Favor')
+            };
+        } else {
+            request = {
+                deadline: $scope.deadline || 0,
+                milestone: milestones,
+                user: Parse.User.current()
+            };
         }
         var result = angularCopy($scope.result);
         var barterRequests = result.get('barterRequests');
@@ -911,11 +914,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                     return;
                 }
 
-                if (!result.get('barterUpMilestones') || !result.get('offerMilestones') || !result.get('barterUpMilestones').length || !result.get('offerMilestones').length) {
-                    // alert("Dashboard can't be accessed because there is no Milestones");
-                    window.location.href = "/barter/" + result.get('barter').id;
-                    return;
-                }
                 $scope.result = result;
                 $rootScope.title = "Enabrter | Dashboard";
                 $scope.offerMilestones = angularCopy(result.get('offerMilestones'));
@@ -1037,6 +1035,14 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     };
 
     $scope.showClose = function (x) {
+        if (x == 'favor') {
+
+            if ($scope.result && Parse.User.current().id == $scope.result.get('barterUpUser').id && $scope.result.get('offerFavor') && $scope.result.get('barterUpFinalPic') && !$scope.result.get('barter').get("barterUpRate"))
+                return true;
+            if ($scope.result && Parse.User.current().id == $scope.result.get('user').id && $scope.result.get('barterUpFavor') && $scope.result.get('offerFinalPic') && !$scope.result.get('barter').get("offerRate"))
+                return true;
+            return false;
+        }
         var oppisite = (x == 'offer') ? 'barterUp' : 'offer';
         if ($scope.result && ((x == 'offer' && Parse.User.current().id == $scope.result.get('user').id) || (x == 'barterUp' && Parse.User.current().id == $scope.result.get('barterUpUser').id) || ($scope.result.get('barter').get(oppisite + "Rate"))))
             return false;
@@ -1045,7 +1051,6 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         return false;
     }
     $scope.showFinalPic = function (x) {
-        var oppisite = (x == 'offer') ? 'barterUp' : 'offer';
         if ($scope.result && ((x == 'offer' && Parse.User.current().id != $scope.result.get('user').id) || (x == 'barterUp' && Parse.User.current().id != $scope.result.get('barterUpUser').id) ))
             return false;
         var arr = [];

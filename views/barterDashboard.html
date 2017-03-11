@@ -12,13 +12,17 @@
                     <a href="/profile/{{result.get('barterUpUser').id}}" class=" white"
                        ng-bind="result.get('barterUpUser').get('username')"></a>
                 </div>
+                <button class="btn btn-success" data-target="#closeRate" data-toggle="modal"
+                        ng-show="showClose('favor')">
+                    Close & Rate
+                </button>
             </div>
             <!-- /.container -->
         </div>
     </section>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-{{result.get('barterUpFavor')?'12':(result.get('offerFavor')?'0 hidden':'6')}}">
                 <h3>Offer Milestones
                     <button class="btn btn-success" data-target="#closeRate" data-toggle="modal"
                             ng-show="showClose('offer')">Close & Rate
@@ -49,7 +53,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-{{result.get('offerFavor')?'12':(result.get('barterUpFavor')?'0 hidden':'6')}}">
                 <h3>Seek Milestones
                     <button class="btn btn-success" data-target="#closeRate" data-toggle="modal"
                             ng-show="showClose('barterUp')">Close & Rate

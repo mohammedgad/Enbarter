@@ -13,6 +13,8 @@
                 class="badge">{{(nCount>=10)?"10+":nCount}}</span></a>
         <a class="list-group-item">Completed<br>Barters<span
                 class="badge">{{(completedBarters>=25)?"25+":completedBarters}}</span></a>
+        <a ng-show="userId==result.id&&result.get('favors')" class="list-group-item">Favors<span
+                class="badge">{{(result.get('favors')[0].count>=10)?"10+":result.get('favors')[0].count}}</span></a>
         <a ng-show="userId==result.id" class="list-group-item" href="/profile/edit">Edit Profile</a>
         <a ng-show="userId&&userId!=result.id" class="list-group-item" href="/messages/{{result.id}}">Send Message</a>
         <a data-target="#sign" data-toggle="modal" ng-hide="isLoggedIn()" ng-click="initFBLogin()"
