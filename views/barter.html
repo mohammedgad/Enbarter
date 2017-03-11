@@ -142,7 +142,7 @@
                                 <td>{{result.get('barterUpDeadline')}}</td>
                                 <td class="table-action">
                                     <button type="button" class="btn btn-info"
-                                            ng-click="showMilestones(result.get('barterUpMilestones'))"
+                                            ng-click="showMilestones(result.get('barterUpMilestones'),result.get('barterUpFavor')?{favor:true}:null)"
                                             ng-show="sameAccount()" data-target="#barterMilestones" data-toggle="modal"
                                     >
                                         MileStones
@@ -166,11 +166,12 @@
 
                                 </td>
                                 <td>{{request.deadline}}</td>
-                                <td class="table-action" ng-show="sameAccount()&&!result.get('barterUpUser')">
+                                <td class="table-action"
+                                    ng-show="sameAccount()">
                                     <button type="button" class="btn btn-info"
                                             ng-click="showMilestones(request.milestone,request,$index)"
                                             data-target="#barterMilestones" data-toggle="modal">
-                                        Barter up
+                                        {{result.get('state')=='new'?'Barter up':'Milestones'}}
                                     </button>
                                 </td>
                             </tr>
@@ -273,7 +274,7 @@
                         </button>
 
                     </div>
-                    <div class="form-group" ng-hide="result.get('offerFavor')||!currentUser.get('favors')">
+                    <div class="form-group" ng-hide="result.get('offerFavor')||!currentUser.get('favors')[0].count>0">
                         <label class="control-label" for="formInput954"> <input type="checkbox"
                                                                                 id="formInput954"
                                                                                 ng-change="favorChange()"
@@ -334,7 +335,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button ng-show="milestonesOffer" type="button" class="btn btn-success"
+                    <button ng-show="milestonesOffer&&result.get('state')=='new'" type="button" class="btn btn-success"
                             ng-click="barterUpOwner(milestonesOffer,milestonesOfferIndex)" data-dismiss="modal">Accept
                     </button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>

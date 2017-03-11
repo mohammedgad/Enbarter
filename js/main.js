@@ -703,10 +703,6 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         barterDashboard.set('barter', result);
         barterDashboard.set('offerMilestones', result.get('offerMilestones'));
         barterDashboard.set('offerDeadline', result.get('offerDeadline'));
-        if (result.get('offerFavor'))
-            barterDashboard.set('offerFavor', result.get('offerFavor'));
-        if (request.favor)
-            barterDashboard.set('barterUpFavor', getPointer(request.favor, 'Favor'));
 
         showSpinner();
         barterDashboard.save({
@@ -716,6 +712,9 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                 result.set("barterUpDeadline", request.deadline);
                 result.set("state", "bartered");
                 result.set('barterDashboard', results);
+                if (request.favor)
+                    result.set('barterUpFavor', getPointer(request.favor, 'Favor'));
+
                 result.save({
                     success: function (results) {
                         $scope.result = angularCopy(results);
@@ -903,14 +902,9 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         success: function (results) {
             if (results[0]) {
                 result = results[0];
-                if (!result.get('barterUpUser') && Parse.User.current().id != result.get('user').id) {
+                if (!Parse.User.current() || !result.get('barterUpUser') || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
                     // alert("Dashboard can't be accessed because there is no barter user");
                     window.location.href = "/barter/" + result.get('barter').id;
-                    return;
-                }
-                if (!Parse.User.current() || (Parse.User.current().id != result.get('user').id && Parse.User.current().id != result.get('barterUpUser').id)) {
-                    $location.path('/');
-                    $scope.$apply();
                     return;
                 }
 
@@ -1037,9 +1031,9 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     $scope.showClose = function (x) {
         if (x == 'favor') {
 
-            if ($scope.result && Parse.User.current().id == $scope.result.get('barterUpUser').id && $scope.result.get('offerFavor') && $scope.result.get('barterUpFinalPic') && !$scope.result.get('barter').get("barterUpRate"))
+            if ($scope.result && $scope.result.get('barter') && Parse.User.current().id == $scope.result.get('barterUpUser').id && $scope.result.get('barter').get('offerFavor') && $scope.result.get('barterUpFinalPic') && !$scope.result.get('barter').get("barterUpRate"))
                 return true;
-            if ($scope.result && Parse.User.current().id == $scope.result.get('user').id && $scope.result.get('barterUpFavor') && $scope.result.get('offerFinalPic') && !$scope.result.get('barter').get("offerRate"))
+            if ($scope.result && $scope.result.get('barter') && Parse.User.current().id == $scope.result.get('user').id && $scope.result.get('barter').get('barterUpFavor') && $scope.result.get('offerFinalPic') && !$scope.result.get('barter').get("offerRate"))
                 return true;
             return false;
         }
