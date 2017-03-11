@@ -44,20 +44,20 @@
                                 <span class="period">/ Mo</span>
                             </div>
                             <!-- /.price -->
-                            <a ng-click="buyNow()"
-                               ng-show="isLoggedIn()&&user.get('membership').id!='42FyZkMdNq'"
+                            <a ng-click="buyNow(premuim)"
+                               ng-show="isLoggedIn()&&user.get('membership').id!=premuim.id"
                                class="btn btn-success">Buy Now!</a>
                             <a data-target="#sign"
                                data-toggle="modal" ng-hide="isLoggedIn()"
                                class="btn btn-success" ng-click="initFBLogin()">Register Now!</a>
                             <a ng-href="{{user.get('paymentInfo').get('receipt_url')}}"
-                               ng-show="isLoggedIn()&&user.get('membership').id=='42FyZkMdNq'&&user.get('paymentInfo').get('receipt_url')"
+                               ng-show="isLoggedIn()&&user.get('membership').id==premuim.id&&user.get('paymentInfo').get('receipt_url')"
                                class="btn btn-default" target="_blank">Receipt</a>
                             <a ng-href="{{user.get('paymentInfo').get('update_url')}}"
-                               ng-show="isLoggedIn()&&user.get('membership').id=='42FyZkMdNq'&&user.get('paymentInfo').get('update_url')"
+                               ng-show="isLoggedIn()&&user.get('membership').id==premuim.id&&user.get('paymentInfo').get('update_url')"
                                class="btn btn-success" target="_blank">Update</a>
                             <a ng-href="{{user.get('paymentInfo').get('cancel_url')}}"
-                               ng-show="isLoggedIn()&&user.get('membership').id=='42FyZkMdNq'&&user.get('paymentInfo').get('cancel_url')"
+                               ng-show="isLoggedIn()&&user.get('membership').id==premuim.id&&user.get('paymentInfo').get('cancel_url')"
                                class="btn btn-danger" target="_blank">Cancel</a>
                         </header>
                         <ul class="features">

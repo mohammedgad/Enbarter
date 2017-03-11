@@ -1324,11 +1324,25 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
         });
     }
 
-    if (Parse.User.current()) {
-        getUser();
-    } else {
-        hideSpinner();
-    }
+    var Membership = Parse.Object.extend("Membership");
+    var query = new Parse.Query(Membership);
+    query.find({
+        success: function (memberships) {
+            $scope.memberships = memberships;
+            for (var i = 0; i < memberships.length; i++) {
+                if (memberships[i].id == '42FyZkMdNq')
+                    $scope.premuim = memberships[i];
+            }
+            if (Parse.User.current()) {
+                getUser();
+            } else {
+                hideSpinner();
+            }
+        },
+        error: function (object, error) {
+            errorHandler($rootScope, error);
+        }
+    });
 
     function initPaddle(callback) {
         if (typeof Paddle === 'undefined') {
@@ -1351,17 +1365,24 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
             callback();
         }
     };
-    $scope.buyNow = function () {
+    $scope.buyNow = function (membership) {
         initPaddle(function () {
-            Paddle.Checkout.open({
-                product: 511568,
+            var options = {
+                product: membership.get('productId'),
                 email: Parse.User.current().get('email'),
                 passthrough: Parse.User.current().id,
                 successCallback: function () {
                     getUser();
                     $rootScope.alertModal("Thank you for your payment, The payment may take up to 72 hours to be processed and appear in your account.");
-                }
-            });
+                },
+                disableLogout: true
+            };
+            if (Parse.User.current().get('membership') && Parse.User.current().get('membership').id == 'fQcewB3856' && membership.get('noTrials')) {
+                options.trialDays = '0';
+                options.trialDaysAuth = membership.get('noTrials');
+            }
+
+            Paddle.Checkout.open(options);
         });
     };
 
