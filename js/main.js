@@ -785,7 +785,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
         reloadComments(callback);
     }
     $scope.sendComment = function (parent) {
-        if (!$(parent ? '#commentReply' : '#comment').summernote('code') || $(parent ? '#commentReply' : '#comment').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0)
+        if (!$(parent ? '#commentReply' : '#comment').summernote('code') || ($(parent ? '#commentReply' : '#comment').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0 && !$(parent ? '#commentReply' : '#comment').summernote('code').includes('img')))
             return;
         $scope.cantSend = true;
         var BarterComment = Parse.Object.extend("BarterComment");
@@ -1510,7 +1510,7 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
     }
 
     $scope.sendMessage = function (parent) {
-        if (!$('#message').summernote('code') || $('#message').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0)
+        if (!$('#message').summernote('code') || ($('#message').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0 && !$('#message').summernote('code').include('img')))
             return;
         $scope.cantSend = true;
         var message = new Message();

@@ -143,73 +143,73 @@
                 return button.render();
             }
             var $summernote = $('.summernote');
-            for (var i = 0; i < $summernote.length; i++) {
-                $($summernote[i]).summernote({
-                    toolbar: [
-                        ['style', ['bold', 'italic', 'underline', 'clear']],
-                        ['font', ['strikethrough', 'superscript', 'subscript']],
-                        ['insert', $('.summernote')[0].attributes.insertTagsDisabled || ['link', 'picture', 'videoBtn', 'hr']],
-                        ['undo', ['undo', 'redo']], ['fullscreen', ['fullscreen']], ['CharacterCount', ['charCount']]
 
-                    ], shortcuts: false, disableDragAndDrop: true, buttons: {
-                        charCount: function (context) {
-                            var ui = $.summernote.ui;
-                            var button = ui.button({
-                                contents: '<i id="charCount' + i + '">#Character Count</i>',
-                                tooltip: 'Character Count'
-                            });
-                            return button.render();
-                        }, videoBtn: videoBtn
-                    },
-                    height: 200, placeholder: 'write here...',
-                    callbacks: {
-                        onKeydown: function (e) {
-                            var count = '#charCount';
-                            for (var i = 0; i < $('.summernote').length; i++) {
-                                if ($('.summernote').eq(i).summernote('code') == e.currentTarget.innerHTML) {
-                                    count += i;
-                                    break;
+            function initSummernote(theEditor) {
+                theEditor.summernote({
+                        toolbar: [
+                            ['style', ['bold', 'italic', 'underline', 'clear']],
+                            ['font', ['strikethrough', 'superscript', 'subscript']],
+                            ['insert', theEditor[0].attributes.insertTagsDisabled || ['link', 'picture', 'videoBtn', 'hr']],
+                            ['undo', ['undo', 'redo']], ['fullscreen', ['fullscreen']], ['CharacterCount', ['charCount']]
+
+                        ], shortcuts: false, disableDragAndDrop: true, buttons: {
+                            charCount: function (context) {
+                                var ui = $.summernote.ui;
+                                var button = ui.button({
+                                    contents: '<i id="charCount' + i + '">#Character Count</i>',
+                                    tooltip: 'Character Count'
+                                });
+                                return button.render();
+                            }, videoBtn: videoBtn
+                        },
+                        height: 200, placeholder: 'write here...',
+                        callbacks: {
+                            onKeydown: function (e) {
+                                var count = '#charCount';
+                                for (var i = 0; i < $('.summernote').length; i++) {
+                                    if ($('.summernote').eq(i).summernote('code') == e.currentTarget.innerHTML) {
+                                        count += i;
+                                        break;
+                                    }
                                 }
-                            }
-                            var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
-                            $(count).text('#' + num);
-                            var key = e.keyCode;
-                            allowed_keys = [8, 37, 38, 39, 40, 46]
-                            if (num > 1000 && $.inArray(key, allowed_keys) == -1) {
+                                var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
+                                $(count).text('#' + num);
+                                var key = e.keyCode;
+                                allowed_keys = [8, 37, 38, 39, 40, 46]
+                                if (num > 1000 && $.inArray(key, allowed_keys) == -1) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    $(count).text("Exceeding the allowed character limit");
+                                }
+                            }, onPaste: function (e) {
                                 e.preventDefault();
                                 e.stopPropagation();
-                                $(count).text("Exceeding the allowed character limit");
-                            }
-                        }, onPaste: function (e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            var count = '#charCount';
-                            for (var i = 0; i < $('.summernote').length; i++) {
-                                if ($('.summernote').eq(i).summernote('code') == e.currentTarget.innerHTML) {
-                                    count += i;
-                                    break;
+                                var count = '#charCount';
+                                for (var i = 0; i < $('.summernote').length; i++) {
+                                    if ($('.summernote').eq(i).summernote('code') == e.currentTarget.innerHTML) {
+                                        count += i;
+                                        break;
+                                    }
                                 }
-                            }
-                            var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
-                            var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-                            num += bufferText.replace(/(<([^>]+)>)/ig, "").length;
-                            if (num < 1000) {
-                                document.execCommand('insertText', false, bufferText);
-                                $(count).text('#' + num);
-                            } else {
-                                $(count).text("Paste content exceeding the allowed character limit");
-                            }
-                        },
-                        onInit: function () {
-                            var delay = 500;
+                                var num = e.currentTarget.innerText.replace(/(<([^>]+)>)/ig, "").length;
+                                var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                                num += bufferText.replace(/(<([^>]+)>)/ig, "").length;
+                                if (num < 1000) {
+                                    document.execCommand('insertText', false, bufferText);
+                                    $(count).text('#' + num);
+                                } else {
+                                    $(count).text("Paste content exceeding the allowed character limit");
+                                }
+                            },
+                            onInit: function () {
+                                var delay = 500;
 
-                            function initCodeFn() {
-                                var scope = angular.element($('.summernote')).scope();
-                                for (var j = 0; j < $('.summernote').length; j++) {
-                                    var initCode = $($('.summernote')[j]).attr("initCode");
+                                function initCodeFn() {
+                                    var scope = angular.element($('.summernote')).scope();
+                                    var initCode = theEditor.attr("initCode");
                                     if (initCode) {
                                         if (scope[initCode])
-                                            $($('.summernote')[j]).summernote('code', scope[initCode]);
+                                            theEditor.summernote('code', scope[initCode]);
                                         else if (delay < 10000) {
                                             delay += 500;
                                             setTimeout(function () {
@@ -217,22 +217,52 @@
                                             }, delay);
                                         }
                                     } else
-                                        $($('.summernote')[j]).summernote('code', '');
+                                        theEditor.summernote('code', '');
                                 }
-                            }
 
-                            setTimeout(function () {
-                                initCodeFn()
-                            }, delay);
+                                setTimeout(function () {
+                                    initCodeFn()
+                                }, delay);
+                            },
+                            onImageUpload: function (files) {
+                                sendFile(files[0], theEditor);
+                            }
                         }
                     }
-                });
+                );
+            }
+
+            for (var i = 0; i < $summernote.length; i++) {
+                initSummernote($($summernote[i]));
             }
         },
         dataType: "script",
         cache: true
     });
 
+    function sendFile(file, editor) {
+        data = new FormData();
+        data.append("image", file);
+        showSpinner();
+        $.ajax({
+            url: "https://api.imgur.com/3/image",
+            headers: {"Authorization": "Client-ID a4ffa13fb142024"},
+            dataType: 'json',
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function (data) {
+                editor.summernote("insertImage", data.data.link, file.name);
+                hideSpinner();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus + " " + errorThrown);
+                hideSpinner();
+            }
+        });
+    }
 </script>
 
 <style>
