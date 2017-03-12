@@ -254,7 +254,7 @@
             processData: false,
             type: 'POST',
             success: function (data) {
-                editor.summernote("insertImage", data.data.link, file.name);
+                editor.summernote("insertImage", data.data.link.replace('http://i.imgur.com', "https://i.imgur.com"), file.name);
                 hideSpinner();
             },
             error: function (jqXHR, textStatus, errorThrown) {
