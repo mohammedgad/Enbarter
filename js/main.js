@@ -1287,24 +1287,40 @@ app.controller('notificationsCtrl', function ($scope, $location, $rootScope, $ro
         $scope.$apply();
     }
     $rootScope.title = "Enbarter | Notifications";
-    profileWidget(Parse.User.current().id, $scope, '/notifications', function (result) {
-        var Notification = Parse.Object.extend('Notification');
+    var Notification = Parse.Object.extend('Notification');
+
+    if ($location.hash()) {
         var query = new Parse.Query(Notification);
-        query.descending("createdAt");
-        query.equalTo("user", Parse.User.current());
-        query.find({
-            success: function (results) {
-                $scope.results = results;
+        query.get($location.hash(), {
+            success: function (result) {
+                $rootScope.notificationCheck(result);
                 $scope.$apply();
-                hideSpinner();
             },
             error: function (object, error) {
-                $location.path('/');
-                $scope.$apply();
-                hideSpinner();
+                loadNotification();
             }
         });
-    }, true);
+    } else
+        loadNotification();
+    function loadNotification() {
+        profileWidget(Parse.User.current().id, $scope, '/notifications', function (result) {
+            var query = new Parse.Query(Notification);
+            query.descending("createdAt");
+            query.equalTo("user", Parse.User.current());
+            query.find({
+                success: function (results) {
+                    $scope.results = results;
+                    $scope.$apply();
+                    hideSpinner();
+                },
+                error: function (object, error) {
+                    $location.path('/');
+                    $scope.$apply();
+                    hideSpinner();
+                }
+            });
+        }, true);
+    }
 });
 
 app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routeParams) {
