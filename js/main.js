@@ -378,6 +378,13 @@ app.controller('createBarter', function ($scope, $rootScope) {
 
     $scope.favorChange = function () {
         $('.hideFavor').toggle();
+        if ($('.hideFavor').is(":hidden")) {
+            $scope.barterTitle1 = 'Favor';
+            $('#formInput121').prop('disabled', true);
+        } else {
+            $scope.barterTitle1 = '';
+            $('#formInput121').prop('disabled', false);
+        }
     };
 
     $scope.startBarter = function () {
