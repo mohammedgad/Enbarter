@@ -19,16 +19,14 @@
                 <strong class="control-label col-sm-1 ">Barter Title</strong>
                 <div class="form-group text-center">
                     <div>
-                        <div class="col-xs-4"><input type="text" class="form-control" id="formInput121"
-                                                     placeholder="Offer"
-                                                     ng-model="barterTitle1"> <br>
-                            <div class="form-group" ng-show="result.get('favors')[0].count>0">
-                                <label class="control-label" for="formInput954"> <input type="checkbox"
-                                                                                        id="formInput954"
-                                                                                        ng-change="favorChange()"
-                                                                                        ng-model="favor">
-                                    Favor
-                                </label>
+                        <div class="col-xs-4">
+                            <div class="input-group">
+                                <label ng-show="result.get('favors')[0].count>0" class="input-group-addon"
+                                       for="formInput954"> <input type="checkbox" id="formInput954"
+                                                                  ng-change="favorChange()"
+                                                                  ng-model="favor"> Favor</label>
+                                <input type="text" class="form-control" id="formInput121" placeholder="Offer"
+                                       ng-model="barterTitle1">
                             </div>
                         </div>
                         <div class="col-xs-1 h5">For</div>
