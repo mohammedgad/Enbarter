@@ -96,11 +96,16 @@ app.run(function ($rootScope, $location) {
         if ($rootScope.nCount > 0)
             $rootScope.nCount--;
         notification.save({
-            success: function (results) {
-                if (results.get('redirect') == $location.path())
+            success: function (notification) {
+                var redirect = notification.get('redirect').split('#');
+                if (redirect[0] == $location.path())
                     location.reload();
                 else
-                    $location.path(results.get('redirect'));
+                    $location.path(redirect[0]);
+                if (redirect[1])
+                    $location.hash(redirect[1]);
+                else
+                    $location.hash(null);
                 $rootScope.$apply();
             },
             error: function (object, error) {
