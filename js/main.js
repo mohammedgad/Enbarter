@@ -1199,7 +1199,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
         $rootScope.title = "Enbarter | Edit: " + result.get('username');
         $scope.sendEmails = result.get('options') && result.get('options').sendEmails == false ? false : true;
         $scope.requestsPublic = result.get('options') && result.get('options').requestsPublic == false ? false : true;
-
+        $scope.email = result.get('email');
         $scope.$apply();
         hideSpinner();
     }, true);
