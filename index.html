@@ -308,6 +308,30 @@
         </div>
     </div>
 </section>
+<div class="modal fade pg-show-modal" id="reportIt" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">REPORT</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label" for="formInput2568">Why do you think is
+                        inappropriate?</label>
+                    <textarea class="form-control" rows="3" id="formInput2568"
+                              ng-model="reportDescription" required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" ng-click="createReport()" data-dismiss="modal">
+                    Report!
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <link href="css/libsBundle.css" rel="stylesheet">
 <link href="css/style-library-1.css" rel="stylesheet">
 <script src="js/libsBundle.js"></script>

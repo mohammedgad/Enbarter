@@ -59,8 +59,8 @@
                     >DISABLED
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" ng-hide="sameAccount()" data-toggle="modal"
-                            data-target="{{isLoggedIn()?'#reportBarter':'#sign'}}"
-                            ng-click="!isLoggedIn()&&initFBLogin()">Report barter
+                            data-target="{{isLoggedIn()?'#reportIt':'#sign'}}"
+                            ng-click="isLoggedIn()?parseReport(result):initFBLogin()">Report barter
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" ng-click="disable()"
                             ng-hide="!sameAccount()||result.get('state')=='disabled'||result.get('state')=='bartered'">
@@ -293,32 +293,6 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade pg-show-modal" id="reportBarter" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">REPORT BARTER</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label class="control-label" for="formInput2568">Why do you think this barter is
-                            inappropriate?</label>
-                        <textarea class="form-control" rows="3" id="formInput2568"
-                                  ng-model="reportDescription" required></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger" ng-click="reportBarter()" data-dismiss="modal">
-                        Report!
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <div class="modal fade pg-show-modal" id="barterMilestones" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">

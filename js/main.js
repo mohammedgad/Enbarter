@@ -165,6 +165,28 @@ app.run(function ($rootScope, $location) {
             });
         } else $rootScope.alertModal('Email is required');
     }
+
+    $rootScope.createReport = function () {
+        var Report = Parse.Object.extend("Report");
+        var report = new Report();
+        report.set("user", Parse.User.current());
+        report.set("description", $rootScope.reportDescription);
+        report.addUnique("objects", $rootScope.reportThis);
+        showSpinner();
+        report.save({
+            success: function (results) {
+                $rootScope.alertModal("Thank You");
+                $rootScope.reportDescription = "";
+                hideSpinner();
+            },
+            error: function (object, error) {
+                errorHandler($rootScope, error);
+            }
+        });
+    }
+    $rootScope.parseReport = function (reportThis) {
+        $rootScope.reportThis = reportThis;
+    }
 });
 app.directive('onFinishRender', function ($timeout) {
     return {
@@ -299,8 +321,9 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
         showSpinner();
         user.signUp(null, {
             success: function (user) {
-                location.reload();
+                Parse.User.logOut();
                 hideSpinner();
+                $rootScope.alertModal("Kindly verify your email!");
             },
             error: function (user, error) {
                 errorHandler($rootScope, error);
@@ -746,23 +769,6 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
 
     }
 
-    $scope.reportBarter = function () {
-        var Report = Parse.Object.extend("ReportBarter");
-        var report = new Report();
-        report.set("user", Parse.User.current());
-        report.set("description", $scope.reportDescription);
-        report.set("barter", $scope.result);
-        showSpinner();
-        report.save({
-            success: function (results) {
-                $rootScope.alertModal("Thank You");
-                hideSpinner();
-            },
-            error: function (object, error) {
-                errorHandler($rootScope, error);
-            }
-        });
-    }
     function reloadComments(callback) {
         var BarterComment = Parse.Object.extend("BarterComment");
         var query = new Parse.Query(BarterComment);
@@ -994,7 +1000,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
         var result = angularCopy($scope.result);
         var arr = result.get(column);
         for (var i = 0; i < arr.length; i++) {
-            if (arr[i].task == o.task) {
+            if (arr[i].task == o.task && !arr[i].checked) {
                 arr[i].checked = true;
                 arr[i].date = new Date();
                 arr[i].comment = $scope.comment;
@@ -1005,6 +1011,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                     var parseFile = new Parse.File(name, file);
                     arr[i].file = parseFile;
                 }
+                break;
             }
         }
         result.set(column, arr);
@@ -1014,6 +1021,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 $scope[column] = angularCopy(arr);
                 $scope.result = results;
                 $scope.comment = '';
+                $("#formInput25675").val('');
                 $scope.$apply();
                 hideSpinner();
             },

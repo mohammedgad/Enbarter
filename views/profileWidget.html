@@ -19,5 +19,8 @@
         <a ng-show="userId&&userId!=result.id" class="list-group-item" href="/messages/{{result.id}}">Send Message</a>
         <a data-target="#sign" data-toggle="modal" ng-hide="isLoggedIn()" ng-click="initFBLogin()"
            class="list-group-item">Send Message</a>
+        <a data-toggle="modal" data-target="{{isLoggedIn()?'#reportIt':'#sign'}}"
+           ng-click="isLoggedIn()?parseReport(result):initFBLogin()"
+           class="btn btn-danger btn-block" ng-hide="userId==result.id">Report</a>
     </ul>
 </div>
