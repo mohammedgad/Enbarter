@@ -1607,8 +1607,10 @@ function errorHandler($rootScope, error) {
     if (typeof error === 'undefined') error = {code: 100};
     if (error.code == 141 || errorsMap[error.code])
         message = errorsMap[error.code] || error.message;
-    else
+    else if (error.message)
         message = "Error: " + error.code + " " + error.message;
+    else
+        message = "Error: " + error;
     hideSpinner();
     $rootScope.alertModal(message);
     if (error.code == 209) {
