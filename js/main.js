@@ -1405,9 +1405,11 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
                 },
                 disableLogout: true
             };
-            if (Parse.User.current().get('membership') && Parse.User.current().get('membership').id == 'fQcewB3856' && membership.get('noTrials')) {
-                options.trialDays = '0';
-                options.trialDaysAuth = membership.get('noTrials');
+            if (Parse.User.current().get('membership') && Parse.User.current().get('membership').id == 'fQcewB3856' && membership.get('auth')) {
+                options.trialDays = membership.get('period');
+                options.price = membership.get('price');
+                options.trialDaysAuth = membership.get('auth')[0];
+                options.auth = membership.get('auth')[1];
                 options.message = membership.get('name') + ", No Trial";
             }
 
