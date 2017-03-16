@@ -885,7 +885,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
     $scope.reloadChat = function () {
         var query = new Parse.Query(Chat);
         query.include("user");
-        query.equalTo("barterDashboard", $scope.result);
+        query.equalTo("barter", getPointer($scope.result.get('barter')));
 
         query.find({
             success: function (results) {
@@ -972,7 +972,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             var chat = new Chat();
             chat.set("message", $scope.message);
             chat.set("user", Parse.User.current());
-            chat.set("barterDashboard", getPointer($scope.result));
+            chat.set("barter", getPointer($scope.result.get('barter')));
             chat.set("offerUser", $scope.result.get("user"));
             chat.set("barterUpUser", $scope.result.get("barterUpUser"));
             chat.save({
