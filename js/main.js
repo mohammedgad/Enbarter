@@ -1181,6 +1181,16 @@ app.controller('showProfileCtrl', function ($scope, $location, $rootScope, $rout
             hideSpinner();
         }
     });
+    $scope.showReviews = function () {
+        if ($scope.barters) {
+            for (var i = 0; i < $scope.barters.length; i++) {
+                if ($scope.barters[i].get('barterUpUser').id == $scope.result.id && $scope.barters[i].get('offerRate') || $scope.barters[i].get('user').id == $scope.result.id && $scope.barters[i].get('barterUpRate'))
+                    return true;
+            }
+            return false;
+        } else
+            return false;
+    }
 });
 
 app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $routeParams) {
@@ -1374,6 +1384,7 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
             if (Parse.User.current()) {
                 getUser();
             } else {
+                $scope.$apply();
                 hideSpinner();
             }
         },
