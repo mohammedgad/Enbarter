@@ -76,7 +76,7 @@
                 <ul>
                     <li ng-repeat="skill in result.get('skills')">{{skill}}</li>
                 </ul>
-                <h3 ng-show="showReviews()">Reviews</h3>
+                <h3 ng-show="result.get('rateCount')>0">Reviews</h3>
                 <div class="list-group">
                     <div ng-repeat="barter in barters"
                          ng-show="(barter.get('barterUpReview')&&barter.get('user').id==result.id)">
