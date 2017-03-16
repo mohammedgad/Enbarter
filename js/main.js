@@ -1540,7 +1540,7 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
     }
 
     $scope.sendMessage = function (parent) {
-        if (!$('#message').summernote('code') || ($('#message').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0 && !$('#message').summernote('code').include('img')))
+        if (!$('#message').summernote('code') || ($('#message').summernote('code').replace(/(<([^>]+)>)/ig, "").length == 0 && !$('#message').summernote('code').include('img')) || !$scope.subject)
             return;
         $scope.cantSend = true;
         var message = new Message();
@@ -1548,6 +1548,7 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
         message.set('user', Parse.User.current());
         message.set('message', $('#message').summernote('code'));
         message.set('messageThread', $scope.thread);
+        message.set('subject', $scope.subject);
 
         showSpinner();
         message.save({
@@ -1555,6 +1556,7 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
                 loadMessages(results.get('messageThread'), function () {
                     $scope.cantSend = false;
                     $($('#message')).summernote('code', '');
+                    $scope.subject = "";
                     $scope.$apply();
                     hideSpinner();
                 });

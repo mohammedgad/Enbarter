@@ -25,22 +25,22 @@
                         </header>
                         <ul class="features">
                             <li>
-                                <i class="fa fa-file-o"></i> 6 Units a month
+                                <i class="fa fa-file-o"></i> 3 Units a month
                             </li>
                             <li>
-                                <i class="fa fa-cloud-upload"></i> 6 Active barters limit
+                                <i class="fa fa-cloud-upload"></i> 3 Active barters limit
                             </li>
                         </ul>
                         <!-- /.features -->
                     </div>
                     <!-- /.price-block -->
                     <div class="col-md-4 price-block">
-                        <div class="ribbon premium"></div>
+                        <div class="ribbon new"></div>
                         <header>
-                            <h2>Premium</h2>
+                            <h2>{{premuim.get('name')}}</h2>
                             <div class="price">
                                 <span class="currency">$</span>
-                                <span class="amount">10</span>
+                                <span class="amount">{{premuim.get('price')}}</span>
                                 <span class="period">/ Mo</span>
                             </div>
                             <!-- /.price -->
@@ -62,13 +62,13 @@
                         </header>
                         <ul class="features">
                             <li>
-                                <i class="fa fa-file-o"></i> 365 Days Free Trial
+                                <i class="fa fa-file-o"></i> {{premuim.get('trial')}} Days Free Trial
                             </li>
                             <li>
-                                <i class="fa fa-file-o"></i> 60 Units a month
+                                <i class="fa fa-file-o"></i> {{premuim.get('monthlyUnits')}} Units a month
                             </li>
                             <li>
-                                <i class="fa fa-cloud-upload"></i> 60 Active barters limit
+                                <i class="fa fa-cloud-upload"></i> {{premuim.get('activeLimit')}} Active barters limit
                             </li>
                         </ul>
                         <!-- /.features -->

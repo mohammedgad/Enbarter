@@ -17,11 +17,13 @@
             <div class="chatbox well" style="height: 300px;overflow-y: scroll;" id="messageBox">
                 <div ng-repeat="m in messages" on-finish-render="ngRepeatFinished">
                     <a href="/profile/{{m.get('user').id}}"
-                       class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}:</a>
+                       class="{{m.get('user').id==userId?'text-danger':'text-primary'}}">{{m.get('user').get('username')}}</a>:{{m.get('subject')}}
                     <div ng-bind-html="m.get('message')"></div>
                 </div>
             </div>
             <form role="form" ng-submit="sendMessage()">
+                <div class="form-group"><input type="text" ng-model="subject" class="form-control"
+                                               placeholder="Subject"></div>
                 <textarea class="form-control summernote" rows="3" id="message"></textarea>
                 <button class="btn btn-block btn-info" ng-disabled="cantSend">
                     Send!
