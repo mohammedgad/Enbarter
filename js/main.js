@@ -266,7 +266,7 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
                     }, function (response) {
                         if (!response.error) {
                             toDataUrl("https://graph.facebook.com/" + response.id + "/picture?type=large", function (result) {
-                                user.set("username", response.name);
+                                user.set("username", response.name.toLowerCase());
                                 user.set("pic", new Parse.File("pic.jpg", {base64: result.toString('base64')}));
                                 user.save(null, {
                                     success: function (user) {
