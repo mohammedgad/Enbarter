@@ -109,7 +109,7 @@ app.run(function ($rootScope, $location) {
                 $rootScope.$apply();
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     }
@@ -160,7 +160,7 @@ app.run(function ($rootScope, $location) {
                     hideSpinner();
                 },
                 error: function (object, error) {
-                    errorHandler($rootScope, error);
+                    errorHandler($rootScope, error || object);
                 }
             });
         } else $rootScope.alertModal('Email is required');
@@ -180,7 +180,7 @@ app.run(function ($rootScope, $location) {
                 hideSpinner();
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     }
@@ -304,7 +304,7 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
                 hideSpinner();
             },
             error: function (user, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || user);
             }
         });
     }
@@ -326,7 +326,7 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
                 $rootScope.alertModal("Kindly verify your email!");
             },
             error: function (user, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || user);
             }
         });
     }
@@ -357,7 +357,7 @@ app.controller('header', function ($scope, $location, $rootScope, $sce) {
                 $scope.$apply();
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
 
@@ -477,7 +477,7 @@ app.controller('createBarter', function ($scope, $rootScope) {
                 hideSpinner();
             },
             error: function (barter, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || barter);
                 $scope.canStartDisabled = false;
                 $scope.$apply();
             }
@@ -495,7 +495,7 @@ function getCategories(successCallback) {
             successCallback(results);
         },
         error: function (object, error) {
-            errorHandler($rootScope, error);
+            errorHandler($rootScope, error || object);
         }
     });
 
@@ -548,7 +548,7 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
                 hideSpinner();
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     }
@@ -568,7 +568,7 @@ app.controller('browseCtrl', function ($rootScope, $scope, $routeParams, $locati
                 hideSpinner();
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     }
@@ -648,7 +648,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                     hideSpinner();
                 },
                 error: function (object, error) {
-                    errorHandler($rootScope, error);
+                    errorHandler($rootScope, error || object);
                 }
             });
         }
@@ -697,12 +697,12 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                         hideSpinner();
                     },
                     error: function (object, error) {
-                        errorHandler($rootScope, error);
+                        errorHandler($rootScope, error || object);
                     }
                 });
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
                 result.set('barterRequests', angularCopy(barterRequests));
                 $scope.$apply();
             }
@@ -758,11 +758,11 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                         hideSpinner();
                     },
                     error: function (object, error) {
-                        errorHandler($rootScope, error);
+                        errorHandler($rootScope, error || object);
                     }
                 });
             }, error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
 
@@ -788,9 +788,9 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
                 hideSpinner();
                 callback();
             },
-            error: function (error) {
+            error: function (object, error) {
                 $scope.$apply();
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     }
@@ -824,7 +824,7 @@ app.controller('barterCtrl', function ($scope, $location, $rootScope, $routePara
             error: function (object, error) {
                 $scope.cantSend = false;
                 $scope.$apply();
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     }
@@ -865,7 +865,7 @@ app.controller('indexCtrl', function ($scope, $location, $rootScope, $routeParam
             hideSpinner();
         },
         error: function (object, error) {
-            errorHandler($rootScope, error);
+            errorHandler($rootScope, error || object);
         }
     });
 });
@@ -893,7 +893,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 $scope.$apply();
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
 
@@ -985,7 +985,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 error: function (object, error) {
                     $scope.cantSend = false;
                     $scope.$apply();
-                    errorHandler($rootScope, error);
+                    errorHandler($rootScope, error || object);
                 }
             });
         }
@@ -1026,7 +1026,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 hideSpinner();
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     };
@@ -1043,7 +1043,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
                 hideSpinner();
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     };
@@ -1098,7 +1098,7 @@ app.controller('barterDashboardCtrl', function ($scope, $location, $rootScope, $
             success: function () {
                 hideSpinner();
             }, error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     }
@@ -1232,7 +1232,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
                 location.reload();
                 hideSpinner();
             }, error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
                 $scope.cantSubmit = false;
                 $scope.$apply();
             }
@@ -1376,7 +1376,7 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
             }
         },
         error: function (object, error) {
-            errorHandler($rootScope, error);
+            errorHandler($rootScope, error || object);
         }
     });
 
@@ -1442,8 +1442,8 @@ app.controller('pricesCtrl', function ($scope, $location, $rootScope, $routePara
             success: function (result) {
                 $rootScope.alertModal(result.result);
                 hideSpinner();
-            }, error: function (error) {
-                errorHandler($rootScope, error);
+            }, error: function (object, error) {
+                errorHandler($rootScope, error || object);
             }
         });
     };
@@ -1472,7 +1472,7 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
                 callback();
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     }
@@ -1490,7 +1490,7 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
                     callback(results[0]);
             },
             error: function (object, error) {
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     };
@@ -1519,7 +1519,7 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
                                     loadMessages(result, loadThreads);
                                 },
                                 error: function (object, error) {
-                                    errorHandler($rootScope, error);
+                                    errorHandler($rootScope, error || object);
                                 }
                             });
                         }
@@ -1572,7 +1572,7 @@ app.controller('messagesCtrl', function ($scope, $location, $rootScope, $routePa
             error: function (object, error) {
                 $scope.cantSend = false;
                 $scope.$apply();
-                errorHandler($rootScope, error);
+                errorHandler($rootScope, error || object);
             }
         });
     }
