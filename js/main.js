@@ -1210,7 +1210,7 @@ app.controller('editProfileCtrl', function ($scope, $location, $rootScope, $rout
         result.set("bio", $('#bioText').summernote('code'));
         if ($scope.birthday)
             result.set("birthday", new Date($scope.birthday));
-        if ($scope.email && !result.get('email'))
+        if ($scope.email)
             result.set("email", $scope.email);
         result.set("skills", $scope.skills);
         result.set("workLinks", $scope.workLinks);
