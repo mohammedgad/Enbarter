@@ -47,7 +47,7 @@ app.config(function ($routeProvider, $locationProvider) {
 
 app.run(function ($rootScope, $location) {
     Parse.initialize("EnbarterApp", "Ad06@!30");
-    Parse.serverURL = 'https://api.enbarterdev.ml/v1';
+    Parse.serverURL = 'https://api.enbarter.com/v1';
     rootS = $rootScope;
     $rootScope.title = 'Enbarter';
     $rootScope.description = "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.";
