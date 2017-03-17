@@ -1815,9 +1815,6 @@ $(document).ready(function () {
         if (navigator.userAgent.match(/(MSIE)/) != null) {
             hideSpinner();
             alert("You are now using enbarter in legacy mode, Kindly use enbarter a modern browser to enjoy the full experience!");
-        } else if (navigator.userAgent.match(/(iPhone|Android)/) != null) {
-            hideSpinner();
-            alert("You are now using enbarter in legacy mode, Kindly use enbarter mobile app to enjoy the full experience!");
         }
 
         $(document).on("click", 'a[src^="http"]', function (e) {
